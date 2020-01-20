@@ -1,0 +1,48 @@
+<div class='row'>
+	<div class='container text-center' style="margin-top: 50px; padding: 50px;">
+
+		<img src='/app_v1/assets/images/logo.png' class='animated jello'/>
+
+		<hr />
+
+		<div data-ng-if='language && isAdmin' data-ng-init='loadLanguage()' style='width: 400px; margin: 10px auto;'>
+			<div id='language-section' class='animated flipInX'>
+				<label>Choose your language</label> <br/>
+				<select class='form-control' data-ng-model='input.language' data-ng-change='translate()'>
+					<option value=''> Select Language</option>
+					<option data-ng-repeat='lang in languages track by $index' value='{{lang.code}}' data-ng-bind='lang.name'></option>
+				</select>
+			</div>
+		</div>
+
+
+		<div data-ng-if='showCategory' style='width: 400px; margin: 10px auto;'>
+			<div id='language-section' class='animated flipInX'>
+				<label translate="questions.labels.choose_category">Choose category</label> <br/>
+				<select class='form-control' data-ng-model='input.category' data-ng-change='chooseCategory()'>
+					<option value='' translate='table.select_category'> Select Category</option>
+					<option data-ng-repeat='category in categories track by $index' value='{{category}}' data-ng-bind='category'></option>
+				</select>
+			</div>
+		</div>
+
+		<div data-ng-if='language && !isAdmin' data-ng-init='loadLanguage()' style='width: 400px; margin: 10px auto;'>
+			<div id='language-section' class='animated flipInX'>
+				<form role="form" data-ng-submit='studentLogin()'>
+					<label>Screen Language</label> <br/>
+					<select class='form-control' data-ng-model='input.language' required>
+						<option value=''> Select Language</option>
+						<option data-ng-repeat='lang in languages track by $index' value='{{lang.code}}' data-ng-bind='lang.name'></option>
+					</select>
+					<label>Voice Over Language</label> <br/>
+					<select class='form-control' data-ng-model='input.audiolanguage'>
+						<option value=''> No Audio</option>
+						<option data-ng-repeat='lang in languages track by $index' value='{{lang.code}}' data-ng-bind='lang.name'></option>
+					</select><br>
+					<button type="submit" class="btn btn-default">Submit</button>
+				</form>
+			</div>
+		</div>
+
+	</div>
+</div>

@@ -1,0 +1,47 @@
+<div>
+	<div id="wrapper">
+      <div id="login" class="animate form bounceInDown animated">
+      	<div class='text-center'>
+      		<img src="/app_v1/assets/images/symbol.png" style="height: 65px; margin-left: -40px;" class='animated pulse'>
+      	</div>
+      	<section class="login_content">
+          <form data-ng-submit='login()'>
+            <h3 translate='login.title'> Login </h3>
+
+            <div class='alert alert-danger alert-dismissible animated flash' data-ng-if='error'>
+              	<button type="button" class="close" aria-label="Close" data-ng-click='closeAlert()'><span aria-hidden="true">&times;</span></button>
+              	<strong class='glyphicon glyphicon-remove'></strong> &nbsp; <span data-ng-bind='error'></span>
+            </div>
+
+            <div style="margin-top:35px;">
+              <input type="text" class="form-control" placeholder="{{'login.username' | translate}}" required data-ng-model='user.studentId' />
+            </div>
+            <div>
+              <input type="text" class="form-control" placeholder="Admin / Supervisor Id" required data-ng-model='user.supervisorId' />
+            </div>
+            <div>
+              <input type="password" class="form-control" placeholder="Admin / Supervisor passcode" required data-ng-model='user.password' />
+            </div>
+            <div>
+              <div data-ng-if='showLoader'>
+                <img data-ng-src='/app/assets/images/app-loader.gif' style='height: 35px;'/>
+              </div>
+              <button type='submit' class="btn btn-default submit" data-ng-if='!showLoader' translate='login.links.login'>Log in</button>
+            </div>
+            <div class="clearfix"></div>
+            <div class="separator">
+
+              <div class="clearfix"></div>
+              <br />
+              <div>
+                <h1 style='color: #000 !important;'><img src='/app/assets/images/symbol.png' style='width:75px;'> {{'app.title' | translate}}</h1>
+              </div>
+            </div>
+          </form>
+          <!-- form -->
+        </section>
+
+        <!-- content -->
+      </div>
+    </div>
+</div>

@@ -1,0 +1,77 @@
+<!-- page content -->
+
+  <div class="">
+          <div class="clearfix"></div>
+
+          <div class="row">
+
+            <div class="col-md-12 col-sm-12 col-xs-12" data-ng-init='getAll()'>
+              <div class="x_panel" style="height:600px;overflow-y:scroll;">
+                <div class="x_title">
+                  <h2 translate="questions.title">Questions List</h2>
+                  <ul class="nav navbar-right panel_toolbox">
+                    <li class="" style='color:#c3c3c3;'>
+                      <a data-ui-sref='app.questions_add' title='Adding New Question' href='javascript:void(0);' class='btn btn-link'>
+                      <i class="fa fa-pencil"></i>&nbsp; {{'questions.link.add_question' | translate}}</a>
+                    </li>
+                    </li>
+                  </ul>
+                  <div class="clearfix"></div>
+                </div>
+                <ol class="breadcrumb">
+                  <li><a href='javascript:void(0);' data-ui-sref='app'  translate="home.menu.home">Home</a></li>
+                  <li class="active"  translate="home.menu.questions">Questions</li>
+                </ol>
+                <div class='alert alert-success alert-dismissible animated flash' data-ng-if='saveAlert'>
+                  <button type="button" class="close" aria-label="Close" data-ng-click='closeAlert()'><span aria-hidden="true">&times;</span></button>
+                  <strong class='glyphicon glyphicon-ok'></strong> &nbsp; {{'questions.alert.success' | translate}}
+                </div>
+             
+                <div data-ng-if='loader' style='height: 100%; padding-top: 200px; text-align: center;'>
+                  <img data-ng-src='/app/assets/images/app-loader.gif'/>
+                </div>
+
+                <div data-ng-if='!loader && !items.length' style='height: 100%; padding-top: 150px; text-align: center;'>
+                  <h3><span class='fa fa-warning text-warning'></span> {{'home.alert.question' | translate}}</h3> <br />
+                  <a href='javascript:void(0);' class='btn btn-primary' data-ui-sref='app.questions_add' translate='questions.link.add_question'> Add a New Question</a>
+                </div>
+             
+               	<table class='table table-stripeed' data-ng-if='items.length && !loader'>
+               		<thead >
+      						<tr class='info'>
+                    <th style='width:50px;' translate="table.sno">S.No</th>
+      							<th style='width:100px;' translate="questions.labels.category">Category</th>
+                    <th style='width:300px;' translate="questions.label.question">Question</th>
+                    <th style='width:250px;' translate="questions.label.choices">Choices</th>
+                    <th style='width:100px;' translate="questions.label.answer">Answer</th>
+      							<th style='width:150px;' translate="questions.label.created_on">Created On</th>
+      							<th style='width:100px;' translate="questions.label.actions">Actions</th>
+      						</tr>
+      					</thead>
+      					<tbody>
+      						<tr data-ng-repeat='item in items track by $index'>
+      							<td data-ng-bind='$index+1'>2</td>
+                    <td data-ng-bind='item.category'>2</td>
+      							<td data-ng-bind='item.question'>2</td>
+                    <td data-ng-bind='item.choice1 + "," + item.choice2 + "," + item.choice3 + "," + item.choice4'></td>
+                    <td data-ng-bind='getAnswer(item)'></td>
+                    <td data-ng-bind='getDate(item.created)'>2</td>
+      							<td> 
+      								<a href='javascript:void(0);' class='text-primary' data-ng-click='editItem(item)'>
+                        <span class='fa fa-edit'></span>
+                      </a> &nbsp; | &nbsp; 
+                      <a href='javascript:void(0);' class='text-danger' data-ng-click='removeItem(item)'>
+                        <span class='fa fa-remove'></span>
+                      </a>
+      							</td>
+      						</tr>
+      					</tbody>
+               	</table>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+
+<!-- /page content -->

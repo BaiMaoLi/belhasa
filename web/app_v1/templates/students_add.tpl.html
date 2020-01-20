@@ -1,0 +1,228 @@
+<!-- page content -->
+
+<div class="">
+  <div class="clearfix"></div>
+  <div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+      <div class="x_panel" style="height:600px;overflow-y:scroll;">
+        <div class="x_title">
+          <h2 translate="home.labels.user_registration" data-ng-if="logUser.isAdmin=='1'"></h2>
+          <h2 translate="home.labels.student_registration" data-ng-if="logUser.isAdmin=='2'"></h2>
+          <div class="clearfix"></div>
+        </div>
+
+        <ol class="breadcrumb">
+          <li><a href='javascript:void(0);' data-ui-sref='app' translate="home.menu.home">Home</a></li>
+          <li><a href='javascript:void(0);' data-ui-sref='app.students' translate="home.menu.users"></a></li>
+          <li class="active" translate="home.labels.registration">Registration</li>
+        </ol>
+
+        <div class='profile-section'>
+          <div class='panel panel-primary'>
+            <div class='panel-heading'>
+              <span translate="student.labels.personal_info">User Info</span>
+            </div>
+            <div class='panel-body' data-ng-init='loadCategory()'>
+              <div class='alert alert-danger alert-dismissible animated flash' data-ng-if='passwordSuccessAlert'>
+                <button type="button" class="close" aria-label="Close" data-ng-click='closeAlert()'><span aria-hidden="true">&times;</span></button>
+                <strong class='fa fa-warning'></strong> &nbsp; {{passwordSuccessAlert}}</span>
+              </div>
+              <div class='alert alert-danger alert-dismissible animated flash' data-ng-if='profileUpdateSuccessAlert'>
+                <button type="button" class="close" aria-label="Close" data-ng-click='closeAlert()'><span aria-hidden="true">&times;</span></button>
+                <strong class='fa fa-warning'></strong> &nbsp; Profile updated successfully</span>
+              </div>
+              <!-- start of form -->
+              <form data-ng-submit='createUser()'>
+                <table class='table table-striped'>
+                <tbody>
+
+                 <tr>
+                    <th translate="register.form.user_type">User Type</th>
+                    <td data-ng-if="logUser.isAdmin=='1'">
+                      <label>
+                        <input type='radio' data-ng-model='newStudent.isAdmin' value='1'> {{'register.form.admin' | translate }}
+                      </label>
+                      <label>
+                        <input type='radio' data-ng-model='newStudent.isAdmin' value='2'> {{'register.form.supervisor' | translate }}
+                      </label>
+                      <label>
+                        <input type='radio' data-ng-model='newStudent.isAdmin' value='0'> {{'register.form.student' | translate }}
+                      </label>
+                    </td>
+                    <td data-ng-if="logUser.isAdmin=='2'" data-ng-model='newStudent.isAdmin' value='0'>
+                      <label>{{'register.form.student'|translate}}</label>
+                    </td>
+                    <th class='text-center' translate="register.form.photo">
+                      Photo
+                    </th>
+                  </tr>
+
+                  <tr>
+                    <th style="width: 300px;" translate="register.form.student_id" data-ng-if="newStudent.isAdmin == '0'">Student Id</th>
+                    <th style="width: 300px;" translate="register.form.admin_id" data-ng-if="newStudent.isAdmin == '1'">Admin Id</th>
+                    <th style="width: 300px;" translate="register.form.supervisor_id" data-ng-if="newStudent.isAdmin == '2'">Supervisor Id</th>
+                    <!-- <td  style="width: 300px;"> -->
+                    <td  style="width: 300px;" data-ng-if="newStudent.isAdmin == '0'">
+                      <input class='form-control' data-ng-model='newStudent.studentId' placeholder="{{'register.form.student_id' | translate }}" required></input>
+                    </td>
+                    <td  style="width: 300px;" data-ng-if="newStudent.isAdmin == '1'">
+                      <input class='form-control' data-ng-model='newStudent.studentId' placeholder="{{'register.form.admin_id' | translate }}" required></input>
+                    </td>
+                    <td  style="width: 300px;" data-ng-if="newStudent.isAdmin == '2'">
+                      <input class='form-control' data-ng-model='newStudent.studentId' placeholder="{{'register.form.supervisor_id' | translate }}" required></input>
+                    </td>
+                    <td rowspan="13" class='text-center'>
+
+                      <img data-ng-src='{{newStudent.photo}}' style="width:200px;" />
+
+                      <br/>
+                      <div class='text-center'>
+                        <button class='btn btn-info' type="button" data-ng-click='uploadPhoto()' style="margin: 5px;">{{'register.form.upload_photo' | translate }}</button>
+                      </div>
+                    </td>
+
+                  </tr>
+
+                  <tr>
+
+                    <th style="width: 300px;" translate="register.form.name"> Name</th>
+                    <td>
+                      <input type='text' data-ng-model='newStudent.name' class='form-control' placeholder="{{'register.form.name' | translate }}" required></input>
+                    </td>
+                    <!-- <td rowspan="13" class='text-center' data-ng-if="newStudent.isAdmin == '1' || newStudent.isAdmin == '2'">
+
+                      <img data-ng-src='{{newStudent.photo}}' style="width:200px;" />
+
+                      <br/>
+                      <div class='text-center'>
+                        <button class='btn btn-info' type="button" data-ng-click='uploadPhoto()' style="margin: 5px;">{{'register.form.upload_photo' | translate }}</button>
+                      </div>
+                    </td> -->
+
+                  </tr>
+
+                  <tr data-ng-if="newStudent.isAdmin == '0'">
+                    <th translate="register.form.category">Category</th>
+                    <td>
+                        <select class='form-control' data-ng-model='newStudent.category' required>
+                          <option value="">{{'register.form.select' | translate}}</option>
+                          <option data-ng-repeat='category in categories track by $index' value='{{category}}' data-ng-bind='category'>English</option>
+                        </select>
+                        <!-- <select data-ng-model='newStudent.category' class='form-control' required>
+                          <option value="">{{'register.form.select' | translate}}</option>
+                          <option value='LMV'>LMV</option>
+                          <option value='MC'>MC</option>
+                          <option value='HVT and LB'>HVT and LB</option>
+                          <option value='FRLK'>FRLK</option>
+                          <option value='Instructor'>Instructor</option>
+                        </select> -->
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <th translate="register.form.email">Email</th>
+                    <td>
+                      <input type='email' data-ng-if="newStudent.isAdmin == '1' || newStudent.isAdmin == '2'" data-ng-model='newStudent.email' class='form-control' placeholder="{{'register.form.email' | translate }}" required></input>
+                      <input type='email' data-ng-if="newStudent.isAdmin == '0'" data-ng-model='newStudent.email' class='form-control' placeholder="{{'register.form.email' | translate }}" ></input>
+                    </td>
+
+                  </tr>
+
+                  <tr data-ng-if="newStudent.isAdmin == '1' || newStudent.isAdmin == '2'">
+                    <th translate="login.passcode">Password</th>
+                    <td>
+                      <input type='password' data-ng-model='newStudent.password' class='form-control' placeholder="{{'login.passcode' | translate }}" pattern=".{4,}" required required title="{{'validation.password_validation'| translate}}"></input>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <th translate="student.labels.gender" style="border-bottom: none;">Gender</th>
+                    <td>
+                      <select data-ng-model='newStudent.gender' class='form-control' required>
+                        <option value="">{{'register.form.select' | translate}}</option>
+                        <option value='Male'>{{'register.form.male' | translate}}</option>
+                        <option value='Female'>{{'register.form.female' | translate}}</option>
+                      </select>
+                    </td>
+                  </tr>
+
+                 <!--  <tr>
+                    <th translate="register.form.user_type">User Type</th>
+                    <td>
+                      <label>
+                        <input type='radio' data-ng-model='newStudent.isAdmin' value='1'> {{'register.form.admin' | translate }}
+                      </label>
+                      <label>
+                        <input type='radio' data-ng-model='newStudent.isAdmin' value='0'> {{'register.form.student' | translate }}
+                      </label>
+                    </td>
+                  </tr> -->
+
+                  <tr data-ng-if="newStudent.isAdmin == '1' || newStudent.isAdmin == '2'">
+                    <th translate="student.labels.nationality">Nationality</th>
+                    <td>
+                       <input type="text" class="form-control" placeholder="{{'student.labels.nationality' | translate }}" data-ng-model='newStudent.nationality' />
+                    </td>
+                  </tr>
+
+                  <tr data-ng-if="newStudent.isAdmin == '1' || newStudent.isAdmin == '2'">
+                    <th translate="student.labels.dob">Date of Birth</th>
+                    <td data-ng-if="add_dob">
+                      <input type="text" class="form-control" ng-click="openPicker()" uib-datepicker-popup="yyyy-MM-dd" data-ng-model='newStudent.dob' is-open="popup1.opened" close-text="Close" max-date='date_valid.startDate' placeholder="{{'student.labels.dob' | translate }}" />
+                    </td>
+                    <td data-ng-if="!add_dob">
+                      <input type="text" class="form-control" ng-click="EnableDobAdd()" data-ng-model='newStudent.dob' placeholder="{{'student.labels.dob' | translate }}" />
+                    </td>
+                  </tr>
+
+                   <tr data-ng-if="newStudent.isAdmin == '1' || newStudent.isAdmin == '2'">
+                    <th translate="student.labels.maritalStatus">Marital Status</th>
+                    <td >
+                      <select class='form-control' data-ng-model='newStudent.maritalStatus'>
+                            <option value="">{{'register.form.select' | translate}}</option>
+                            <option value='Single'>{{'register.form.single' | translate}}</option>
+                            <option value='Married'>{{'register.form.married' | translate}}</option>
+                          </select>
+                    </td>
+                  </tr>
+
+                  <tr data-ng-if="newStudent.isAdmin == '1' || newStudent.isAdmin == '2'">
+                    <th translate="student.labels.passport">Passport</th>
+                    <td>
+                      <textarea class="form-control" data-ng-model='newStudent.passport' placeholder="{{'register.form.passport_details' | translate }}">
+                            Passport Details
+                          </textarea>
+                    </td>
+                  </tr>
+
+                  <tr data-ng-if="newStudent.isAdmin == '1' || newStudent.isAdmin == '2'">
+                    <th translate="student.labels.emirates">Emirates</th>
+                    <td>
+                      <textarea class='form-control' data-ng-model='newStudent.emirates' placeholder="{{'register.form.emirates_id_details' | translate }}">
+                            Emirates Id Details
+                      </textarea>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th class='text-center' colspan="4" style="border-top:none;">
+                      <button class='btn btn-success' type='submit'> &nbsp;{{'register.form.register_student' | translate }}&nbsp; </button>
+                      <a data-ui-sref='app.students' class='btn btn-primary' > {{'table.cancel' | translate}}</a>
+                    </th>
+                  </tr>
+
+                </tbody>
+              </table>
+              </form>
+              <!-- end of form -->
+            </div>
+          </div>
+
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- /page content -->

@@ -1,0 +1,195 @@
+<style>
+.paginationclass{
+
+margin: 19px 28px;
+}
+.paginationclass span{
+    margin-left:15px;
+    display:inline-block;
+}
+.pagination-controle li{
+    display: inline-block;
+}
+.pagination-controle button{
+    font-size: 12px;
+    margin-top: -26px;
+    cursor:pointer;
+
+}
+.pagination{
+    margin:5px 12px !important;
+}
+.right-inner-addon {
+    position: relative;
+}
+.right-inner-addon input {
+    padding-right: 30px;
+}
+.right-inner-addon i {
+    position: absolute;
+    right: 0px;
+    padding: 10px 12px;
+    pointer-events: none;
+}
+</style>
+<div class="">
+  <div class="clearfix"></div>
+  <div class='alert alert-danger alert-dismissible animated flash' data-ng-if='testError'>
+    <button type="button" class="close" aria-label="Close" data-ng-click='closeAlert()'>
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <strong class='glyphicon glyphicon-alert'></strong> &nbsp; <span> Please Select Both Date</span>
+  </div>
+  <div class='alert alert-danger alert-dismissible animated flash' data-ng-if='filterError'>
+    <button type="button" class="close" aria-label="Close" data-ng-click='closeAlert()'>
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <strong class='glyphicon glyphicon-alert'></strong> &nbsp; <span> Please Select Filter By And Enter value in Search</span>
+  </div>
+
+  <div class="row" data-ng-init='loadResults()'>
+    <div class="col-md-12 col-sm-12 col-xs-12">
+      <div class="x_panel" style="height:600px;overflow-y:scroll;">
+        <div class="x_title">
+          <h2 translate="test.labels.test_results">Test Results</h2>
+          <div class="clearfix"></div>
+        </div>
+        <ol class="breadcrumb">
+          <li><a href='javascript:void(0);' data-ui-sref='app' translate="home.menu.home">Home</a></li>
+          <li class="active" translate="test.labels.results">Results</a></li>
+        </ol>
+        <div>
+          <div data-ng-if='loader' style='height: 100%; padding-top: 200px; text-align: center;'>
+            <img data-ng-src='/app/assets/images/app-loader.gif'/>
+          </div>
+          <!-- <div class="pagination pagination-centered" ng-show="items.length && !loader" style="margin-left: -10px !important;">
+              <ul class="pagination-controle pagination">
+               <li>
+                <button type="button" class="btn btn-primary" ng-disabled="curPage == 0"
+               ng-click="curPage=curPage-1"> &lt; {{'table.prev' | translate}}</button>
+               </li>
+               <li>
+               <span>Page {{curPage + 1}} of {{ numberOfPages() }}</span>
+               </li>
+               <li>
+               <button type="button" class="btn btn-primary"
+               ng-disabled="curPage >= items.length/pageSize - 1"
+               ng-click="curPage = curPage+1">{{'table.next' | translate}} &gt;</button>
+               </li>
+              </ul>
+          </div> -->
+          <div class="pagination pagination-centered" ng-show="items.length && !loader" style="margin-left: -10px !important;">
+              <ul class="pagination-controle pagination">
+               <li>
+                <button type="button" class="btn btn-primary" ng-disabled="curPage == 0"
+               ng-click="prev()"> &lt; {{'table.prev' | translate}}</button>
+               </li>
+               <li>
+               <span>Page {{curPage + 1}} of {{ numberOfPages }}</span>
+               </li>
+               <li>
+               <button type="button" class="btn btn-primary"
+               ng-disabled="curPage >= totalCount/pageSize - 1"
+               ng-click="next()">{{'table.next' | translate}} &gt;</button>
+               </li>
+              </ul>
+          </div>
+           <div class="pull-right" style="display: inline-block; margin-bottom: 20px;" ng-if="!loader && user.isAdmin && items.length">
+              <form class="form-inline">
+                    <div class="form-group">
+                      <select class="form-control" id="filterBy" ng-model="search.filterBy" required="">
+                          <!-- <option data-ng-repeat='filter in filterList track by $index' value='{{filter.value}}' data-ng-bind='filter.name'>English</option> -->
+                        <option value="0">Filter By</option>
+                        <option value="category">Test Category</option>
+                        <option value="studentId">Student ID</option>
+                        <option value="student_name">Student Name</option>
+                        <option value="email">Email</option>
+                        <!-- <option>Result Status</option> -->
+                      </select>
+                    </div>
+                  <div class="form-group">
+                        <div class="right-inner-addon">
+                            <i class="fa fa-search"></i>
+                            <input type="text" ng-model="search.studentId" class="form-control" placeholder="{{'table.search' | translate}}" style="width: 249px;" value=" " required=""/>
+                        </div>
+                  </div>
+                  <button type="submit" class='btn btn-primary' data-ng-click='searchByStudent(0)'>{{'table.search' | translate}}</button>
+              </form>
+            </div>
+            <div class = "row"  ng-if="!loader && user.isAdmin">
+                <div class="col-md-3">
+                    <div class="form-group has-feedback">
+                        <label class="control-label sr-only">DatePicker</label>
+                        <input type="text" class="form-control" ng-click="openPickerFrom()" uib-datepicker-popup="yyyy-MM-dd" ng-model='from' is-open="popupFrom.opened" close-text="Close" max-date='date_valid.endDate' placeholder="From" />
+                        <i class="fa fa-calendar form-control-feedback"></i>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group has-feedback">
+                        <label class="control-label sr-only">DatePicker</label>
+                        <input type="text" class="form-control" ng-click="openPickerTo()" uib-datepicker-popup="yyyy-MM-dd" ng-model='to' is-open="popupTo.opened" close-text="Close" min-date='from' max-date='date_valid.endDate' placeholder="To" />
+                        <i class="fa fa-calendar form-control-feedback"></i>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <button type="button" class='btn btn-primary' data-ng-click='dateFilter(from,to,0)'>Go</button>
+                    <button type="button" class='btn btn-primary' data-ng-click='reset()'>Reset</button>
+                </div>
+                <div class="col-md-4">
+                    <div class="" style="text-align: right; margin-right: 1%; margin-bottom: 1%;" ng-if="!loader && user.isAdmin">
+                       <button type="button" class='btn btn-success' data-ng-click='exportData()' ng-disabled="exportButton">Export Excel</button>
+                       <button type="button" class='btn btn-success' data-ng-click='exportPDF()' ng-disabled="exportButton">Export PDF</button>
+                     </div>
+                </div>
+            </div>
+          <table class='table table-spriped' data-ng-if='items.length && !loader'>
+            <thead>
+              <tr class="info">
+                <th style='width:100px;' translate="table.sno">S.No</th>
+
+                <th translate="table.test_category" >Test Category</th>
+
+                <th translate="register.form.student_id" >Student Id</th>
+
+                <th translate="register.form.student_name" >Student Name</th>
+
+                <th translate="register.form.email" >Email</th>
+
+                <th translate="table.result_status" >Result Status</th>
+
+                <th style='width:250px;' translate="student.labels.held_on" >Held On</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr data-ng-repeat='item in items' style='cursor: pointer;' data-ng-click='viewResult(item)'>
+                <td >{{pageSize *(curPage)+$index+1}}</td>
+                <td data-ng-bind='item.category'></td>
+                <td data-ng-bind='item.student.studentId'></td>
+                <td data-ng-bind='item.student.name'></td>
+                <td data-ng-bind='item.student.email'></td>
+                <td data-ng-if = 'item.result_status == 0' translate="form.fail"> FAIL</td>
+                <td data-ng-if = 'item.result_status == 1' translate="form.pass"> PASS</td>
+                <td data-ng-bind='item.testdate'></td>
+              </tr>
+            </tbody>
+          </table>
+          <div data-ng-if='!loader && !items.length' style='height: 100%; padding-top: 150px; text-align: center;'>
+            <h3><span class='fa fa-warning text-warning'></span> {{'home.alert.result' | translate}}</h3> <br />
+            <!-- <a href='javascript:void(0);' class='btn btn-primary' data-ui-sref='app.questions_add' translate='questions.link.add_question'> Add a New Question</a> -->
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+<style>
+  .sort-icon {
+    font-size: 9px;
+    margin-left: 5px;
+}
+
+th {
+    cursor:pointer;
+}
+</style>

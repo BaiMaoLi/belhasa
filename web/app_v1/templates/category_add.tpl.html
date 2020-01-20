@@ -1,0 +1,57 @@
+<!-- page content -->
+
+<div class="">
+  <div class="clearfix"></div>
+
+  <div class="row">
+
+    <div class="col-md-12 col-sm-12 col-xs-12">
+      <div class="x_panel" style="height:600px;overflow-y:scroll;">
+        <div class="x_title">
+          <h2>Create a new Category</h2>
+          <div class="clearfix"></div>
+        </div>
+        <ol class="breadcrumb">
+          <li><a href='javascript:void(0);' data-ui-sref='app'  translate="home.menu.home">Home</a></li>
+          <li><a href='javascript:void(0);' data-ui-sref='app.category'>Category</a></li>
+          <li class="active" translate="table.create">Create</li>
+        </ol>
+
+        <div class='alert alert-danger alert-dismissible animated flash' data-ng-if='errorMsg'>
+          <button type="button" class="close" aria-label="Close" data-ng-click='closeAlert()'><span aria-hidden="true">&times;</span></button>
+          <strong class='fa fa-warning'></strong> &nbsp; {{errorMsgString}}</span>
+        </div>
+
+       	<form data-ng-submit='saveCategory()' style="margin-top: 20px;">
+          <table class='table table-stripeed'>
+            <tbody>
+              <tr>
+                <th>Category Name</th>
+                <td> <input type='text' class='form-control' id="category_name" data-ng-model='newItem.name' placeholder="Name of Category"></input> </td>
+                <td>
+                  <button type="submit" class='btn btn-success'>{{'table.submit' | translate}}</button> &nbsp; &nbsp;
+                  <a data-ui-sref='app.category' class='btn btn-primary' > {{'table.cancel' | translate}}</a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </form>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+<script>
+$(document).ready(function(){
+    $( "#category_name" ).keyup(function() {
+        if(/[^a-zA-Z0-9 ]/.test($("#category_name").val())){
+            var string = $("#category_name").val();
+            $("#category_name").val(string.replace(/[^A-Za-z0-9 ]/g, ''));
+            alert("Category name should contain only the Alpha Numerics");
+        }
+	});
+});
+</script>
+
+<!-- /page content -->

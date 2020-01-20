@@ -1,0 +1,187 @@
+  <div class="">
+          <div class="clearfix"></div>
+
+          <div class="row">
+
+            <div class="col-md-12 col-sm-12 col-xs-12" data-ng-init='getAll()'>
+              <div class="x_panel" style="height:600px;overflow-y:scroll;">
+                <div class="x_title">
+                  <h2 translate="questions.title">Questions List</h2>
+                  <span class='pull-right'>
+                    <a href='#/app/questions/add?category={{search.category}}&type={{filterQuery.questionType}}' title='Adding New Question' class='btn btn-info'> <i class="fa fa-pencil"></i>&nbsp; {{'questions.link.add_question' | translate}} </a>
+                  </span>
+                  <div class="clearfix"></div>
+                </div>
+                <ol class="breadcrumb">
+                  <li><a href='javascript:void(0);' data-ui-sref='app'  translate="home.menu.home">Home</a></li>
+                  <li><a href='javascript:void(0);' data-ui-sref='app.questionmanagement'  translate="home.menu.ques_mang">Home</a></li>
+                  <li class="active"  translate="home.menu.questions">Questions</li>
+                </ol>
+                <div class='alert alert-success animated lightSpeedIn' data-ng-if='configurationSuccessAlert'>
+                  <button type="button" class="close" aria-label="Close" data-ng-click='closeAlert()'><span aria-hidden="true">&times;</span></button>
+                  <strong class='glyphicon glyphicon-ok'></strong> &nbsp;{{'table.testconfigrationsuccess' | translate}}
+                </div>
+                <div >
+                  <form data-ng-submit='saveConfig()' data-ng-init='loadTestConfig()'>
+                    <label data-ng-if="titlemsg === 'realtime'">
+                      {{'testconfigure.mock_table_name' | translate}}
+                    </label>
+                    <label data-ng-if="titlemsg === 'common' || titlemsg === 'specific'">
+                      {{'testconfigure.pra_table_name' | translate}}
+                    </label>
+                    <table class="table table-bordered">
+                      <thead>
+                        <tr class='info'>
+                          <td></td>
+                          <th data-ng-if='isAllowed("specific")' translate='testconfigure.specific'>Specific</th>
+                          <th data-ng-if='isAllowed("common")' translate='testconfigure.common'>Common</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td translate='testconfigure.no_of_question'>No of questions</td>
+                          <td data-ng-if='isAllowed("specific")'>
+                            <input class='form-control'
+                              type="number"
+                              min="0"
+                              max="{{getLengh('isSpecific')}}"
+                              data-ng-model='testConfig.noofspecificquestion'
+                              >
+                            </td>
+                          <td data-ng-if='isAllowed("common")'>
+                            <input class='form-control'
+                              type="number"
+                              min="0"
+                              max="{{getLengh('isCommon')}}"
+                              data-ng-model='testConfig.noofcommonquestion'
+                              >
+                            </td>
+                        </tr>
+                        <tr data-ng-if='filterQuery.questionType === "isRealtime"'>
+                          <td translate='testconfigure.no_of_req_answer'>No of required answers</td>
+                          <td data-ng-if='isAllowed("specific")'>
+                            <input
+                              class='form-control'
+                              type="number"
+                              min="0"
+                              max="{{testConfig.noofspecificquestion}}"
+                              data-ng-model='testConfig.noofreqspecificanswer'>
+                            </td>
+                          <td data-ng-if='isAllowed("common")'>
+                            <input class='form-control'
+                              type="number"
+                              min="0"
+                              max="{{testConfig.noofcommonquestion}}"
+                              data-ng-model='testConfig.noofreqcommonanswer'
+                              >
+                          </td>
+                        </tr>
+                        <tr>
+                          <td translate='testconfigure.duration'>Total duration (In minutes)</td>
+                          <td colspan="2"><input class='form-control' type="number" min="1" data-ng-model='testConfig.duration' style=""></td>
+                        </tr>
+                      <!--   <tr>
+                          <td translate='testconfigure.instruction'></td>
+                          <td colspan="2"><textarea rows="5" cols="150"  style="width:600px;"
+                          data-ng-model='testConfig.instruction'></textarea></td>
+                        </tr> -->
+                      </tbody>
+                      <tfoot>
+                        <tr>
+                          <th colspan="3" class="text-right">
+                            <button type="submit" class='btn btn-success' translate='testconfigure.save'>Save</button>
+                            <a data-ui-sref='app.questionmanagement' class='btn btn-primary' style='margin-left:10px;'> {{'table.cancel' | translate}}</a>
+                          </th>
+                        </tr>
+                      </tfoot>
+                    </table>
+                  </form>
+                </div>
+                <div class='alert alert-success alert-dismissible animated flash' data-ng-if='saveAlert'>
+                  <button type="button" class="close" aria-label="Close" data-ng-click='closeAlert()'><span aria-hidden="true">&times;</span></button>
+                  <strong class='glyphicon glyphicon-ok'></strong> &nbsp; {{'questions.alert.success' | translate}}
+                </div>
+                <!-- <div>
+                  <form>
+                     <label>
+                      Test Instructions
+                    </label>
+                    <table class="table table-stripped">
+                        <tr class='info'>
+                          <td>Test</td>
+                          <td>Insruction</td>
+                        </tr>
+                        <tr>
+                        </tr>
+                  </form>
+                </div> -->
+                <div data-ng-if='loader' style='height: 100%; padding-top: 200px; text-align: center;'>
+                  <img data-ng-src='/app/assets/images/app-loader.gif'/>
+                </div>
+
+                <div data-ng-if='sloader && items.length' class='text-right' style="padding-bottom: 10px;">
+                  <span style="width: 250px; display: inline-block;">
+                    <select class="form-control" data-ng-model='search.category'>
+                      <option value="">Select Category</option>
+                      <option data-ng-repeat='category in categories' value='{{category}}' data-ng-bind='category'></option>
+                    </select>
+                  </span>
+                  &nbsp; | &nbsp;
+                  <span style="width: 250px; display: inline-block;">
+                    <select class="form-control" data-ng-model='filterQuery.questionType'>
+                      <option value="">Select Type</option>
+                      <option value='isRealtime'>Realtime</option>
+                      <option value='isCommon'>Common</option>
+                      <option value='isSpecific'>Specific</option>
+                    </select>
+                  </span>
+                </div>
+
+                <div data-ng-if='!loader && !items.length' style='height: 100%; padding-top: 150px; text-align: center;'>
+                  <h3><span class='fa fa-warning text-warning'></span> {{'home.alert.question' | translate}}</h3> <br />
+                  <a href='#/app/questions/add?category={{search.category}}&type={{filterQuery.questionType}}' class='btn btn-primary' translate='questions.link.add_question'> Add a New Question</a>
+                </div>
+                <label translate='table.question_list'>
+                      Question List
+                </label>
+                <table class='table table-stripeed' data-ng-if='items.length && !loader'>
+                  <thead >
+                  <tr class='info'>
+                    <th style='width:50px;' translate="table.sno">S.No</th>
+                    <th style='width:100px;' translate="questions.labels.topicArea" data-ng-if = "tempType.practiseType !== 'common'">Topic Area</th>
+                    <th style='width:100px;' translate="questions.labels.category" data-ng-if = "tempType.practiseType !== 'common' ">Category</th>
+                    <th style='width:300px;' translate="questions.label.question">Question</th>
+                    <th style='width:250px;' translate="questions.label.choices">Choices</th>
+                    <th style='width:100px;' translate="questions.label.answer">Answer</th>
+                    <!-- <th style='width:150px;' translate="questions.label.created_on">Created On</th> -->
+                    <th style='width: 501px; text-align: center;' translate="questions.label.actions">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr data-ng-repeat='item in items | QuestionType:filterQuery.questionType'>
+                    <td data-ng-bind='$index+1'>2</td>
+                    <td data-ng-bind='item.topicArea' data-ng-if = "tempType.practiseType !== 'common'">2</td>
+                    <td data-ng-bind='item.category' data-ng-if = "tempType.practiseType !== 'common'">2</td>
+                    <td data-ng-bind='item.question'>2</td>
+                    <td data-ng-bind='item.choice1 + "," + item.choice2 + "," + item.choice3 + "," + item.choice4'></td>
+                    <td data-ng-bind='getAnswer(item)'></td>
+                    <!-- <td data-ng-bind='getDate(item.created)'>2</td> -->
+                    <td style="text-align: center;">
+                      <a href='javascript:void(0);' class='btn btn-info btn-xs text-primary' data-ng-click='editItem(item)'>
+                        <i class="fa fa-edit"></i>&nbsp;&nbsp;&nbsp;{{'table.edit' | translate}}&nbsp;&nbsp;&nbsp;
+                      </a> &nbsp;  &nbsp;
+                      <a href='javascript:void(0);' class='btn btn-danger btn-xs text-danger' data-ng-click='removeItem(item)'>
+                        <i class="fa fa-remove"></i>&nbsp;&nbsp;&nbsp;{{'table.delete' | translate}}&nbsp;&nbsp;&nbsp;
+                      </a>
+                    </td>
+                  </tr>
+                </tbody>
+                </table>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+
+<!-- /page content

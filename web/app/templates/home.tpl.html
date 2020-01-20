@@ -1,0 +1,24 @@
+<div class="container body">
+	<div class="main_container">
+		<div class="col-md-3 left_col" data-ui-view='left_panel'></div>
+
+		<div class='top-nav'>
+			<div data-ui-view='header'></div>
+		</div>
+
+		<div class='right_col' role='main'>
+			<!-- page content -->
+			<div data-ui-view='section'></div>
+			<!-- /page content -->
+			<!-- footer content -->
+	        <footer>
+	          <div class="copyright-info">
+	            <p class="pull-right"> {{'app.powered_by' | translate}} - Mait.ae
+	            </p>
+	          </div>
+	          <div class="clearfix"></div>
+	        </footer>
+	        <!-- /footer content -->
+		</div>
+	</div>
+</div>

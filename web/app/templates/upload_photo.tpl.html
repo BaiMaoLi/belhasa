@@ -1,0 +1,18 @@
+<div class="modal-header">
+    <h3 class="modal-title">
+        <h2>Upload Image </h2>
+    </h3>
+</div>
+<div class="modal-body" data-ng-init='initPlugin()'>
+	<div>Select an image file: <input type="file" id="fileInput" /></div>
+    <div>Preview:</div>
+    <div><img ng-src="{{myCroppedImage}}" /></div>
+    <div class="cropArea">
+      <img-crop image="myImage" result-image="myCroppedImage" result-image-format="image/jpeg"></img-crop>
+    </div>
+
+</div>
+<div class="modal-footer">
+    <button class="btn btn-success" type="button" ng-click="save()">Save</button>
+    <button class="btn btn-danger" type="button" ng-click="cancel()">Cancel</button>
+</div>

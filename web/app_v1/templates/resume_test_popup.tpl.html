@@ -1,0 +1,35 @@
+<style>
+.PopupPanel
+{
+    border: solid 1px black;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    background-color: white;
+    z-index: 100;
+
+    height: 230px;
+    margin-top: 10%;
+
+    width: 550px;
+    margin-left: -300px;
+}
+.btn {
+    width: 120px;
+}
+/*.modal-body {
+    position: relative;
+    padding: 0px;
+}*/
+</style>
+<div class = "PopupPanel animated slideInDown">
+<!-- <div  style="margin-left:400px;border-left:none;margin-top:100px;margin-bottom:100px;" id="popup"> -->
+<div  style="text-align: center; margin-top: 60px;" id="popup">
+  <h4>
+      {{'resume.continue_test' | translate}}
+  </h4>
+  <br>
+  <button type='button' class='btn btn-success btn-lg' ng-click="continue()" style="">{{'resume.ok' | translate }}</button>
+  <button type='button' class='btn btn-warning btn-lg' ng-click="cancel()" style="">{{'table.cancel' | translate }}</button>
+</div>
+</div>

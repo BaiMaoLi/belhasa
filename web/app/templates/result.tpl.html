@@ -1,0 +1,46 @@
+
+<div class="">
+  <div class="clearfix"></div>
+
+  <div class="row" data-ng-init='loadResults()'>
+    <div class="col-md-12 col-sm-12 col-xs-12">
+      <div class="x_panel" style="height:600px;overflow-y:scroll;">
+        <div class="x_title">
+          <h2 translate="test.labels.test_results">Test Results</h2>
+          <div class="clearfix"></div>
+        </div>
+        <ol class="breadcrumb">
+          <li><a href='javascript:void(0);' data-ui-sref='app' translate="home.menu.home">Home</a></li>
+          <li class="active" translate="test.labels.results">Results</a></li>
+        </ol>
+        <div>
+          <div data-ng-if='loader' style='height: 100%; padding-top: 200px; text-align: center;'>
+            <img data-ng-src='/app/assets/images/app-loader.gif'/>
+          </div>
+         	<table class='table table-spriped animated fadeInDown' data-ng-if='items && !loader'>
+            <thead>
+              <tr>
+                <th style='width:100px;' translate="table.sno">S.No</th>
+                <th translate="register.form.firstname">First Name</th>
+                <th translate="register.form.lastname">Last Name</th>
+                <th translate="register.form.email">Email</th>
+                <th style='width:250px;' translate="student.labels.held_on">Held On</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr data-ng-repeat='item in items track by $index' style='cursor: pointer;' data-ng-click='viewResult(item)'>
+                <td data-ng-bind='$index + 1'></td>
+                <td data-ng-bind='item.student.firstName'></td>
+                <td data-ng-bind='item.student.lastName'></td>
+                <td data-ng-bind='item.student.email'></td>
+                <td data-ng-bind='item.testdate'></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+

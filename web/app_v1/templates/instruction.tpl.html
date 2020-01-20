@@ -1,0 +1,156 @@
+<style>
+.PopupPanel
+{
+    border: solid 1px black;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    background-color: white;
+    z-index: 100;
+
+    height: 300px;
+    margin-top: 10%;
+
+    width: 600px;
+    margin-left: -300px;
+}
+.modal-body {
+    position: relative;
+    padding: 0px;
+}
+</style>
+<!-- msg for realtime -->
+<div class="PopupPanel animated {{animatedClass}}" data-ng-if = "dismsg === 'realtime'">
+<div class="modal-header" style="border-style: hidden;">
+    <h3 class="modal-title" >
+        <h2>
+          <div style="" align="center">
+            <img src='/app_v1/assets/images/logo.png' style="height: 75px;" />
+          </div>
+          <!-- <span class='pull-right' data-ng-click='closePopup()' style="cursor: pointer;"> <i class='glyphicon glyphicon-remove'></i> </span> -->
+        </h2>
+    </h3>
+</div>
+<div class="modal-body" data-ng-init='loadTest()' style="background-color: white;">
+    <!-- <div style="width: 90%; margin: 5px auto;"> -->
+      <div style="margin: 5px auto;">
+<!--       <div data-ng-if='loader' style='min-height: 300px !important; padding-top: 100px; text-align: center;'>
+        <img data-ng-src='/app/assets/images/app-loader.gif'/>
+      </div> -->
+
+   <!--    <div data-ng-if='testExpiry' style='min-height: 300px !important; padding-top: 100px; text-align: center;'>
+        <h3 class='text-danger'><i class='glyphicon glyphicon-alert'></i>{{'table.ansprocessing' | translate}}</h3>
+      </div> -->
+
+      <div id='test-question'>
+          <div id='test-question' data-ng-if='index==1' >
+            <form >
+              <div >
+                <div class='panel-heading'>
+                  <strong style="font-size:18px;"><u></u></strong>
+                <div class='panel-body' style="">
+                  <div>
+                      <!-- <h4 align="center" style="font-weight: bold; text-align: center;">{{'table.wel' | translate}}</h4> -->
+                       <div style="font-size: 20px;">
+                          <!--  <p style="text-align: center;"><b>{{'table.pra' | translate}}</b> {{mins}} </p> -->
+                          <!-- <p>{{'form.testdismock' | translate}}{{testOptions.duration}} {{hrs}} Hr {{mins}} Min {{'form.testdismockend' | translate}}</p> -->
+                           <p style="text-align: center;" data-ng-if='hrs && mins'>{{'form.testdismock' | translate}} {{testOptions.duration}} {{hrs}} Hours {{mins}} Minutes {{'form.testdismockend' | translate}}</p>
+                           <p style="text-align: center;" data-ng-if='hrs && !mins'>{{'form.testdismock' | translate}} {{testOptions.duration}} {{hrs}} Hours {{'form.testdismockend' | translate}}</p>
+                           <p style="text-align: center;" data-ng-if='!hrs && mins'>{{'form.testdismock' | translate}} {{testOptions.duration}} {{mins}} Minutes {{'form.testdismockend' | translate}}</p>
+                           <p style="text-align: center;" data-ng-if='!hrs && !mins'><b>{{'form.testdismock' | translate}} {{testOptions.duration}} {{mins}} Minutes {{'form.testdismockend' | translate}}</p>
+
+                        <!-- <p><b>The following screens will show you how to use the Belhasa Driving Center Theory test system. You will have 10 minutes to complete this Tutorial. If you have any questions, please raise your hand for assistance from the Test Administrator.</b></p>
+
+                        <p><b>The next screen is Non-Disclosure Agreement which you must accept in order to to further.</b></p>
+                        <p><b>Please select the Next button to continue.</b></p> -->
+                      </div>
+                     <!-- <div data-ng-if = 'instructionmsg !== null' data-ng-bind='instructionmsg'></div> -->
+                     <!-- <div data-ng-if = 'instructionmsg === null' > There is no Instruction in this category</div> -->
+                  </div>
+                </div>
+                  <div style="text-align: center;">
+                     <!-- <button  type='submit' class='btn btn-success btn-lg pull-right' data-ng-if='index!=4' data-ng-click='accept()' align="center"> Next </button> -->
+                     <button  type='submit' class='btn btn-success btn-lg' data-ng-click='finishTest()' align="center">{{'resume.ok' | translate}}  </button>
+                  </div>
+              </div>
+              </div>
+            </form>
+          </div>
+      </div>
+    </div>
+</div>
+<div class="modal-footer" style="border-style: hidden;">
+ <!--  <div style="width:50%">
+     <button  type='submit' class='btn btn-success btn-lg pull-right' data-ng-if='index!=4' data-ng-click='accept()' align="center"> Next </button>
+     <button  type='submit' class='btn btn-success btn-lg pull-right' data-ng-if='index==4' data-ng-click='finishTest()' align="center"> Finish </button>
+  </div> -->
+</div>
+</div>
+
+<!-- msg for practise -->
+<div class="PopupPanel animated {{animatedClass}}" data-ng-if = "dismsg != 'realtime'">
+<div class="modal-header" style="border-style: hidden;">
+    <h3 class="modal-title" >
+        <h2>
+          <div style="" align="center">
+            <img src='/app_v1/assets/images/logo.png' style="height: 75px;" />
+          </div>
+          <!-- <span class='pull-right' data-ng-click='closePopup()' style="cursor: pointer;"> <i class='glyphicon glyphicon-remove'></i> </span> -->
+        </h2>
+    </h3>
+</div>
+<div class="modal-body" data-ng-init='loadTest()' style="background-color: white;">
+    <!-- <div style="width: 90%; margin: 5px auto;"> -->
+      <div style="margin: 5px auto;">
+<!--       <div data-ng-if='loader' style='min-height: 300px !important; padding-top: 100px; text-align: center;'>
+        <img data-ng-src='/app/assets/images/app-loader.gif'/>
+      </div> -->
+
+   <!--    <div data-ng-if='testExpiry' style='min-height: 300px !important; padding-top: 100px; text-align: center;'>
+        <h3 class='text-danger'><i class='glyphicon glyphicon-alert'></i>{{'table.ansprocessing' | translate}}</h3>
+      </div> -->
+
+      <div id='test-question'>
+          <div id='test-question' data-ng-if='index==1' >
+            <form >
+              <div >
+                <div class='panel-heading'>
+                  <strong style="font-size:18px;"><u></u></strong>
+                <div class='panel-body' style="">
+                  <div>
+                      <!-- <h4 align="center" style="font-weight: bold; text-align: center;">{{'table.wel' | translate}}</h4> -->
+                       <div style="font-size: 20px;">
+                          <!--  <p style="text-align: center;"><b>{{'table.pra' | translate}}</b> {{mins}} </p> -->
+                          <!-- <p>{{'form.testdis' | translate}} {{testOptions.duration}} {{hrs}} Hr {{mins}} Min. {{'table.pra' | translate}}</p> -->
+                           <p style="text-align: center;" data-ng-if='hrs && mins'>{{'form.testdis' | translate}} {{testOptions.duration}} {{hrs}} Hours {{mins}} Minutes {{'table.pra' | translate}}</p>
+                           <p style="text-align: center;" data-ng-if='hrs && !mins'>{{'form.testdis' | translate}} {{testOptions.duration}} {{hrs}} Hours {{'table.pra' | translate}}</p>
+                           <p style="text-align: center;" data-ng-if='!hrs && mins'>{{'form.testdis' | translate}} {{testOptions.duration}} {{mins}} Minutes {{'table.pra' | translate}}</p>
+                           <p style="text-align: center;" data-ng-if='!hrs && !mins'>{{'form.testdis' | translate}} {{testOptions.duration}} {{mins}} Minutes {{'table.pra' | translate}}</p>
+
+                        <!-- <p><b>The following screens will show you how to use the Belhasa Driving Center Theory test system. You will have 10 minutes to complete this Tutorial. If you have any questions, please raise your hand for assistance from the Test Administrator.</b></p>
+
+                        <p><b>The next screen is Non-Disclosure Agreement which you must accept in order to to further.</b></p>
+                        <p><b>Please select the Next button to continue.</b></p> -->
+                      </div>
+                     <!-- <div data-ng-if = 'instructionmsg !== null' data-ng-bind='instructionmsg'></div> -->
+                     <!-- <div data-ng-if = 'instructionmsg === null' > There is no Instruction in this category</div> -->
+                  </div>
+                </div>
+                  <div style="text-align: center;">
+                     <!-- <button  type='submit' class='btn btn-success btn-lg pull-right' data-ng-if='index!=4' data-ng-click='accept()' align="center"> Next </button> -->
+                     <button  type='submit' class='btn btn-success btn-lg' data-ng-click='finishTest()' align="center">{{'resume.ok' | translate}}  </button>
+                  </div>
+              </div>
+              </div>
+            </form>
+          </div>
+      </div>
+    </div>
+</div>
+<div class="modal-footer" style="border-style: hidden;">
+ <!--  <div style="width:50%">
+     <button  type='submit' class='btn btn-success btn-lg pull-right' data-ng-if='index!=4' data-ng-click='accept()' align="center"> Next </button>
+     <button  type='submit' class='btn btn-success btn-lg pull-right' data-ng-if='index==4' data-ng-click='finishTest()' align="center"> Finish </button>
+  </div> -->
+</div>
+</div>

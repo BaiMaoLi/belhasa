@@ -1,0 +1,108 @@
+
+<div class="">
+  <div class="clearfix"></div>
+
+  <div class="row" data-ng-init='loadResult()'>
+    <div class="col-md-12 col-sm-12 col-xs-12">
+      <div class="x_panel" style="height:600px;overflow-y:scroll;">
+        <div class="x_title">
+          <h2 translate="test.labels.test_results">Test Results</h2>
+          <div class="clearfix"></div>
+        </div>
+        <ol class="breadcrumb">
+          <li><a href='javascript:void(0);' data-ui-sref='app' translate="home.menu.home">Home</a></li>
+          <li><a href='javascript:void(0);' data-ui-sref='app.test_results' translate="test.labels.results">Results</a></li>
+          <li class="active" translate="test.labels.view">View</li>
+        </ol>
+        <div>
+          <div data-ng-if='loader' style='height: 100%; padding-top: 200px; text-align: center;'>
+            <img data-ng-src='/app/assets/images/app-loader.gif'/>
+          </div>
+
+          <div data-ng-if='testResult.questions.length && !loader' class='text-right'>
+            <button class='btn btn-primary' data-ng-click='printResult()' style="margin-bottom: 5px;"><i class='glyphicon glyphicon-print'></i> &nbsp;&nbsp;{{'table.print' | translate}}</button>
+          </div>
+
+          <div id='test-result'  data-ng-if='testResult && !loader && user.isAdmin'>
+            <div class='panel panel-info'>
+              <div class='panel-heading' style="font-weight: bold;" translate="student.labels.student_info">Student Info:</div>
+              <div class='panel-body'>
+                <table class='table table-striped'>
+                  <tbody>
+                    <tr>
+                      <th translate="register.form.student_id">Student Id</th>
+                      <td data-ng-bind='testResult.student.studentId'></td>
+                    </tr>
+                    <tr>
+                      <th translate="register.form.name">Name</th>
+                      <td data-ng-bind='testResult.student.name'></td>
+                    </tr>
+                    <tr>
+                      <th translate="register.form.email">Email</th>
+                      <td data-ng-bind='testResult.student.email'></td>
+                    </tr>
+                    <tr>
+                      <th translate="test.labels.result">Result</th>
+                      <td data-ng-if = 'testResult.result_status == 0' translate="form.fail"> fail</td>
+                      <td data-ng-if = 'testResult.result_status == 1' translate="form.pass"> pass</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <div data-ng-if='!testResult.questions.length && !loader' style='height: 100%; padding-top: 150px; text-align: center;'>
+          <h3><span class='fa fa-warning text-warning'></span>{{'table.noresultfound' | translate}}</h3> <br />
+
+          </div>
+
+          <div   data-ng-if='testResult.questions.length && !loader'>
+            <div class='panel panel-info'>
+              <div class='panel-heading' style="font-weight: bold;">{{'table.test_details' | translate}}</div>
+              <div class='panel-body'>
+                <table class='table table-spriped' data-ng-if='testResult && !loader'>
+                  <thead>
+                    <tr class="info">
+                      <th style='width:50px;' translate="table.sno">S.No</th>
+                      <th translate="questions.label.question">Question</th>
+                      <th style='width:150px;' translate="student.labels.input">Input</th>
+                      <th style='width:100px;' translate="test.labels.result">Result</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr data-ng-repeat='question in testResult.questions track by $index'>
+                      <td data-ng-bind='$index + 1'></td>
+                      <td data-ng-bind='question.question'></td>
+                      <td data-ng-bind='question.option'></td>
+                      <td>
+                        <div class='text-success' data-ng-if='question.status'> <span class='glyphicon glyphicon-ok'></span> </div>
+
+                        <div class='text-danger' data-ng-if='!question.status'> <span class='glyphicon glyphicon-remove'></span> </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <th></th>
+                      <td></td>
+                      <th class='text-success' translate="table.no_of_corrects">No of corrects</th>
+                      <td data-ng-bind='correctResults'>1</td>
+                    </tr>
+                    <tr>
+                      <th></th>
+                      <td></td>
+                      <th class='text-danger' translate="table.no_of_incorrects">No of incorrects</th>
+                      <td data-ng-bind='incorrectResults'>1</td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

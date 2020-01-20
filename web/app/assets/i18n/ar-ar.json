@@ -1,0 +1,152 @@
+{
+	"app": {
+		"title": "Belhasa Driving",
+		"powered_by": "مشغل بواسطة"
+	},
+	"login": {
+		"title": "تسجيل الدخول",
+		"username": "البريد الإلكتروني / طالب  لمهوية شخصية",
+		"password": "كلمه السر",
+		"links": {
+			"login": "تسجيل الدخول",
+			"create_account": "إصنع حساب"
+		},
+		"labels": {
+			"new_to_site": "جديد في الموقع؟"
+		}
+	},
+	"register": {
+		"title": "إصنع حساب",
+		"form": {
+			"firstname": "الاسم الاول",
+			"lastname": "الكنية",
+			"email": "البريد الإلكتروني",
+            "photo": "صورة فوتوغرافية",
+			"password": "كلمه السر",
+			"retype_password": "كلمه السر أعد كتابة",
+			"admin_password": "كلمه السر مشرف"
+		},
+		"labels": {
+			"enter_admin_password": "أدخل كلمة المرور لتسجيل الدخول مشرف لحظة :",
+			"already_member": "عضو بالفعل ؟"
+		},
+		"links": {
+			"submit": "عرض",
+			"instant_login": "لحظة دخول"
+		}
+	},
+	"table": {
+		"sno": "الرقم التسلسلي"
+	},
+	"form": {
+		"status": "الحالة",
+		"enabled": "تمكين",
+		"activate": "تفعيل",
+        "waiting": "في انتظار الموافقة",
+        "disable": "تعطيل"
+	},
+	"home": {
+		"menu": {
+			"home": "منزل",
+			"students": "الطلاب",
+			"questions": "أسئلة",
+			"results": "النتائج",
+			"my_results": "بلدي نتائج",
+			"profile": "الملف الشخصي",
+			"logout": "خروج"
+		},
+		"labels": {
+			"welcome": "أهلا بك",
+			"adminPortal": "مشرف البوابة",
+			"studentPortal": "بوابة الطالب",
+			"total_user": "عدد الأعضاء",
+			"user_requests": "طلبات تنتظر الموافقة",
+			"view_more": "عرض المزيد ...",
+			"test_results": "نتائج الإختبار",
+			"start_test": "بداية اختبار",
+			"choose_test_type": "اختيار نوع الاختبار",
+			"short_test": "قصيرة مدة الاختبار",
+			"long_test": "طويلة مدة الاختبار",
+			"choose_test_category": "اختيار اختبار الفئة"
+		},
+		"alert": {
+			"test": "لا يوجد الاختبارات المتاحة في الفئة المختارة",
+			"student": "أي تفاصيل طالب وجدت .",
+			"question": "أي الأسئلة وجدت .."
+		}
+	},
+	"student": {
+		"title_profile": "الملف الشخصي للطالب",
+		"title_list": "قائمة الطلبة",
+		"profile": "مظهر جانبي",
+		"labels" : {
+			"personal_info": "معلومات شخصية",
+			"account_info": "معلومات الحساب",
+			"student_info": "معلومات الطالب",
+			"gender": "جنس",
+			"nationality": "جنسية",
+			"dob": "تاريخ الولادة",
+			"age": "عمر",
+			"held_on": "التي عقدت في",
+			"input": "إدخال",
+            "maritalStatus": "وضع الحالة الإجتماعية",
+            "passport": "جواز سفر",
+            "emirates": "الإمارات"
+		}
+	},
+	"questions": {
+		"title": "قائمة الأسئلة",
+		"alert": {
+			"success": "تفاصيل مسألة حفظ"
+		},
+		"link": {
+			"add_question": "إضافة سؤال",
+			"add_translation": "إضافة الترجمة",
+			"save_question": "حفظ سؤال"
+		},
+		"labels": {
+			"question": "سؤال",
+			"choices": "اختيارات",
+			"answer": "إجابة",
+			"created_on": "مكون في",
+			"actions": "الإجراءات",
+			"create": "خلق",
+			"choose_language": "اختر اللغة",
+			"choose_category": "اختيار الفئة",
+			"answer_options": "خيارات الإجابة",
+			"option": "خيار",
+			"question_creation": "إنشاء سؤال",
+			"category": "فئة",
+            "enter_your_question":"أدخل سؤالك هنا ....",
+            "audio_file":"ملف صوتي",
+            "options":"خيارات"
+		},
+		"label": {
+			"question": "سؤال",
+			"choices": "اختيارات",
+			"answer": "إجابة",
+			"created_on": "مكون في",
+			"actions": "الإجراءات",
+			"create": "خلق",
+			"choose_language": "اختر اللغة",
+			"choose_category": "اختيار الفئة",
+			"answer_options": "خيارات الإجابة",
+			"option": "خيار",
+			"question_creation": "إنشاء سؤال",
+			"category": "فئة"
+		}
+	},
+	"test": {
+		"labels": {
+			"test_results": "نتائج الإختبار",
+			"test_details": "تفاصيل الاختبار",
+			"results": "النتائج",
+			"result": "نتيجة",
+			"view": "رأي"
+		},
+		"link": {
+			"next": "التالى",
+			"finish": "نهاية"
+		}
+	}
+}

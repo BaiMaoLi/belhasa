@@ -1,0 +1,154 @@
+{
+	"app": {
+		"title": "Belhasa Driving Center",
+		"powered_by": "Powered By"
+	},
+	"login": {
+		"title": "Login",
+		"username": "Student ID / Email",
+		"password": "Password",
+		"links": {
+			"login": "Log in",
+			"create_account": "Create Account"
+		},
+		"labels": {
+			"new_to_site": "New to site?"
+		}
+	},
+	"register": {
+		"title": "Create Account",
+		"form": {
+			"firstname": "First Name",
+			"lastname": "Last Name",
+			"email": "Email",
+			"photo": "Photo",
+			"password": "Password",
+			"retype_password": "Retype Password",
+			"admin_password": "Admin Password"
+		},
+		"labels": {
+			"enter_admin_password": "Enter admin password for instant login:",
+			"already_member": "Already a member?"
+		},
+		"links": {
+			"submit": "Submit",
+			"instant_login": "Instant Login"
+		}
+	},
+	"table": {
+		"sno": "S.No"
+	},
+	"form": {
+		"status": "Status",
+		"enabled": "Enabled",
+		"activate": "Activate",
+		"waiting": "Waiting for Approval",
+		"disable": "Disable"
+	},
+	"home": {
+		"menu": {
+			"home": "Home",
+			"students": "Students",
+			"questions": "Questions",
+			"results": "Results",
+			"my_results": "My Results",
+			"profile": "Profile",
+			"logout": "Log out"
+		},
+		"labels": {
+			"welcome": "Welcome",
+			"adminPortal": "Admin Portal",
+			"studentPortal": "Student Portal",
+			"total_user": "Total Users",
+			"user_requests": "Requests waiting for Approval",
+			"view_more": "View more...",
+			"test_results": "Test Results",
+			"start_test": "Start Test",
+			"choose_test_type": "Choose Test Type",
+			"short_test": "Short Duration Test",
+			"long_test": "Long Duration Test",
+			"choose_test_category": "Choose Test Category"
+		},
+		"alert": {
+			"test": "There is no tests available in selected category",
+			"student": "No student details found.",
+			"question": "No questions found."
+		}
+	},
+	"student": {
+		"title_profile": "Student Profile",
+		"title_list": "Student List",
+		"profile": "Profile",
+		"labels" : {
+			"personal_info": "Personal Info",
+			"account_info": "Account Info",
+			"student_info": "Student Info",
+			"gender": "Gender",
+			"nationality": "Nationality",
+			"dob": "Date of Birth",
+			"age": "Age",
+			"held_on": "Held On",
+			"input": "Input",
+			"maritalStatus": "Marital Status",
+			"passport": "Passport",
+			"emirates": "Emirates"
+		}
+	},
+	"questions": {
+		"title": "Questions List",
+		"alert": {
+			"success": "Question details saved"
+		},
+		"link": {
+			"add_question": "Add Question",
+			"add_translation": "Add Translation",
+			"save_question": "Save Question"
+		},		
+		"labels": {
+			"question": "Question",
+			"choices": "Choices",
+			"answer": "Answer",
+			"created_on": "Created On",
+			"actions": "Actions",
+			"create": "Create",
+			"edit": "Edit",
+			"choose_language": "Choose Language",
+			"choose_category": "Choose Category",
+			"answer_options": "Answer Options",
+			"option": "Option",
+			"question_creation": "Question Creation",
+			"category": "Category",
+            "enter_your_question":"Enter your question here....",
+            "audio_file":"Audio File",
+            "options":"Options"
+		},
+		"label": {
+			"question": "Question",
+			"choices": "Choices",
+			"answer": "Answer",
+			"created_on": "Created On",
+			"actions": "Actions",
+			"create": "Create",
+			"edit": "Edit",
+			"choose_language": "Choose Language",
+			"choose_category": "Choose Category",
+			"answer_options": "Answer Options",
+			"option": "Option",
+			"question_creation": "Question Creation",
+			"category": "Category"
+		}
+	},
+	"test": {
+		"labels": {
+			"test_results": "Test Results",
+			"test_details": "Test Details",
+			"results": "Results",
+			"result": "Result",
+			"view": "View"
+		},
+		"link": {
+			"next": "Next",
+			"finish": "Finish"
+		}
+	}
+}

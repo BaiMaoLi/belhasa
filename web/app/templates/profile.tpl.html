@@ -1,0 +1,146 @@
+<div class="">
+  <div class="clearfix"></div>
+  <div class="row" data-ng-init='loadStudentById()'>
+    <div class="col-md-12 col-sm-12 col-xs-12">
+      <div class="x_panel" style="height:600px;overflow-y:scroll;">
+        <div class="x_title">
+          <h2 translate="student.title_profile">Profile</h2>
+          <div class="clearfix"></div>
+        </div>
+
+        <ol class="breadcrumb">
+          <li><a href='javascript:void(0);' data-ui-sref='app' translate="home.menu.home">Home</a></li>
+          <li class="active" translate="student.profile">Profile</li>
+        </ol>
+
+        <div data-ng-if='loader' style='height: 100%; padding-top: 200px; text-align: center;'>
+          <img data-ng-src='/app/assets/images/app-loader.gif'/>
+        </div>
+
+        <div class='profile-section' data-ng-if='!loader'>
+          <div class='panel panel-primary'>
+            <div class='panel-heading'>
+              <span translate="student.labels.personal_info">Personal Info</span>
+              <span class='pull-right'>
+                <a data-ng-if='!editView' href='javascript:void(0);' data-ng-click='enableEdit(true)' style='color:#FFF;'> <i class='fa fa-pencil-square'></i> Update </a>
+                <a data-ng-if='editView' href='javascript:void(0);' data-ng-click='enableEdit(false)' style='color:#FFF;'> <i class='fa fa-close'></i> Cancel </a>
+               </span>
+            </div>
+            <div class='panel-body'>
+              <form data-ng-submit='updateUser()'>
+                 <table class='table table-striped'>
+                <tbody>
+                  <tr>
+                    <th style="width: 300px;" translate="register.form.firstname">First name</th>
+                    <td  style="width: 300px;" data-ng-bind='student.firstName' data-ng-if='!editView'></td>
+                    <td data-ng-if='editView'>
+                      <input type='text' data-ng-model='user.firstName' class='form-control' required></input>
+                    </td>
+                    <td rowspan="13" class='text-center' style='padding-top: 10px;'>
+                      <img src='/app/assets/images/temp-icon.png' style="width:200px;" data-ng-if='!student.photo && !editView'/>
+                      <img data-ng-src='{{student.photo}}' style="width:200px;" data-ng-if='student.photo && !editView'/>
+                      <img data-ng-src='{{user.photo}}' style="width:200px;" data-ng-if='editView'/>
+
+                      <hr />
+                      <div data-ng-if='editView' class='text-center'>
+                        <button class='btn btn-info' type="button" data-ng-click='uploadPhoto()'>Upload New Photo</button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th translate="register.form.lastname">Last name</th>
+                    <td data-ng-bind='student.lastName' data-ng-if='!editView'></td>
+                    <td data-ng-if='editView'>
+                      <input type='text' data-ng-model='user.lastName' class='form-control' required></input>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th translate="student.labels.gender">Gender</th>
+                    <td data-ng-bind='student.gender' data-ng-if='!editView'></td>
+                    <td data-ng-if='editView'>
+                      <select data-ng-model='user.gender' class='form-control' required>
+                        <option value='Male'>Male</option>
+                        <option value='Female'>Female</option>
+                      </select>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th translate="student.labels.nationality">Nationality</th>
+                    <td data-ng-bind='student.nationality' data-ng-if='!editView'></td>
+                    <td data-ng-if='editView'>
+                       <input type="text" class="form-control" placeholder="{{'student.labels.nationality' | translate }}" required data-ng-model='user.nationality' />
+                    </td>
+                  </tr>
+                  <tr>
+                    <th translate="student.labels.dob">Date of Birth</th>
+                    <td data-ng-bind='student.dob' data-ng-if='!editView'></td>
+                    <td data-ng-if='editView'>
+                      <input type="text" class="form-control" ng-click="openPicker()" uib-datepicker-popup="yyyy-MM-dd" data-ng-model='user.dob' is-open="popup1.opened" ng-required="true" close-text="Close" placeholder="Date of Birth" />
+                    </td>
+                  </tr>
+                  <tr>
+                    <th translate="student.labels.age">Age</th>
+                    <td data-ng-bind='student.age' data-ng-if='!editView'></td>
+                    <td data-ng-if='editView'>
+                      <input type='number' data-ng-model='user.age' class='form-control' required></input>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th translate="student.labels.maritalStatus">Marital Status</th>
+                    <td data-ng-bind='student.maritalStatus' data-ng-if='!editView'></td>
+                    <td data-ng-if='editView'>
+                      <select class='form-control' data-ng-model='user.maritalStatus' required>
+                            <option value='Single'>Single</option>
+                            <option value='Married'>Married</option>
+                          </select>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th translate="student.labels.passport">Passport</th>
+                    <td data-ng-bind='student.passport' data-ng-if='!editView'></td>
+                    <td data-ng-if='editView'>
+                      <textarea class="form-control" data-ng-model='user.passport' required placeholder="Passport Details">
+                            Passport Details
+                          </textarea>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th translate="student.labels.emirates">Emirates</th>
+                    <td data-ng-bind='student.emirates' data-ng-if='!editView'></td>
+                    <td data-ng-if='editView'>
+                      <textarea class='form-control' data-ng-model='user.emirates' required placeholder="Emirates Id Details">
+                            Emirates Id Details
+                      </textarea>
+                    </td>
+                  </tr>
+                  <tr data-ng-if='editView'>
+                    <th class='text-center' colspan="3">
+                      <button class='btn btn-success' type='submit'> Save </button>
+                    </th>
+                  </tr>
+                </tbody>
+              </table>
+              </form>
+            </div>
+          </div>
+
+          <div class='panel panel-info'>
+            <div class='panel-heading' translate="student.labels.account_info"> Account info</div>
+            <div class=panel-body>
+              <table class='table table-striped'>
+                <tr>
+                  <th style='width: 300px;' translate="register.form.email">Email</th>
+                  <td data-ng-bind='student.email'></td>
+                </tr>
+              </table>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- /page content

@@ -1,0 +1,28 @@
+<div class="modal-header">
+    <h3 class="modal-title">
+        <h2 translate='upload.upload_img'></h2>
+    </h3>
+</div>
+<div class="modal-body" data-ng-init='initPlugin()'>
+	<div>
+        <label translate='upload.select_img_upload'>  </label>
+        <input type="file" id="fileInput"/>
+    </div>
+    <div class="col-sm-12" style="margin-top: 30px;">
+        <div class='col-sm-6'>
+            <div class="cropArea" style="width: 100% !important;">
+              <img-crop image="myImage" result-image="myCroppedImage" result-image-format="image/jpeg"></img-crop>
+            </div>        
+        </div>
+        <div class='col-sm-6 text-center'>
+            <h3 translate='upload.preview'></h3>
+            <div>
+                <img ng-src="{{myCroppedImage}}" />
+            </div>  
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-success" type="button" ng-click="save()" translate='testconfigure.save'></button>
+    <button class="btn btn-danger" type="button" ng-click="cancel()" translate='table.cancel'></button>
+</div>

@@ -1,0 +1,74 @@
+<!--page content -->
+
+<div class="">
+  <div class="clearfix"></div>
+
+  <div class="row">
+
+    <div class="col-md-12 col-sm-12 col-xs-12" data-ng-init='getAll()'>
+      <div class="x_panel" style="height:600px;overflow-y:scroll;">
+        <div class="x_title">
+          <h2>List of Category</h2>
+          <span class='pull-right'>
+              <a data-ui-sref='app.category_add' class='btn btn-info' title='Adding New Category'> <i class="fa fa-pencil"></i>&nbsp; Add Category </a>
+            </span>
+          <div class="clearfix"></div>
+        </div>
+        <ol class="breadcrumb">
+          <li><a href='javascript:void(0);' data-ui-sref='app'  translate="home.menu.home">Home</a></li>
+          <li class="active">Category</li>
+        </ol>
+
+        <div class='alert alert-success alert-dismissible animated flash' data-ng-if='save'>
+          <button type="button" class="close" aria-label="Close" data-ng-click='closeAlert()'><span aria-hidden="true">&times;</span></button>
+          <strong class='glyphicon glyphicon-ok'></strong> &nbsp; Category Saved
+        </div>
+
+        <div data-ng-if='loader' style='height: 100%; padding-top: 200px; text-align: center;'>
+          <img data-ng-src='/app/assets/images/app-loader.gif'/>
+        </div>
+
+        <div data-ng-if='!loader && !items.length' style='height: 100%; padding-top: 150px; text-align: center;'>
+          <h3><span class='fa fa-warning text-warning'></span>{{'table.notopicareafound' | translate}}</h3> <br />
+          <a href='javascript:void(0);' class='btn btn-primary' data-ui-sref='app.topic_area_add' > {{'table.addtopicarea' | translate}}</a>
+        </div>
+
+       	<table class='table table-stripeed' data-ng-if='items.length && !loader'>
+       		<thead >
+				<tr class='info'>
+                    <th style='width:50px;' translate="table.sno">S.No</th>
+				    <th >Category</th>
+                    <th >Status</th>
+                    <th style='width:275px; text-align: center;' translate="table.actions">Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+    			<tr data-ng-repeat='item in items track by $index'>
+    				<td data-ng-bind='$index+1'>2</td>
+                    <td data-ng-bind='item.name'>2</td>
+                    <td>
+                        <span  ng-if="item.status === 1"> Active </span>
+                        <span  ng-if="item.status === 0"> Inactive </span>
+                    </td>
+    			    <td style='text-align: center;'>
+    					<a href='javascript:void(0);' class='btn btn-info btn-xs text-primary' data-ng-click='editItem(item)'>
+                        <i class="fa fa-edit"></i>&nbsp;&nbsp;&nbsp;{{'table.edit' | translate}}&nbsp;&nbsp;&nbsp;
+                        </a> &nbsp;  &nbsp;
+                        <a href='javascript:void(0);' class='btn btn-success btn-xs text-success'  ng-if="item.status === 0" data-ng-click='changeStatus(item, $index, 1)'>
+                        <i class="fa fa-check"></i>&nbsp;&nbsp;&nbsp;Enable&nbsp;&nbsp;&nbsp;
+                        </a>
+                        <a href='javascript:void(0);' class='btn btn-danger btn-xs text-danger' ng-if="item.status === 1" data-ng-click='changeStatus(item, $index, 0)'>
+                        <i class="fa fa-times"></i>&nbsp;&nbsp;&nbsp;Disable&nbsp;&nbsp;&nbsp;
+                        </a>
+                    </td>
+    			</tr>
+			</tbody>
+       	</table>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+<!-- /page content

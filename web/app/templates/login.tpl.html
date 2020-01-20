@@ -1,0 +1,177 @@
+<div class="">
+    <a class="hiddenanchor" id="toregister"></a>
+    <a class="hiddenanchor" id="tologin"></a>
+
+    <div id="wrapper">
+      <div id="login" class="form bounceInDown animated" data-ng-if='page === "login"'>
+        <section class="login_content">
+          <form data-ng-submit='login()'>
+            <h1 translate='login.title'>Login</h1>
+            <div>
+              <input type="text" class="form-control" placeholder="{{'login.username' | translate}}" required data-ng-model='user.email' />
+            </div>
+            <div>
+              <input type="password" class="form-control" placeholder="{{'login.password' | translate}}" required data-ng-model='user.password' />
+            </div>
+            <div data-ng-if='error'>
+              <p class='text-danger'><strong data-ng-bind='error'></strong></p>
+            </div>
+            <div>
+              <div data-ng-if='showLoader'>
+                <img data-ng-src='/app/assets/images/app-loader.gif' style='height: 35px;'/>
+              </div>
+              <button type='submit' class="btn btn-default submit" data-ng-if='!showLoader' translate='login.links.login'>Log in</button>
+            </div>
+            <div class="clearfix"></div>
+            <div class="separator">
+
+              <p class="change_link"> {{'login.labels.new_to_site' | translate}}
+                <a data-ng-click='showPage("register")' data-ui-sref='register' class="to_register" translate='login.links.create_account'> Create Account </a>
+              </p>
+              <div class="clearfix"></div>
+              <br />
+              <div>
+                <h1><img src='/app/assets/images/symbol.png' style='width:75px;'> {{'app.title' | translate}}</h1>
+              </div>
+            </div>
+          </form>
+          <!-- form -->
+        </section>
+        <!-- content -->
+      </div>
+      <div id="register" class="form bounceInDown animated" data-ng-if='page === "register"'>
+        <section class="login_content">
+          <!-- <form data-ng-submit='register()'> -->
+            <h1 translate='register.title'>Create Account</h1>
+            
+            <div class=''>
+              <div data-ng-switch='registerPage'>
+                <div data-ng-switch-when='account'>
+                  <form data-ng-submit='nextPage("personal")'>
+                    <div class='panel panel-info'>
+                      <div class='panel-heading'>Choose your account</div>
+                      <div class='panel-body'>
+                        <div>
+                          <input type="email" class="form-control" placeholder="{{'register.form.email' | translate }}" required data-ng-model='user.email' />
+                        </div>
+                        <div>
+                          <input type="password" class="form-control" placeholder="{{'register.form.password' | translate }}" required data-ng-model='user.password' />
+                        </div>
+                        <div>
+                          <input type="password" class="form-control" placeholder="{{'register.form.retype_password' | translate }}" required data-ng-model='user.confirmPassword' />
+                        </div>
+                        <div data-ng-if='showAdmin'>
+                          <div class='animated fadeInDown'>
+                            <span class='pull-right text-danger' style='cursor:pointer;' data-ng-click='instanLogin(false)'><i class='glyphicon glyphicon-remove'></i></span>
+                            <p class='text-left' translate="register.labels.enter_admin_password">Enter admin password for instant login:</p>
+                            <input type="password" class="form-control" placeholder="{{'register.form.admin_password' | translate }}" required data-ng-model='user.admin' />
+                          </div>
+                        </div>
+                        <div class='pull-right'>
+                          <button type='submit' class='btn btn-primary'>Next</button> &nbsp;
+                          <a href='javascript:void(0);' data-ng-click='instanLogin(true)' data-ng-if='!showLoader' translate="register.links.instant_login">Instant Login</a>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+
+                <div data-ng-switch-when='personal'>
+                  <form data-ng-submit='nextPage("profile")'>
+                    <div class='panel panel-danger'>
+                      <div class='panel-heading'>Enter your profile info</div>
+                      <div class='panel-body'>
+                        <div>
+                          <input type="text" class="form-control" placeholder="{{'register.form.firstname' | translate }}" required data-ng-model='user.firstName'/>
+                        </div>
+                        <div>
+                          <input type="text" class="form-control" placeholder="{{'register.form.lastname' | translate }}" required data-ng-model='user.lastName'/>
+                        </div>
+                        <div>
+                          <select class='form-control' data-ng-model='user.gender' required>
+                            <option value='Male'>Male</option>
+                            <option value='Female'>Female</option>
+                          </select>
+                        </div>
+                        <div style="margin-top: 15px;">
+                          <input type="text" class="form-control" placeholder="{{'student.labels.nationality' | translate }}" required data-ng-model='user.nationality' />
+                        </div>
+                        <div>
+                          <p class="input-group">
+                            <input type="text" class="form-control" ng-click="openPicker()" uib-datepicker-popup="yyyy-MM-dd" ng-model="user.dob" is-open="popup1.opened" ng-required="true" close-text="Close" placeholder="Date of Birth" />
+                            <span class="input-group-btn" style='vertical-align: top;'>
+                              <button type="button" class="btn btn-default" ng-click="openPicker()"><i class="glyphicon glyphicon-calendar"></i></button>
+                            </span>
+                          </p>
+                        </div>
+                        <div style="margin-top: 15px;">
+                          <select class='form-control' data-ng-model='user.maritalStatus' required>
+                            <option value='Single'>Single</option>
+                            <option value='Married'>Married</option>
+                          </select>
+                        </div>
+                        <div style="margin-top: 15px;">
+
+                          <textarea class='form-control' data-ng-model='user.emirates' required placeholder="Emirates Id Details">
+                            Emirates Id Details
+                          </textarea>
+                        </div>
+                        <div style="margin-top: 15px;">
+                          <textarea class="form-control" data-ng-model='user.passport' required placeholder="Passport Details">
+                            Passport Details
+                          </textarea>
+                        </div>
+                        <div class='pull-right'>
+                          <button type='submit' class='btn btn-primary'>Next</button>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+
+                <div data-ng-switch-when='profile'>
+                  <form data-ng-submit='register()'>
+                    <div class='panel panel-success' data-ng-init='initImage()'>
+                      <div class='panel-heading'>Choose your profile pic</div>
+                      <div class='panel-body text-left'>
+                        <div>Select an image file: <input type="file" id="fileInput" /></div>
+                        <div>Preview:</div>
+                        <div><img ng-src="{{user.photo}}" /></div>
+
+                        <div class="cropArea">
+                          <img-crop image="myImage" result-image="user.photo" result-image-format="image/jpeg"></img-crop>
+                        </div>
+                        
+                        <div class='pull-right'>
+                          <button type='submit' class='btn btn-success'>Finish</button>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+
+                <div data-ng-if='error'>
+                  <p class='text-danger'><strong data-ng-bind='error'></strong></p> <br/>
+                </div>
+
+              </div>
+            </div> 
+
+            <div class="clearfix"></div>
+            <div class="separator">
+              <p class="change_link">{{'register.labels.already_member' | translate}}
+                <a data-ng-click='showPage("login")' data-ui-sref='login' class="to_register" translate="login.links.login"> Log in </a>
+              </p>
+              <div class="clearfix"></div>
+              <br />
+            </div>
+            <div>
+                <h1><img src='/app/assets/images/symbol.png' style='width:75px;'> {{'app.title' | translate}}</h1>
+            </div>
+          <!-- </form> -->
+          <!-- form -->
+        </section>
+        <!-- content -->
+      </div>
+    </div>
+  </div>

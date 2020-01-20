@@ -1,0 +1,62 @@
+<!-- page content -->
+
+  <div class="">
+
+          <div class="clearfix"></div>
+
+          <div class="row">
+
+            <div class="col-md-12 col-sm-12 col-xs-12" data-ng-init='getAll()'>
+              <div class="x_panel" style="height:600px;overflow-y:scroll;">
+                <div class="x_title">
+                  <h2>Languages List</h2>
+                  <ul class="nav navbar-right panel_toolbox">
+                    </li>
+                    <li class="text-danger">
+                      <a data-ui-sref='app.language_save' title='Adding New Language'><i class="fa fa-plus text-danger"></i>&nbsp; New Language</a>
+                    </li>
+                    </li>
+                  </ul>
+                  <div class="clearfix"></div>
+
+                </div>
+                <div data-ng-if='!items.length'>
+                	<p class='text-center text-primary' style='padding-top:40px; font-size:24px;'>
+                		<span class='fa fa-warning text-warning'></span>
+                		There is no language found. <br/>
+                	</p>
+                	<p class='text-center'><a href="javascript:void(0);" role="button" title='Adding New Language'><i class="fa fa-plus"></i>&nbsp; New Language</a></p>
+                </div>
+               	<table class='table footable' data-ng-if='items.length'>
+               		<thead>
+						<tr>
+              <th>S.No</th>
+							<th>Code</th>
+							<th>Name</th>
+							<th>Actions</th>
+						</tr>
+					</thead>
+					<body>
+						<tr data-ng-repeat='item in items track by $index'>
+              <td data-ng-bind='$index+1'>2</td>
+              <td data-ng-bind='item.name'>2</td>
+							<td data-ng-bind='item.code'>2</td>
+							<td> 
+								<a href='#/app/language/save?id={{item.id}}' class='btn btn-success' data-ng-click='editItem(item)'>
+									<span class='fa fa-edit'></span>
+								</a> &nbsp;
+								<a href='javascript:void(0);' class='btn btn-danger' data-ng-click='removeItem(item)'>
+									<span class='fa fa-remove'></span>
+								</a> 
+							</td>
+						</tr>
+					</body>
+               	</table>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+
+<!-- /page content -->

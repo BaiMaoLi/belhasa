@@ -1,0 +1,152 @@
+{
+	"app": {
+		"title": "Belhasa Driving",
+		"powered_by": "کی طرف سے طاقت"
+	},
+	"login": {
+		"title": "لاگ ان",
+		"username": "طالب علم آئی ڈی / ای میل",
+		"password": "پاس ورڈ",
+		"links": {
+			"login": "لاگ ان کریں",
+			"create_account": "اکاؤنٹ بنائیں"
+		},
+		"labels": {
+			"new_to_site": "سائٹ پر نئے ہیں؟"
+		}
+	},
+	"register": {
+		"title": "اکاؤنٹ بنائیں",
+		"form": {
+			"firstname": "پہلا نام",
+			"lastname": "آخری نام",
+			"email": "دوستوں کوارسال کریں",
+            "photo": "تصویر",
+			"password": "پاس ورڈ",
+			"retype_password": "دوبارہ پاسوورڈ لکھئے",
+			"admin_password": "ایڈمن پاس ورڈ"
+		},
+		"labels": {
+			"enter_admin_password": "فوری لاگ ان کے لئے منتظم پاس ورڈ درج کریں:",
+			"already_member": "پہلے سے ہی رکن؟"
+		},
+		"links": {
+			"submit": "جمع کرائیں",
+			"instant_login": "فوری لاگ ان"
+		}
+	},
+	"table": {
+		"sno": "سیریل نمبر"
+	},
+	"form": {
+		"status": "سٹیٹس",
+		"enabled": "قابل بنایا",
+		"activate": "فعال کریں",
+        "waiting": "منظوری کے انتظار میں",
+        "disable": "غیر فعال کریں"
+	},
+	"home": {
+		"menu": {
+			"home": "ہوم",
+			"students": "طلباء",
+			"questions": "سوالات",
+			"results": "نتائج",
+			"my_results": "میرے نتائج",
+			"profile": "پروفائل",
+			"logout": "لاگ آوٹ"
+		},
+		"labels": {
+			"welcome": "خوش آمدید",
+			"adminPortal": "ایڈمن پورٹل",
+			"studentPortal": "طالب علم پورٹل",
+			"total_user": "کل صارفین",
+			"user_requests": "منظوری کے انتظار میں درخواستیں",
+			"view_more": "مزید دیکھیں...",
+			"test_results": "امتحانی نتائج",
+			"start_test": "شروع میں ٹیسٹ",
+			"choose_test_type": "ٹیسٹ قسم میں سے انتخاب کریں",
+			"short_test": "مختصر مدت ٹیسٹ",
+			"long_test": "طویل دورانیہ ٹیسٹ",
+			"choose_test_category": "ٹیسٹ زمرہ منتخب کریں"
+		},
+		"alert": {
+			"test": "منتخب زمرہ میں دستیاب کوئی ٹیسٹ نہیں ہے",
+			"student": "کوئی بھی طالب علم کی تفصیلات پایا .",
+			"question": "کوئی سوال نہیں پایا ."
+		}
+	},
+	"student": {
+		"title_profile": "طالب علم پروفائل",
+		"title_list": "طالب علم فہرست",
+		"profile": "پروفائل",
+		"labels" : {
+			"personal_info": "ذاتی معلومات",
+			"account_info": "اکاؤنٹ کی معلومات",
+			"student_info": "طالب علم کی معلومات",
+			"gender": "صنف",
+			"nationality": "قومیت",
+			"dob": "پیدائش کی تاریخ",
+			"age": "عمر",
+			"held_on": "منعقدہ",
+			"input": "ان پٹ",
+            "maritalStatus": "ازدواجی حیثیت",
+            "passport": "پاسپورٹ",
+            "emirates": "امارات"
+		}
+	},
+	"questions": {
+		"title": "سوالات کی فہرست",
+		"alert": {
+			"success": "بات تفصیلات بچایا"
+		},
+		"link": {
+			"add_question": "سوال شامل کریں",
+			"add_translation": "ترجمہ شامل کریں",
+			"save_question": "سوال محفوظ کریں"
+		},
+		"labels": {
+			"question": "س",
+			"choices": "انتخاب کا",
+			"answer": "جواب",
+			"created_on": "پر پیدا کیا",
+			"actions": "عوامل",
+			"create": "بنانا",
+			"choose_language": "زبان کا انتخاب کریں",
+			"choose_category": "زمرہ منتخب کریں",
+			"answer_options": "جواب کے اختیارات",
+			"option": "آپشن",
+			"question_creation": "سوال تخلیق",
+			"category": "قسم",
+            "enter_your_question":"آپ کے سوال درج ....",
+            "audio_file":"آڈیو فائل",
+            "options":"اختیارات"
+		},
+		"label": {
+			"question": "س",
+			"choices": "انتخاب کا",
+			"answer": "جواب",
+			"created_on": "پر پیدا کیا",
+			"actions": "عوامل",
+			"create": "بنانا",
+			"choose_language": "زبان کا انتخاب کریں",
+			"choose_category": "زمرہ منتخب کریں",
+			"answer_options": "جواب کے اختیارات",
+			"option": "آپشن",
+			"question_creation": "سوال تخلیق",
+			"category": "قسم"
+		}
+	},
+	"test": {
+		"labels": {
+			"test_results": "امتحانی نتائج",
+			"test_details": "ٹیسٹ کی تفصیلات",
+			"results": "نتائج",
+			"result": "نتائج",
+			"view": "لنک"
+		},
+		"link": {
+			"next": "اگلے",
+			"finish": "ختم"
+		}
+	}
+}

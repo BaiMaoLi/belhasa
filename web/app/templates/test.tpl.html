@@ -1,0 +1,64 @@
+
+  <div class="">
+          <div class="clearfix"></div>
+
+          <div class="row" data-ng-init='loadTest()'>
+            <div class="col-md-12 col-sm-12 col-xs-12">
+              <div class="x_panel" style="height:600px;overflow-y:scroll;">
+                <div class="x_title">
+                  <h2>{{title}} &nbsp;Test <span style='color: #0000ff;font-size: 25px;position: absolute;right: 30px;text-align: right;'>{{timer}}</span> </h2>
+
+                  <div class="clearfix"></div>
+                </div>
+
+                <div data-ng-if='loader' style='min-height: 300px !important; padding-top: 100px; text-align: center;'>
+                  <img data-ng-src='/app/assets/images/app-loader.gif'/>
+                </div>
+
+                <form>
+                <div id='test-question' data-ng-if='!loader'>
+                  <div class='panel panel-info'>
+                    <div class='panel-heading'>
+                      <strong><u>{{'questions.label.question' | translate}}:</u></strong>
+                      <img data-ng-src='/app/assets/images/audio.png'> <br/><br/>
+                      <p data-ng-bind='question.question' style='font-size:20px;'></p>
+                    </div>
+                    <div class='panel-body'>
+                      <div class="col-sm-12">
+                        <div class='col-sm-3'>
+                          <input id="question-choice1" type="radio" value="1" ng-model="form.choice" name="choice"/> 
+                          <label for='question-choice1' data-ng-bind='question.choice1'></label>
+                        </div>
+
+                        <div class='col-sm-3'>
+                          <input id="question-choice2" type="radio" value="2" ng-model="form.choice" name="choice"/> 
+                          <label for='question-choice2' data-ng-bind='question.choice2'></label>
+                        </div>
+
+                        <div class='col-sm-3'>
+                          <input id="question-choice3" type="radio" value="3" ng-model="form.choice" name="choice"/> 
+                          <label for='question-choice3' data-ng-bind='question.choice3'></label>
+                        </div>
+
+                        <div class='col-sm-3'>
+                          <input id="question-choice4" type="radio" value="4" ng-model="form.choice" name="choice"/> 
+                          <label for='question-choice4' data-ng-bind='question.choice4'></label>
+                        </div>
+                      </div>
+
+                      <div class='text-right' style='padding-left: 20px;'>
+                        <button type='submit' class='btn btn-warning' data-ng-click='nextQuestion()' data-ng-if='questionId+1 !== test.length'> &nbsp;&nbsp; {{'test.link.next' | translate}} &nbsp;&nbsp;</button> &nbsp;
+                        <button  type='button' class='btn btn-success' data-ng-click='viewResults()' data-ng-if='questionId+1 === test.length'> &nbsp;&nbsp;{{'test.link.finish' | translate}}&nbsp;&nbsp; </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+                
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+<!-- /page content

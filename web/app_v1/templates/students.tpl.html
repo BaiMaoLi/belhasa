@@ -1,0 +1,164 @@
+<style>
+.label {
+    display: block;
+    padding: .2em .6em .3em;
+    font-size: 100%;
+    font-weight: bolder;
+    line-height: 1;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: .25em;
+    width: 120px;
+}
+.label-default {
+    background: #9b59b6;
+}
+.paginationclass{
+
+margin: 19px 28px;
+}
+.paginationclass span{
+    margin-left:15px;
+    display:inline-block;
+}
+.pagination-controle li{
+    display: inline-block;
+}
+.pagination-controle button{
+    font-size: 12px;
+    margin-top: -26px;
+    cursor:pointer;
+
+}
+.pagination{
+    margin:5px 12px !important;
+}
+.right-inner-addon {
+    position: relative;
+}
+.right-inner-addon input {
+    padding-right: 30px;
+}
+.right-inner-addon i {
+    position: absolute;
+    right: 0px;
+    padding: 10px 12px;
+    pointer-events: none;
+}
+</style>
+<!-- page content -->
+<div class="">
+  <div class="clearfix"></div>
+  <div class="row" data-ng-init='loadStudents()'>
+    <div class="col-md-12 col-sm-12 col-xs-12">
+      <div class="x_panel" style="height:600px;overflow-y:scroll;">
+        <div class="x_title">
+          <h2>
+            <div translate="student.title_list" data-ng-if = "logUser.isAdmin === 2"></div>
+            <div translate="student.users_list" data-ng-if = "logUser.isAdmin === 1"></div>
+          </h2>
+           <span class='pull-right'>
+              <a data-ui-sref='app.students_add' class='btn btn-info'> <i class='fa fa-user-plus'></i>&nbsp;{{'register.form.add_user' | translate}} </a>
+            </span>
+          <div class="clearfix"></div>
+        </div>
+        <ol class="breadcrumb">
+          <li><a href='javascript:void(0);' data-ui-sref='app' translate="home.menu.home">Home</a></li>
+          <li class="active" translate="home.menu.students" data-ng-if = "logUser.isAdmin === 2">Students</li>
+          <li class="active" translate="home.menu.users" data-ng-if = "logUser.isAdmin === 1">Users</li>
+        </ol>
+        <div class='alert alert-success alert-dismissible animated flash' data-ng-if='success'>
+            <button type="button" class="close" aria-label="Close" data-ng-click='closeAlert()'><span aria-hidden="true">&times;</span></button>
+            <strong class='fa fa-check'></strong> &nbsp; {{'table.studentdetailsaved' | translate}}</span>
+        </div>
+        <div data-ng-if='loader' style='height: 100%; padding-top: 250px; text-align: center;'>
+          <img data-ng-src='/app/assets/images/app-loader.gif'/>
+        </div>
+        <div class="pagination pagination-centered" ng-show="students.length && !loader" style="
+    margin-left: -11px !important;">
+            <ul class="pagination-controle pagination">
+             <li>
+              <button type="button" class="btn btn-primary" ng-disabled="curPage == 0"
+             ng-click="curPage=curPage-1"> &lt; {{'table.prev' | translate}}</button>
+             </li>
+             <li>
+             <span>Page {{curPage + 1}} of {{ numberOfPages() }}</span>
+             </li>
+             <li>
+             <button type="button" class="btn btn-primary"
+             ng-disabled="curPage >= students.length/pageSize - 1"
+             ng-click="curPage = curPage+1">{{'table.next' | translate}} &gt;</button>
+             </li>
+            </ul>
+        </div>
+        <div class="pull-right" style="width: 250px; display: inline-block; margin-bottom: 20px;" ng-if="!loader">
+           <form class="form-inline">
+               <div class="form-group">
+                     <div class="right-inner-addon">
+                         <i class="fa fa-search"></i>
+                         <input type="text" ng-model="search.studentId" class="form-control" placeholder="{{'form.sebyid ' | translate}}" style="width: 249px;" value=" "/>
+                     </div>
+               </div>
+           </form>
+         </div>
+       	<table class='table table-striped' data-ng-if='students.length && !loader'>
+       		<thead>
+        		<tr class="info">
+              <th translate="table.sno">S.No</th>
+              <th translate='register.form.photo' style='width:50px;'>Photo</th>
+              <th translate="register.form.user_id">User ID</th>
+    			<th translate="register.form.user_type">User Type</th>
+    			<th translate="register.form.name">Name</th>
+    			<th translate="register.form.email">Email</th>
+              <th translate="form.status">Status</th>
+        		</tr>
+        	</thead>
+          <tbody>
+
+           <tr data-ng-repeat='student in students | pagination: curPage * pageSize | limitTo: pageSize' style='cursor: pointer' data-ng-click='viewStudent(student)'>
+              <td>{{pageSize *(curPage)+$index+1}}</td>
+              <td>
+                <img data-ng-src="{{student.photo}}" alt="" data-ng-if='student.photo' style='width:30px;'>
+                <img src="app/assets/images/temp-icon.png" alt="" data-ng-if='!student.photo' style='width:30px;'>
+              </td>
+              <td data-ng-bind='student.studentId'></td>
+              <td >
+                <!-- <div class='text-success' data-ng-if='student.isAdmin'> -->
+                <div class='label label-success' data-ng-if="student.isAdmin == '1'">
+                  {{'register.form.admin' | translate}}
+                </div>
+                <!-- <div class='text-danger' data-ng-if='!student.isAdmin'> -->
+                <div class='label label-danger' data-ng-if="student.isAdmin == '0'">
+                  {{'register.form.student' | translate}}
+                </div>
+                <div class='label label-default' data-ng-if="student.isAdmin == '2'">
+                 {{'register.form.supervisor' | translate}}
+                </div>
+              </td>
+              <td data-ng-bind='student.name'></td>
+              <td>
+                <a href='#/app/students/profile?id={{student.id}}' data-ng-bind='student.email'></a>
+              </td>
+              <td>
+                <span data-ng-if='student.status'>
+                  {{'table.active' | translate}}
+                </span>
+                <span data-ng-if='!student.status' class='text-warning'>
+                  {{'table.inactive' | translate}}
+                </span>
+              </td>
+            </tr>
+	        </tbody>
+       	</table>
+        <div data-ng-if='!students.length && !loader' style='height: 100%; padding-top: 200px; text-align: center;'>
+          <h3><strong class='fa fa-warning'></strong>&nbsp;{{'home.alert.student' | translate}}</h3>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- /page content -->

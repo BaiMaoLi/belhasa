@@ -1,0 +1,139 @@
+<!--page content -->
+
+  <div class="" data-ng-init='loadTestconfig()'>
+          <div class="clearfix"></div>
+
+          <div class="row">
+
+            <div class="col-md-12 col-sm-12 col-xs-12" data-ng-init='getAll()'>
+              <div class="x_panel" style="height:600px;overflow-y:scroll;">
+                <div class="x_title">
+                  <h2 translate="table.test_configurations">Test configurations</h2>
+                  <div class="clearfix"></div>
+                </div>
+                <ol class="breadcrumb">
+                  <li><a href='javascript:void(0);' data-ui-sref='app'  translate="home.menu.home">Home</a></li>
+                  <li class="active" translate="table.test_configurations">Test configurations</li>
+                </ol>
+
+                <div class='alert alert-success alert-dismissible animated flash' data-ng-if='saveAlert'>
+                  <button type="button" class="close" aria-label="Close" data-ng-click='closeAlert()'><span aria-hidden="true">&times;</span></button>
+                  <strong class='glyphicon glyphicon-ok'></strong> &nbsp; {{'questions.alert.success' | translate}}
+                </div>
+             
+                <div data-ng-if='loader' style='height: 100%; padding-top: 200px; text-align: center;'>
+                  <img data-ng-src='/app/assets/images/app-loader.gif'/>
+                </div>
+              
+                <div data-ng-if='!editView'>
+                  <table class='table table-stripeed' data-ng-if='items.length && !loader' >
+                    <thead >
+                    <tr class='info'>
+                      <th style='width:50px;' translate="table.sno">S.No</th>
+                <th style='width:400px;' translate="table.name"> Name </th>
+                      <th style='width:200px;' translate="table.category"> Category</th>
+                      <!-- <th style='width:200px;' translate="table.no_of_questions"> No of Questions</th>
+                      <th style='width:200px;' translate="table.no_of_required_answers"> No of Required Answers</th> -->
+                      <th style='width:200px;' translate="table.no_of_specific_questions"> No of Specific Questions</th>
+                      <th style='width:200px;' translate="table.no_of_common_questions"> No of Common Questions</th>
+                      <th style='width:200px;' translate="table.no_of_required_specific_answers"> No of Required Specific Answers</th>
+                      <th style='width:200px;' translate="table.no_of_required_common_answers"> No of Common Questions</th>
+                      <th style='width:250px;' translate="table.test_duration"> Test Duration (In minutes)</th>
+                      <th style='width:100px;' translate="table.actions"> Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr data-ng-repeat='item in items track by $index'>
+                      <td data-ng-bind='$index+1'></td>
+                      <td data-ng-bind='item.name'>2</td>
+                      <td data-ng-bind='item.category'>2</td>
+                      <!-- <td data-ng-bind='item.noofquestion'></td>
+                      <td data-ng-bind='item.reqnoofanswer'></td> -->
+                      <td data-ng-bind='item.noofspecificquestion'></td>
+                      <td data-ng-bind='item.noofcommonquestion'></td>
+                      <td data-ng-bind='item.noofreqspecificanswer'></td>
+                      <td data-ng-bind='item.noofreqcommonanswer'></td>
+                      <td data-ng-bind='item.duration'></td>
+                      <td> 
+                        <a href='javascript:void(0);' class='btn btn-info btn-xs text-primary fa fa-gear' data-ng-click='editConfig(true, item, $index)' translate="table.update">
+                          <i class='fa fa-gear'></i> Update
+                        </a> &nbsp;  &nbsp; 
+                        <a href='javascript:void(0);' class='text-danger' data-ng-click='removeConfig(item)' data-ng-if='hide'>
+                          <span class='fa fa-remove'></span>
+                        </a>
+                      </td>
+                    </tr>
+                  </tbody>
+                  </table>  
+                </div>
+               	<div class='alert alert-danger animated lightSpeedIn' data-ng-if='questionErrorAlert'>
+                  <button type="button" class="close" aria-label="Close" data-ng-click='closeAlert()'><span aria-hidden="true">&times;</span></button>
+                  <strong class='glyphicon glyphicon-warning-sign'></strong> &nbsp; <span data-ng-bind="errorMsg"></span>
+                </div>
+
+                <div data-ng-if='editView'>
+                  <div class='panel panel-success'>
+                    <div class='panel-heading'>
+                      <span>Update Test configurations</span>
+                      <span class='pull-right'>
+                        <a href='javasciprt:void(0);' class='glyphicon glyphicon-remove-sign' data-ng-click='editConfig(false)'></a>
+                      </span>
+                    </div>
+                    <div class='panel-body'>
+                        <form data-ng-submit='saveTestConfig()'>
+                          <table class="table table-striped">
+                            <tr>
+                              <th translate="table.name">Name</th>
+                              <td><input class='form-control' data-ng-model='configItem.name' required></input></td>
+                            </tr>
+                            <tr>
+                              <th translate="table.category">Category</th>
+                              <td data-ng-bind='configItem.category'></td>
+                            </tr>
+                            <!-- <tr>
+                              <th>No of Questions</th>
+                              <td><input class='form-control' type="number" data-ng-model='configItem.noofquestion' required></input></td>
+                            </tr>
+                            <tr>
+                              <th>No of Required Answers</th>
+                              <td><input class='form-control' type='number' data-ng-model='configItem.reqnoofanswer' required></input></td>
+                            </tr> -->
+                            <tr>
+                              <th translate="table.no_of_specific_questions">No of Specific Questions</th>
+                              <td><input class='form-control' type='number' data-ng-model='configItem.noofspecificquestion' required></input></td>
+                            </tr>
+                            <tr>
+                              <th translate="table.no_of_common_questions">No of Common Questions</th>
+                              <td><input class='form-control' type='number' data-ng-model='configItem.noofcommonquestion' required></input></td>
+                            </tr>
+                            <tr>
+                              <th translate="table.no_of_required_specific_answers">No of Required Specific Answers</th>
+                              <td><input class='form-control' type='number' data-ng-model='configItem.noofreqspecificanswer' required></input></td>
+                            </tr>
+                            <tr>
+                              <th translate="table.no_of_required_common_answers">No of Required Common Answers</th>
+                              <td><input class='form-control' type='number' data-ng-model='configItem.noofreqcommonanswer' required></input></td>
+                            </tr>
+                            <tr>
+                              <th translate="table.test_duration">Duration</th>
+                              <td><input class='form-control' type="number" data-ng-model='configItem.duration' required></input></td>
+                            </tr>
+                            <tr>
+                              <td class='text-center' colspan="2">
+                                <button type="submit" class='btn btn-success' translate="table.update"> Update </button> &nbsp; &nbsp;
+                                <button type="button" class='btn btn-danger' data-ng-click='editConfig(false)' translate="questions.labels.cancel"> Cancel </button> &nbsp; &nbsp;
+                              </td>
+                            </tr>
+                          </table>
+                        </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+
+<!-- page content-->

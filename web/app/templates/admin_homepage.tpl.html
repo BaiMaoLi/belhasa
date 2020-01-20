@@ -1,0 +1,145 @@
+  <div class=""  data-ng-init='loadCounts()'>
+          <div class="page-title">
+            <div class="title_left">
+              <h3 data-ng-if='user.isAdmin'><i class="glyphicon glyphicon-dashboard"></i>&nbsp;{{'home.labels.adminPortal' | translate}}</h3>
+              <h3 data-ng-if='!user.isAdmin'><i class="glyphicon glyphicon-dashboard"></i>&nbsp;{{'home.labels.studentPortal' | translate}}</h3>
+            </div>
+          </div>
+          <div class="clearfix"></div>
+          <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+              <div class="x_panel" style="height:600px;">
+                <div class="x_title">
+                  <h2>{{'home.labels.welcome' | translate}} {{user.firstName + ' ' + user.lastName}}!</h2>
+                  <div class="clearfix"></div>
+                </div>
+                <div>
+                  <div class='alert alert-danger alert-dismissible animated flash' data-ng-if='testAlert'>
+                    <button type="button" class="close" aria-label="Close" data-ng-click='closeAlert("test")'>
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                    <strong class='glyphicon glyphicon-alert'></strong> &nbsp; {{'home.alert.test' | translate}}
+                  </div>
+                  <div data-ng-if='user.isAdmin'>
+                    
+                    <div class="row tile_count">
+                      
+                      <div class="animated flipInY col-sm-4 tile_stats_count">
+                        <div class="left"></div>
+                        <div class="right text-center">
+                          <span class="count_top"><i class="fa fa-user"></i> {{'home.labels.total_user' | translate}}</span>
+                          <div class="count" data-ng-bind='userCount'>3</div>
+                          <span class="count_bottom">
+                            <i class="green" data-ng-bind='userRequests'>1 </i> 
+                            <a href='javascript:void(0);' data-ui-sref='app.students' translate="home.labels.user_requests">view more..</a>
+                          </span>
+                        </div>
+                      </div>
+                      
+                      <div class="animated flipInY col-sm-4 tile_stats_count">
+                        <div class="left"></div>
+                        <div class="right text-center">
+                          <span class="count_top"><i class="fa fa-question-circle"></i> {{'home.menu.questions' | translate}}</span>
+                          <div class="count"  data-ng-bind='questionsCount'>10</div>
+                          <span class="count_bottom">
+                            <i class="green">
+                               <a href='javascript:void(0);' data-ui-sref='app.questions' translate="home.labels.view_more">view more..</a> </i> 
+                          </span>
+                        </div>
+                      </div>
+
+                      <div class="animated flipInY col-sm-4 tile_stats_count">
+                        <div class="left"></div>
+                        <div class="right text-center">
+                          <span class="count_top"><i class="fa fa-pencil-square-o"></i> {{'home.labels.test_results' | translate}}</span>
+                          <div class="count" data-ng-bind='testCount'>12</div>
+                          <span class="count_bottom"><i class="green"> <a href='javascript:void(0);' data-ui-sref='app.test_results' translate='home.labels.view_more'>view more..</a></i> </span>
+                        </div>
+                      </div>
+                    </div>
+
+
+                  </div>
+
+                  <div data-ng-if='!user.isAdmin'>
+                    
+                    <div class="row tile_count" data-ng-init='resetDisplay()'>
+                      
+                      <div class="animated flipInY col-sm-6 tile_stats_count">
+                        <div class="left"></div>
+                        <div class="right text-center">
+                          <span class="count_top">
+                            &nbsp;   &nbsp;
+                          </span>
+                          <div class="count">
+                            <a href='javascript:void(0);' data-ui-sref='app.test_results'>
+                              <i class="fa fa-pencil-square-o"></i> <br/>
+                              {{'home.menu.my_results' | translate}}
+                            </a>
+                          </div>
+                          <span class="count_bottom">
+                            
+                          </span>
+                        </div>
+                      </div>
+                      
+                      <div class="animated flipInY col-sm-6 tile_stats_count">
+                        <div class="left" style='height: 120px;'></div>
+                        <div class="right text-center">
+                          <span class="count_top">&nbsp; &nbsp;</span>
+                          <div class="count">
+                            <a href='javascript:void(0);' data-ng-click='chooseTest()'>
+                              <i class="fa fa-pencil"></i> <br/>
+                              {{'home.labels.start_test' | translate}}
+                            </a>
+                          </div>
+                          <span class="count_bottom">
+                            <!-- <div data-ng-if='showTests' style='font-size: 40px; padding-top: 15px;'>
+                              <a href='#/app/test?t=s' class='btn btn-link animated flipInY'> Short Duration Test  </a>
+                              &nbsp; &nbsp;
+                              <a href='#/app/test?t=l' class='btn btn-link animated flipInY'> Long Duration Test </a>
+                            </div>  -->
+                          </span>
+                        </div>
+                      </div>
+
+                    </div>
+
+                    <div class='col-sm-12'>
+                       <div class="col-sm-6 animated fadeInDown" data-ng-if='showTests'>
+                        <div class='panel panel-info'>
+                          <div class='panel-heading'>
+                            <h4 translate='home.labels.choose_test_category'>Choose Test Category</h4>
+                          </div>
+                          <div class='panel-body'>
+                            <ul style="font-size:16px;line-height: 30px;">
+                                <li data-ng-repeat='category in categories track by $index'>
+                                  <a href='javascript:void(0);' data-ng-click='chooseTestCategory(category)'class='btn btn-link' data-ng-bind='category'></a>
+                                </li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-6 animated fadeInRight" data-ng-if='testOptions.c'>
+                        <div class='panel panel-success'>
+                          <div class='panel-heading'>
+                            <h4 translate='home.labels.choose_test_type'>Choose Test Type</h4>
+                          </div>
+                          <div class='panel-body'>
+                            <ul style="font-size:16px;line-height: 30px;">
+                                <li><a href='javascript:void(0);' data-ng-click='chooseTestType("s")'class='btn btn-link' translate='home.labels.short_test'> Short Duration Test</a></li>
+                                <li><a href='javascript:void(0);' data-ng-click='chooseTestType("l")'class='btn btn-link' translate='home.labels.long_test'> Long Duration Test</a></li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                     
+                    </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+<!-- /page content

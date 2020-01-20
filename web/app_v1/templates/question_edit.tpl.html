@@ -1,0 +1,312 @@
+<!-- page content -->
+  <div class="test-page">
+          <div class="clearfix"></div>
+          <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12" data-ng-init='loadAssets()'>
+              <div class="x_panel" style="">
+                <div class="x_title">
+                  <h2 translate="questions.labels.update_question"> Update Question
+                  </h2>
+                  <div class="clearfix"></div>
+                </div>
+
+                <ol class="breadcrumb">
+                  <li><a href='javascript:void(0);' data-ui-sref='app' translate="home.menu.home">Home</a></li>
+                  <!-- <li><a href='javascript:void(0);' data-ui-sref='app.questions' translate="home.menu.questions">Questions</a></li> -->
+                  <li data-ng-if='selectedQuestion.isRealtime && selectedQuestion.parent === "realtime"'><a href='#/app/questions?category={{link_category}}&type={{link_type}}' translate="home.menu.questions">Questions</a></li>
+                  <li data-ng-if='selectedQuestion.isPractise && selectedQuestion.isSpecific && !selectedQuestion.isCommon && selectedQuestion.parent === "specific"'><a href='#/app/questions?category={{link_category}}&type={{link_type}}' translate="home.menu.questions">Questions</a></li>
+                  <li data-ng-if='selectedQuestion.isPractise && !selectedQuestion.isSpecific && selectedQuestion.isCommon && selectedQuestion.parent === "common"'><a href='#/app/questions?category={{link_category}}&type={{link_type}}' translate="home.menu.questions">Questions</a></li>
+                  <li data-ng-if='selectedQuestion.isPractise && selectedQuestion.isSpecific && selectedQuestion.isCommon'><a href='#/app/questions?category={{link_category}}&type={{link_type}}' translate="home.menu.questions">Questions</a></li>
+                  <li class="active" translate="questions.labels.edit">Edit</li>
+                </ol>
+
+                <form data-ng-submit='updateQuestion()' enctype="multipart/form-data">
+               	<div>
+                  <div class='panel panel-default'>
+                    <div class='panel-heading'>
+                      <h4 class='panel-title'  translate="questions.labels.question" style="color: #31708f;"> Question </h4>
+
+                    </div>
+                    <div class='panel-body' data-ng-init='loadQuestion()'>
+
+                      <div data-ng-repeat='query in selectedQuestion.queries track by $index' data-ng-if='query.flag !== "deleted"'>
+                        <div class='col-sm-12 animated fadeInDown'>
+                          <div data-ng-if='$index' style='border-top: solid 1px #d3d3d3; padding: 10px;'>
+                          </div>
+                          <div class='text-right' data-ng-if='$index'>
+                            <button type='button' data-ng-click='removeQuestionElement($index)' class='btn btn-danger'><i class='fa fa-remove'></i></button>
+                          </div>
+
+                          <div class='' data-ng-class="{'col-sm-12':$index, 'col-sm-9': !$index}">
+                          <label class='text-info'>{{'questions.labels.enter_your_question'| translate}}</label>
+                            <textarea class='form-control' rows='5' data-ng-model='query.question' required></textarea>
+                          </div>
+
+                          <div class='col-sm-3' style='' data-ng-if='!$index'>
+                            <div data-ng-if='selectedQuestion.photo'>
+                              <img data-ng-src='{{selectedQuestion.photo}}' />
+                            </div>
+                            <div style='padding-top: 10px;'>
+                              <button type='button' class='btn btn-info' data-ng-click='uploadPhoto()' translate="register.form.upload_photo"> Upload Photo</button>
+                              <button type='button' data-ng-click='removePhoto()' data-ng-if='selectedQuestion.photo' class='btn btn-danger'>{{'register.form.remove' | translate }}</button>
+                            </div>
+                          </div>
+
+                          <div class="col-sm-12" style="margin-top: 20px;">
+                            <label class='text-info' translate="questions.labels.question_attributes">Question Attributes</label>
+                            <table class='table table-striped'>
+                              <tbody>
+                                <tr>
+                                  <th translate="questions.labels.audio">Audio</th>
+                                  <td>
+                                    <span data-ng-if='query.audio'>
+                                      <img data-ng-src='/app/assets/images/audio.png' ng-click="playAudio(query.id)"
+                                        width="20" height="20">
+                                      <audio controls id="{{query.id}}" data-ng-hide='true'>
+                                        <source src="{{query.audio}}" type="audio/mpeg">
+                                      </audio>
+                                    </span> &nbsp; <br/>
+                                    <fieldset>
+                                      <label translate="questions.labels.choose_new_audio">Choose new audio:</label>
+                                      <input type = "file" file-model = "query.newAudio" accept="audio/mp3" id = "{{$index}}audio" onchange="openAudio(this)"/>
+                                      <div class="{{$index}}audio"></div>
+                                    </fieldset>
+                                    <div data-ng-if="progressVisible && query.newAudio" style="margin-top: 10px;">
+                                        <div class="percent-progress">{{progress}}%</div>
+                                        <div class="progress-bar">
+                                            <div class="uploaded" ng-style="{'width': progress+'%'}"></div>
+                                        </div>
+                                    </div>
+                                  </td>
+                                </tr>
+                                <tr data-ng-if='!$index'>
+                                  <th translate="questions.labels.choose_topic_area">
+                                    Choose Topic Area
+                                  </th>
+                                  <td>
+                                    <select class='form-control' data-ng-model='selectedQuestion.topicArea' required data-ng-show='!$index'>
+                                      <option data-ng-repeat='topic in topics track by $index' value='{{topic.id}}' data-ng-bind='topic.name'>English</option>
+                                    </select>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <th translate="questions.labels.choose_language">Choose Language</th>
+                                  <td>
+                                    <select class='form-control' data-ng-model='query.language' ng-change="language_validation_edit()" required>
+                                        <option data-ng-repeat='language in languages track by $index' value='{{language.code}}' data-ng-bind='language.name'>English</option>
+                                    </select>
+                                  </td>
+                                </tr>
+                                <tr data-ng-if='!$index && selectedPractiseTypesEdit != "common"'>
+                                  <th translate="questions.labels.choose_category">Choose Category</th>
+                                  <td>
+                                    <select class='form-control' data-ng-model='selectedQuestion.category' required data-ng-show='!$index'>
+                                      <option data-ng-repeat='category in categories track by $index' value='{{category}}' data-ng-bind='category'>English</option>
+                                    </select>
+                                  </td>
+                                </tr>
+                                <!-- <tr data-ng-if='!$index && selectedPractiseTypesEdit != "common"'>
+                                  <th translate="questions.labels.choose_test_type">Choose Test type</th>
+                                  <td>
+                                      <span data-ng-if = "test.type === 'realtime'" data-ng-model='test.type'>{{'home.labels.start_test'| translate}}</span>
+                                      <span data-ng-if = "test.type === 'practise'" data-ng-model='test.type'>{{'questions.labels.practise'| translate}}</span> -->
+                                    <!-- <select required class='form-control' data-ng-model='test.type' id='testType'>
+                                        <option value='realtime'>{{'home.labels.start_test'| translate}}</option>
+                                        <option value='practise'>{{'questions.labels.practise'| translate}}</option>
+                                    </select> -->
+                                  <!-- </td>
+                                </tr> -->
+                                <tr data-ng-if='!$index'>
+                                  <th translate="questions.labels.question_availabe_in">Question available in </th>
+                                  <td>
+                                      <label class='col-sm-3' style="margin-left: -10px;">
+                                        <input type='radio' name='test_type' ng-click="toggleSelectionCommon()" data-ng-model='selectedPractiseTypesEdit' value='common' required=""> {{'testconfigure.common'| translate}}
+                                      </label>
+                                      <label class='col-sm-3'>
+                                        <input type='radio' name='test_type' ng-click="toggleSelectionSpecific()" data-ng-model='selectedPractiseTypesEdit' value='specific' required=""> {{'testconfigure.specific'| translate}}
+                                      </label>
+                                    <!-- <label ng-repeat="types in practiseTypes">
+                                        <input
+                                          type="checkbox"
+                                          name="selectedTypes[]"
+                                          value="{{types}}"
+                                          ng-checked="selectedPractiseTypes.indexOf(types) > -1"
+                                          ng-click="toggleSelection(types)"
+                                        > {{types}} &nbsp; &nbsp;
+                                      </label> -->
+                                  </td>
+                                </tr>
+                                    <div style='margin-top: 5px;' class='animated fadeIn' data-ng-show='test.type === "practise"'>
+                                      <label translate="questions.labels.test_availablity_list">Test availablity list: </label> &nbsp;
+
+                                    </div>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+
+                          <div class='col-sm-12' style='margin: 10px;'>
+                            <label translate="questions.labels.answer_options">Answer options</label>
+                            <table class='table table-striped'>
+                              <!-- <thead>
+                                <th>{{'questions.labels.options'| translate}}</th>
+
+                              </thead> -->
+                              <tbody>
+                                <tr>
+                                  <th>
+                                    <div class='col-sm-9'>
+                                        <input type='radio' name='choices' data-ng-model='selectedQuestion.answer' value='1' required data-ng-if='!$index'>&nbsp;
+                                        <input type='text' class='form-control' placeholder="{{'questions.labels.option' | translate}} 1" data-ng-if='!selectedQuestion.choice1photo' data-ng-model='query.choice1' required style='width:80%;display: inline-block;'></input>
+                                        <input type='text' class='form-control' placeholder="{{'questions.labels.option' | translate}} 1" data-ng-if='selectedQuestion.choice1photo' data-ng-model='query.choice1' required style='width:80%;display: inline-block;'></input>
+                                    </div>
+                                    <div class='col-sm-3' id='questionphoto' style='' data-ng-if='!$index'>
+                                      <div data-ng-if='selectedQuestion.choice1photo'>
+                                        <img data-ng-src='{{selectedQuestion.choice1photo}}' />
+                                      </div>
+                                      <div style='padding-top: 10px; text-align: center; display: inline-flex;'>
+                                        <button type='button' class='btn btn-info' data-ng-click='uploadPhoto1()' translate="register.form.upload_photo"> Upload Photo</button>
+                                        <button type='button' data-ng-click='removeChoice1Photo()' data-ng-if='selectedQuestion.choice1photo' class='btn btn-danger'>{{'register.form.remove' | translate }}</button>
+                                      </div>
+                                    </div>
+                                  </th>
+                                  <td>
+                                      <span data-ng-if='query.option1audio'>
+                                        <img data-ng-src='/app/assets/images/audio.png' ng-click="playAudio(query.id+'option1')"
+                                          width="20" height="20">
+                                        <audio controls id="{{query.id}}option1" data-ng-hide='true'>
+                                          <source src="{{query.option1audio}}" type="audio/mpeg">
+                                        </audio>
+                                      </span>  &nbsp; <br/>
+                                      <fieldset>
+                                        <label translate="questions.labels.choose_new_audio">Choose new audio:</label>
+                                        <input type = "file" file-model = "query.newOption1Audio" accept="audio/mp3" id = "{{$index}}option1" onchange="openAudio(this)"/>
+                                        <div class="{{$index}}option1"></div>
+                                      </fieldset>
+                                      <div data-ng-if="progressVisible && query.newOption1Audio" style="margin-top: 10px;">
+                                          <div class="percent-progress">{{progress}}%</div>
+                                          <div class="progress-bar">
+                                              <div class="uploaded" ng-style="{'width': progress+'%'}"></div>
+                                          </div>
+                                      </div>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <th>
+                                    <div class='col-sm-9'>
+                                        <input type='radio' name='choices' data-ng-model='selectedQuestion.answer' value='2' required data-ng-if='!$index'>&nbsp;
+                                        <input type='text' class='form-control' placeholder="{{'questions.labels.option' | translate}} 2" data-ng-if='!selectedQuestion.choice2photo' data-ng-model='query.choice2' required style='width:80%;display: inline-block;'></input>
+                                        <input type='text' class='form-control' placeholder="{{'questions.labels.option' | translate}} 2" data-ng-if='selectedQuestion.choice2photo' data-ng-model='query.choice2' required style='width:80%;display: inline-block;'></input>
+                                    </div>
+                                    <div class='col-sm-3' id='questionphoto' style='' data-ng-if='!$index'>
+                                      <div data-ng-if='selectedQuestion.choice2photo'>
+                                        <img data-ng-src='{{selectedQuestion.choice2photo}}' />
+                                      </div>
+                                      <div style='padding-top: 10px; text-align: center; display: inline-flex;'>
+                                        <button type='button' class='btn btn-info' data-ng-click='uploadPhoto2()' translate="register.form.upload_photo"> Upload Photo</button>
+                                        <button type='button' data-ng-click='removeChoice2Photo()' data-ng-if='selectedQuestion.choice2photo' class='btn btn-danger'>{{'register.form.remove' | translate }}</button>
+                                      </div>
+                                    </div>
+                                  </th>
+                                  <td>
+                                      <span data-ng-if='query.option2audio'>
+                                        <img data-ng-src='/app/assets/images/audio.png' ng-click="playAudio(query.id+'option2')"
+                                          width="20" height="20">
+                                        <audio controls id="{{query.id}}option2" data-ng-hide='true'>
+                                          <source src="{{query.option2audio}}" type="audio/mpeg">
+                                        </audio>
+                                      </span>  &nbsp; <br/>
+                                      <fieldset>
+                                        <label translate="questions.labels.choose_new_audio">Choose new audio:</label>
+                                        <input type = "file" file-model = "query.newOption2Audio" accept="audio/mp3" id = "{{$index}}option2" onchange="openAudio(this)"/>
+                                        <div class="{{$index}}option2"></div>
+                                      </fieldset>
+                                      <div data-ng-if="progressVisible && query.newOption2Audio" style="margin-top: 10px;">
+                                          <div class="percent-progress">{{progress}}%</div>
+                                          <div class="progress-bar">
+                                              <div class="uploaded" ng-style="{'width': progress+'%'}"></div>
+                                          </div>
+                                      </div>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <th>
+                                    <div class='col-sm-9'>
+                                        <input type='radio' name='choices' data-ng-model='selectedQuestion.answer' value='3' required data-ng-if='!$index'>&nbsp;
+                                        <input type='text' class='form-control' placeholder="{{'questions.labels.option' | translate}} 3" data-ng-if='!selectedQuestion.choice3photo' data-ng-model='query.choice3' required style='width:80%;display: inline-block;'></input>
+                                        <input type='text' class='form-control' placeholder="{{'questions.labels.option' | translate}} 3" data-ng-if='selectedQuestion.choice3photo' data-ng-model='query.choice3' required style='width:80%;display: inline-block;'></input>
+                                    </div>
+                                    <div class='col-sm-3' id='questionphoto' style='' data-ng-if='!$index'>
+                                        <div data-ng-if='selectedQuestion.choice3photo'>
+                                            <img data-ng-src='{{selectedQuestion.choice3photo}}' />
+                                        </div>
+                                        <div style='padding-top: 10px; text-align: center; display: inline-flex;'>
+                                            <button type='button' class='btn btn-info' data-ng-click='uploadPhoto3()' translate="register.form.upload_photo"> Upload Photo</button>
+                                            <button type='button' data-ng-click='removeChoice3Photo()' data-ng-if='selectedQuestion.choice3photo' class='btn btn-danger'>{{'register.form.remove' | translate }}</button>
+                                        </div>
+                                    </div>
+                                  </th>
+                                  <td>
+                                      <span data-ng-if='query.option3audio'>
+                                        <img data-ng-src='/app/assets/images/audio.png' ng-click="playAudio(query.id+'option3')"
+                                          width="20" height="20">
+                                        <audio controls id="{{query.id}}option3" data-ng-hide='true'>
+                                          <source src="{{query.option3audio}}" type="audio/mpeg">
+                                        </audio>
+                                      </span>  &nbsp; <br/>
+                                      <fieldset>
+                                        <label translate="questions.labels.choose_new_audio">Choose new audio:</label>
+                                        <input type = "file" file-model = "query.newOption3Audio" accept="audio/mp3" id = "{{$index}}option3" onchange="openAudio(this)"/>
+                                        <div class="{{$index}}option3"></div>
+                                      </fieldset>
+                                      <div data-ng-if="progressVisible && query.newOption3Audio" style="margin-top: 10px;">
+                                          <div class="percent-progress">{{progress}}%</div>
+                                          <div class="progress-bar">
+                                              <div class="uploaded" ng-style="{'width': progress+'%'}"></div>
+                                          </div>
+                                      </div>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+
+                        <hr style='margin-top: 20px;'/>
+                      </div>
+
+
+                    </div>
+                  </div>
+                </div>
+                <p class='pull-right'>
+                  <button class='btn btn-success' type='button' data-ng-click='insertNewTranslation()'> <i class='fa fa-plus-circle'></i> &nbsp;&nbsp;{{'questions.link.add_translation' | translate}}</button>
+                </p>
+                <p class='text-center'>
+                  <button class='btn btn-info' type='submit' style='margin-top: 25px;width: 200px;' translate='questions.link.save_question' ng-if="!editQuestionSave">Update Question</button>
+                  <button class='btn btn-info disabled' type='submit' style='margin-top: 25px;width: 200px;' translate='questions.link.save_question' ng-if="editQuestionSave">Update Question</button>
+                  &nbsp; &nbsp;
+                  <a style='margin-top: 25px;width: 200px;' class='btn btn-primary' data-ng-if='selectedQuestion.isRealtime && selectedQuestion.parent === "realtime"' href='#/app/questions?category={{link_category}}&type={{link_type}}'>{{'questions.labels.cancel' | translate}}</a>
+                  <a style='margin-top: 25px;width: 200px;' class='btn btn-primary' data-ng-if='selectedQuestion.isPractise && selectedQuestion.isSpecific && !selectedQuestion.isCommon && selectedQuestion.parent === "specific"' href='#/app/questions?category={{link_category}}&type={{link_type}}'> {{'questions.labels.cancel' | translate}}</a>
+                  <a style='margin-top: 25px;width: 200px;' class='btn btn-primary' data-ng-if='selectedQuestion.isPractise && !selectedQuestion.isSpecific && selectedQuestion.isCommon && selectedQuestion.parent === "common"' href='#/app/questions?category={{link_category}}&type={{link_type}}'> {{'questions.labels.cancel' | translate}}</a>
+                  <a style='margin-top: 25px;width: 200px;' class='btn btn-primary' data-ng-if='selectedQuestion.isPractise && selectedQuestion.isSpecific && selectedQuestion.isCommon' href='#/app/questions?category={{link_category}}&type={{link_type}}'> {{'questions.labels.cancel' | translate}}</a>
+                </p>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <script>
+        function openAudio(value){
+            var id = "."+value.id;
+            if(value.files.length != 0){
+                var obUrl = URL.createObjectURL(value.files[0]);
+                var audio = '<audio controls id=""><source src="'+ obUrl +'" type="audio/mpeg"></audio>';
+                $(id).html(audio);
+            }else{
+                $(id).html("");
+            }
+        }
+        </script>
+<!-- /page content

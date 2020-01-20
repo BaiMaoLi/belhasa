@@ -1,0 +1,64 @@
+<!-- page content -->
+
+<div class="">
+  <div class="clearfix"></div>
+  <div class="row" data-ng-init='loadStudents()'>
+    <div class="col-md-12 col-sm-12 col-xs-12">
+      <div class="x_panel" style="height:600px;overflow-y:scroll;">
+        <div class="x_title">
+          <h2 translate="student.title_list">Student List</h2>
+          <div class="clearfix"></div>
+        </div>
+        <ol class="breadcrumb">
+          <li><a href='javascript:void(0);' data-ui-sref='app' translate="home.menu.home">Home</a></li>
+          <li class="active" translate="home.menu.students">Students</li>
+        </ol>
+        <div data-ng-if='loader' style='height: 100%; padding-top: 250px; text-align: center;'>
+          <img data-ng-src='/app/assets/images/app-loader.gif'/>
+        </div>
+       	<table class='table table-striped' data-ng-if='students.length && !loader'>
+       		<thead>
+        		<tr>
+              <th translate="table.sno">S.No</th>
+              <th translate='register.form.photo' style='width:50px;'>Photo</th>
+              <th>Student ID</th>
+        			<th translate="register.form.firstname">First Name</th>
+        			<th translate="register.form.lastname">Last Name</th>
+        			<th translate="register.form.email">Email</th>
+              <th translate="form.status">Status</th>
+        		</tr>
+        	</thead>
+          <tbody>
+            <tr data-ng-repeat='student in students track by $index' style='cursor: pointer' data-ng-click='viewStudent(student)'>
+              <td data-ng-bind='$index+1'></td>
+              <td>
+                <img data-ng-src="{{student.photo}}" alt="" data-ng-if='student.photo' style='width:30px;'>
+                <img src="app/assets/images/temp-icon.png" alt="" data-ng-if='!student.photo' style='width:30px;'>
+              </td>
+              <td data-ng-bind='student.studentId'></td>
+              <td data-ng-bind='student.firstName'></td>
+              <td data-ng-bind='student.lastName'></td>
+              <td>
+                <a href='#/app/students/profile?id={{student.id}}' data-ng-bind='student.email'></a>
+              </td>
+              <td>
+                <span data-ng-if='student.status' translate="form.enabled">
+                  Enabled
+                </span>
+                <span data-ng-if='!student.status' class='text-warning' translate="form.waiting">
+                  Waiting for Approval
+                </span>
+              </td>
+            </tr>
+	        </tbody>
+       	</table>
+        <div data-ng-if='!students.length && !loader' style='height: 100%; padding-top: 200px; text-align: center;'>
+          <h3><strong class='fa fa-warning'></strong>&nbsp;{{'home.alert.student' | translate}}</h3>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- /page content -->

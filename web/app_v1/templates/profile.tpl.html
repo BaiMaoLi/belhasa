@@ -1,0 +1,209 @@
+<div class="">
+  <div class="clearfix"></div>
+  <div class="row" data-ng-init='loadStudentById()'>
+    <div class="col-md-12 col-sm-12 col-xs-12">
+      <div class="x_panel" style="height:600px;overflow-y:scroll;">
+        <div class="x_title">
+          <h2> {{'table.myprofile' | translate}}</h2>
+          <div class="clearfix"></div>
+        </div>
+
+        <ol class="breadcrumb">
+          <li><a href='javascript:void(0);' data-ui-sref='app' translate="home.menu.home">Home</a></li>
+          <li class="active" translate="student.profile">Profile</li>
+        </ol>
+
+        <div data-ng-if='loader' style='height: 100%; padding-top: 200px; text-align: center;'>
+          <img data-ng-src='/app/assets/images/app-loader.gif'/>
+        </div>
+
+        <div class='alert alert-success animated lightSpeedIn' data-ng-if='passwordSuccessAlert'>
+          <button type="button" class="close" aria-label="Close" data-ng-click='closeAlert()'><span aria-hidden="true">&times;</span></button>
+          <strong class='glyphicon glyphicon-ok'></strong> &nbsp;{{'table.passressuccess' | translate}}
+        </div>
+
+        <div class='profile-section' data-ng-if='!loader'>
+          <div class='panel panel-primary animated fadeIn' data-ng-if='!pwdFlag'>
+            <div class='panel-heading'>
+              <span translate="student.labels.personal_info">Personal Info</span>
+              <span class='pull-right'>
+                <a data-ng-if='!editView' href='javascript:void(0);' data-ng-click='enableEdit(true)' style='color:#FFF;'> <i class='fa fa-pencil-square'></i> {{'table.update' | translate}} </a>
+                <a data-ng-if='editView' href='javascript:void(0);' data-ng-click='enableEdit(false)' style='color:#FFF;'> <i class='fa fa-close'></i> {{'table.cancel' | translate}} </a> &nbsp;|&nbsp;
+                <a data-ng-if="!pwdFlag && student.isAdmin" href='javascript:void(0);' data-ng-click='enablePassword(true)' style='color:#FFF;'> <i class='fa fa-key'></i> {{'table.chngpasscode' | translate}}</a>
+               </span>
+            </div>
+            <div class='panel-body'>
+              <form data-ng-submit='updateUser()'>
+                 <table class='table table-striped'>
+                <tbody>
+                  <tr>
+                    <th style="width: 300px;" translate="register.form.student_id" data-ng-if='student.isAdmin == "0"'></th>
+                    <th style="width: 300px;" translate="register.form.admin_id" data-ng-if='student.isAdmin == "1"'></th>
+                    <th style="width: 300px;" translate="register.form.supervisor_id" data-ng-if='student.isAdmin == "2"'></th>
+                    <td  style="width: 300px;" data-ng-bind='student.studentId'></td>
+                    <th class='text-center'>
+                      {{'register.form.photo' | translate}}
+                    </th>
+                  </tr>
+                  <tr>
+                    <th style="width: 300px;">{{'register.form.name' | translate}}</th>
+                    <td  style="width: 300px;" data-ng-bind='student.name' data-ng-if='!editView'></td>
+                    <td data-ng-if='editView'>
+                      <input type='text' data-ng-model='user.name' class='form-control' required></input>
+                    </td>
+                    <td rowspan="13" class='text-center' style='padding-top: 10px;'>
+                      <img src='/app/assets/images/temp-icon.png' style="width:200px;" data-ng-if='!student.photo && !editView'/>
+                      <img data-ng-src='{{student.photo}}' style="width:200px;" data-ng-if='student.photo && !editView'/>
+                      <img data-ng-src='{{user.photo}}' style="width:200px;" data-ng-if='editView'/>
+
+                      <hr />
+                      <div data-ng-if='editView' class='text-center'>
+                        <button class='btn btn-info' type="button" data-ng-click='uploadPhoto()'>{{'table.uploadphoto' | translate}}</button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr  data-ng-if='!editView'>
+                    <th translate="register.form.user_type">Gender</th>
+                    <td data-ng-if="student.isAdmin == '0'">{{'register.form.student'|translate}}</td>
+                    <td data-ng-if="student.isAdmin == '1'">{{'register.form.admin'|translate}}</td>
+                    <td data-ng-if="student.isAdmin == '2'">{{'register.form.supervisor'|translate}}</td>
+                  </tr>
+                  <tr data-ng-if='!student.isAdmin'>
+                      <th translate="register.form.category">Category</th>
+                      <td data-ng-bind='student.category'></td>
+                  </tr>
+                  <tr>
+                    <th style='width: 300px;' translate="register.form.email">Email</th>
+                    <td data-ng-bind='student.email' data-ng-if='!editView'></td>
+                    <td data-ng-if='editView'>
+                       <input type="email" class="form-control" placeholder="{{'register.form.email' | translate }}" required data-ng-model='user.email' />
+                    </td>
+                  </tr>
+                  <tr>
+                    <th translate="student.labels.gender">Gender</th>
+                    <td data-ng-if='student.gender === "Male" && !editView'>{{'register.form.male' | translate}}</td>
+                    <td data-ng-if='student.gender === "Female" && !editView'>{{'register.form.female' | translate}}</td>
+                    <td data-ng-if="editView">
+                      <select data-ng-model='user.gender' class='form-control' required>
+                        <option value="">{{'register.form.select' | translate}}</option>
+                        <option value='Male'>{{'register.form.male' | translate}}</option>
+                        <option value='Female'>{{'register.form.female' | translate}}</option>
+                      </select>
+                    </td>
+                  </tr>
+                  <tr data-ng-if='student.isAdmin'>
+                    <th translate="student.labels.nationality">Nationality</th>
+                    <td data-ng-bind='student.nationality' data-ng-if='!editView'></td>
+                    <td data-ng-if='editView'>
+                       <input type="text" class="form-control" placeholder="{{'student.labels.nationality' | translate }}"  data-ng-model='user.nationality' />
+                    </td>
+                  </tr>
+                  <tr data-ng-if='student.isAdmin'>
+                    <th translate="student.labels.dob">Date of Birth</th>
+                    <td data-ng-bind='student.dob' data-ng-if='!editView'></td>
+                    <td data-ng-if='editView && enableDob'>
+                      <input type="text" class="form-control" ng-click="openPicker()" uib-datepicker-popup="yyyy-MM-dd" data-ng-model='user.dob' is-open="popup1.opened" close-text="Close" max-date='date_valid.startDate' placeholder="Date of Birth" />
+                    </td>
+                    <td data-ng-if='editView && !enableDob'>
+                      <input type="text" class="form-control" ng-click="EnableDobAdd()" placeholder="Date of Birth" />
+                    </td>
+                  </tr>
+                  <!-- <tr data-ng-if='student.isAdmin'>
+                    <th translate="student.labels.age">Age</th>
+                    <td data-ng-bind='student.age' data-ng-if='!editView'></td>
+                    <td data-ng-if='editView'>
+                      <input type='number' data-ng-model='user.age' class='form-control' required></input>
+                    </td>
+                  </tr> -->
+                  <tr data-ng-if='student.isAdmin'>
+                    <th translate="student.labels.maritalStatus">Marital Status</th>
+                    <td data-ng-bind='student.maritalStatus' data-ng-if='!editView'></td>
+                    <td data-ng-if='editView'>
+                      <select class='form-control' data-ng-model='user.maritalStatus' required>
+                            <option value="">{{'register.form.select' | translate}}</option>
+                            <option value='Single' translate="register.form.single">{{'register.form.single' | translate}}</option>
+                            <option value='Married' translate="register.form.married">{{'register.form.married' | translate}}</option>
+                      </select>
+                    </td>
+                  </tr>
+                  <tr data-ng-if='student.isAdmin'>
+                    <th translate="student.labels.passport">Passport</th>
+                    <td data-ng-bind='student.passport' data-ng-if='!editView'></td>
+                    <td data-ng-if='editView'>
+                      <textarea class="form-control" data-ng-model='user.passport'  placeholder="{{'register.form.passport_details' | translate }}"></textarea>
+                    </td>
+                  </tr>
+                  <tr data-ng-if='student.isAdmin'>
+                    <th translate="student.labels.emirates">Emirates</th>
+                    <td data-ng-bind='student.emirates' data-ng-if='!editView'></td>
+                    <td data-ng-if='editView'>
+                      <textarea class='form-control' data-ng-model='user.emirates'  placeholder="{{'register.form.emirates_id_details' | translate }}">
+                            Emirates Id Details
+                      </textarea>
+                    </td>
+                  </tr>
+                  <tr data-ng-if='editView'>
+                    <th class='text-center' colspan="3">
+                      <button class='btn btn-success' type='submit'> {{'testconfigure.save' | translate }} </button>
+                    </th>
+                  </tr>
+                </tbody>
+              </table>
+              </form>
+            </div>
+          </div>
+
+          <div class='alert alert-danger animated lightSpeedIn' data-ng-if='passwordErrorAlert'>
+            <button type="button" class="close" aria-label="Close" data-ng-click='closeAlert()'><span aria-hidden="true">&times;</span></button>
+            <strong class='glyphicon glyphicon-warning-sign'></strong> &nbsp; <span>{{'form.profile_incorrect_passcode' | translate}}</span>
+          </div>
+          <div class='alert alert-danger animated lightSpeedIn' data-ng-if='passwordErrorAlert_exists'>
+            <button type="button" class="close" aria-label="Close" data-ng-click='closeAlert()'><span aria-hidden="true">&times;</span></button>
+            <strong class='glyphicon glyphicon-warning-sign'></strong> &nbsp; <span>{{'form.profile_passcode_exists' | translate}}</span>
+          </div>
+
+
+          <div class='panel panel-info animated fadeIn' data-ng-if='pwdFlag'>
+            <div class='panel-heading'>
+              <span>{{'table.chngpasscode' | translate}}</span>
+              <span class='pull-right'>
+                <a href='javascript:void(0);' class='text-primary' data-ng-click='enablePassword(false)'> <i class='fa fa-close'></i> {{'table.cancel' | translate}} </a>
+              </span>
+            </div>
+            <div class=panel-body>
+              <form data-ng-submit='resetPassword()'>
+                <table class='table table-striped'>
+                  <tr class='animated fadeIn' data-ng-if='!student.isAdmin'>
+                    <th style='width: 300px;'>{{'table.current_password' | translate}}</th>
+                    <td>
+                      <input type='password' class='form-control' data-ng-model='data.currentPassword' placeholder="{{'table.current_password' | translate}}" required></input>
+                    </td>
+                  </tr>
+                  <tr class='animated fadeIn' data-ng-if='pwdFlag'>
+                    <th style='width: 300px;'>{{'table.new_password' | translate}}</th>
+                    <td>
+                      <input type='password' class='form-control' data-ng-model='data.newPassword' placeholder="{{'table.new_password' | translate}}" required pattern=".{4,}"   required title="{{'validation.password_validation'| translate}}"></input>
+                    </td>
+                  </tr>
+                  <tr class='animated fadeIn' data-ng-if='pwdFlag'>
+                    <th style='width: 300px;'>{{'table.confirm_password' | translate}}</th>
+                    <td>
+                      <input type='password' class='form-control' data-ng-model='data.confirmPassword' placeholder="{{'table.confirm_password' | translate}}" required pattern=".{4,}"   required title="{{'validation.password_validation'| translate}}"></input>
+                    </td>
+                  </tr>
+                  <tr class='animated fadeIn' data-ng-if='pwdFlag'>
+                    <td colspan="2" class='text-center'> <button type="submit" class="btn btn-primary">{{'testconfigure.save' | translate }}</button> </td>
+                  </tr>
+                </table>
+              </form>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- /page content

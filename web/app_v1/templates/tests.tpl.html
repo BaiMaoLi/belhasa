@@ -1,0 +1,548 @@
+<script>
+  window.addEventListener("beforeunload", function(event) {
+      console.log(localStorage.getItem('test'));
+    var id = JSON.parse(localStorage.getItem('test-category'));
+    if (!localStorage.getItem('test')){
+      //var id = JSON.parse(localStorage.getItem('test-category'));
+      // localStorage.removeItem("test-category");
+      // var url = location.origin+'/api/user/logout?id='+id.userId;
+      // var xhr = new XMLHttpRequest();
+      // xhr.open("GET", url, false);
+      // xhr.send();
+      //console.log(xhr.status);
+      //console.log(xhr.statusText);
+
+      event.returnValue = "Your session will not be saved.";
+    } else if(localStorage.getItem('popup')) {
+      console.log('yes');
+      localStorage.removeItem("popup");
+      localStorage.removeItem("test-category");
+      localStorage.removeItem("test");
+      event.returnValue = "Your time over for the test, click OK to see result!";
+    } else {
+    //   console.log('script file');
+    //   localStorage.removeItem("popup");
+    //   localStorage.removeItem("test-category");
+    //   localStorage.removeItem("test");
+    }
+    //  localStorage.removeItem("test-category");
+    //   var url = location.origin+'/api/user/logout?id='+id.userId;
+    //   var xhr = new XMLHttpRequest();
+    //   xhr.open("GET", url, false);
+    //   xhr.send();
+});
+window.addEventListener("unload", function(event) {
+    localStorage.removeItem("test-category");
+    localStorage.removeItem("admin_id");
+    localStorage.removeItem("reviewOption");
+    localStorage.removeItem("user_audio_lang");
+     var url = location.origin+'/api/user/logout?id='+id.userId;
+     var xhr = new XMLHttpRequest();
+     xhr.open("GET", url, false);
+     xhr.send();
+});
+</script>
+
+<div class="modal-header" style="background-color: #686868; height: 55px;">
+    <div ng-if="!rtl_screen">
+        <span class ="testtile" data-ng-if = "titletype === 'Mock Test'">{{'table.testfor' | translate}} {{titlecategory}} - {{'table.candidate_name' | translate}} - {{user_name }}</span>
+        <span class ="testtile" data-ng-if = "titletype === 'Practice common'">{{'table.testfor' | translate}} {{titlecategory}} {{'home.labels.pracom' | translate}} - {{'table.candidate_name' | translate}} - {{user_name }}</span>
+        <span class ="testtile" data-ng-if = "titletype === 'Practice Specific'">{{'table.testfor' | translate}} {{titlecategory}} {{'home.labels.praspe' | translate}} - {{'table.candidate_name' | translate}} - {{user_name }}</span>
+        <span class ="testtimer" ><i class="fa fa-clock-o" aria-hidden="true"></i>{{'table.timerem' | translate}} : {{timer}}</span>
+        <span class ="testcount" ><i class="fa fa-hashtag" aria-hidden="true"></i> {{quescount}} / {{totalcount}}</span>
+    </div>
+    <div ng-if="rtl_screen" style="direction: rtl;">
+        <span class ="testtile" data-ng-if = "titletype === 'Mock Test'">{{'table.testfor' | translate}} {{titlecategory}} - {{'table.candidate_name' | translate}} - {{user_name }}</span>
+        <span class ="testtile" data-ng-if = "titletype === 'Practice common'">{{'table.testfor' | translate}} {{titlecategory}} {{'home.labels.pracom' | translate}} - {{'table.candidate_name' | translate}} - {{user_name }}</span>
+        <span class ="testtile" data-ng-if = "titletype === 'Practice Specific'">{{'table.testfor' | translate}} {{titlecategory}} {{'home.labels.praspe' | translate}} - {{'table.candidate_name' | translate}} - {{user_name }}</span>
+        <span class ="rtltesttimer"><i class="fa fa-clock-o" aria-hidden="true"></i>{{'table.timerem' | translate}} : {{timer}}</span>
+        <span class ="rtltestcount"><i class="fa fa-hashtag" aria-hidden="true"></i> {{quescount}} / {{totalcount}}</span>
+    </div>
+        <!-- <span data-ng-if='realtimetest === "1"' style='color: white; font-size: 40px; position: absolute;right: 40%;text-align: center;'>{{titlecategory}} {{titletype}}</span>
+        <span class='pull-left' style="margin-top:40px;color: white; font-size: 20px;">{{'register.form.student' | translate}} : {{user_name }}</span> -->
+        <!-- <span class='pull-right' data-ng-click='closePopup()' style="cursor: pointer;"> <i class='glyphicon glyphicon-remove'></i> </span> -->
+</div>
+<style>
+    ul {
+    list-style: none;
+    }
+    li {
+    display: inline-block;
+    margin-right: 15px;
+    }
+    input {
+    opacity: 0;
+    }
+    label {
+    cursor: pointer
+    }
+    input:checked + label{
+      position: relative;
+      display: inline-block;
+      padding: 15px 25px;
+      background: #E46C0A;
+      text-decoration: none;
+      color: #fff;
+      font-size: 25px;
+      font-weight: 100;
+      border-radius: 3px;
+      box-shadow: 0px 1px 4px -2px #333;
+      text-shadow: 0px -1px #333;
+      border-color: #797B7B;
+    }
+    .correct{
+        margin-right: 10px;
+        background-color: #DFF0D8;
+        width: 500px;
+        border: 1px solid #DFF0D8;
+        border-radius: 5px;
+        height: inherit;
+        padding-top: 10px;
+        padding-left: 10px;
+        word-wrap: break-word;
+        padding: 10px;
+    }
+    .incorrect{
+        margin-right: 10px;
+        background-color: #F2DEDE;
+        width: 500px;
+        border: 1px solid #F2DEDE;
+        border-radius: 5px;
+        height: inherit;
+        padding-top: 10px;
+        padding-left: 10px;
+        word-wrap: break-word;
+        padding: 10px;
+    }
+    .normal{
+        margin-right: 10px;
+        width: 75px;
+        border: 5px solid black;
+        border-radius: 5px;
+        height: 75px;
+        background: #984807;
+    }
+    #counter{
+    font:Verdana, Geneva, sans-serif;
+    font-size:18px;
+    text-align:left;
+    height:50px;
+    display: table;
+    width: 100%;
+    }
+    #scroller {
+      overflow: auto;
+      height: 100px;
+    }
+
+    #counter span {
+        vertical-align:middle;
+        display: table-cell;
+    }
+    .test-option{
+        padding-top: 0px;
+        padding-bottom: 10px;
+    }
+    .modal{
+      height: 100%;
+    }
+    .modal-dialog{
+    height: 100%;
+    }
+    .modal-content{
+    height: 100%;
+    }
+    body{
+      margin-bottom: 200px;
+    }
+    td{
+        padding: 5px;
+    }
+    .testbtn{
+        background: #686868;
+        color: white;
+        border: 2px solid;
+        border-color: white;
+    }
+    .testbtn:hover{
+        background: #686868;
+        color: yellow;
+        border: 2px solid;
+        border-color: yellow;
+    }
+    button{
+      font-size: 20px;
+    }
+    body{
+      color: #000000 !important;
+      font-size: 16px !important;
+    }
+    .PopupPanel
+    {
+        border: solid 1px black;
+        position: fixed;
+        left: 50%;
+        top: 50%;
+        background-color: white;
+        z-index: 100;
+
+        height: 230px;
+        margin-top: -10%;
+
+        width: 550px;
+        margin-left: -300px;
+    }
+    #rtl_screen{
+        direction: rtl;  /* Right to Left */
+    }
+</style>
+<div class="modal-body" data-ng-init='loadTest()' style="position: static;">
+    <div style="height:100%; width: 90%; margin: 5px auto;">
+
+      <div data-ng-if='loader' style='min-height: 300px !important; padding-top: 100px; text-align: center;'>
+        <img data-ng-src='/app/assets/images/app-loader.gif'/>
+      </div>
+      <div class='alert alert-danger alert-dismissible animated flash' data-ng-if='selectoption'>
+        <button type="button" class="close" aria-label="Close" data-ng-click='closeAlert()'>
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <strong class='glyphicon glyphicon-alert'></strong> &nbsp; <span>{{'form.please_choose_your_answer' | translate}}</span>
+      </div>
+      <div data-ng-if='testExpiry' style='min-height: 300px !important; padding-top: 100px; text-align: center;'>
+        <h3 class='text-danger'><i class='glyphicon glyphicon-alert'></i>{{'table.ansprocessing' | translate}}</h3>
+      </div>
+        <div class="row">
+          <form data-ng-submit='nextQuestion()'>
+            <div class="col-md-12" style="padding-right: 20px;" ng-if="!rtl_screen">
+              <!-- start   -->
+              <div id='test-question' data-ng-if='!loader && !testExpiry'>
+                  <div id='test-question' data-ng-if='!loader && !testExpiry' style="max-height: 520px;">
+                      <!-- <form data-ng-submit='nextQuestion()'> -->
+
+                        <!-- <div class='panel panel-info'>
+                              <div class='panel-heading' style="background-color: #F5F5F5;">
+                                  <strong style="font-size:15px;">{{'questions.label.question' | translate}}</strong>
+                                  <span data-ng-if='question.audio'>
+                                    <i class="fa {{audioClass}}" style='color: #2d2d86;cursor: pointer;font-size: 30px;position: relative;left: 87%;' ng-click="playAudio(question.id)"> </i>
+                                    <audio controls id="{{question.id}}" style="display:none">
+                                      <source data-ng-src="{{question.audio}}" type="audio/mpeg">
+                                    </audio>
+                                  </span>
+                              </div>
+                              <div class='panel-body'>
+                                  <div >
+                                      <div style="width: 25%; display: inline-block; margin-left: 30%;" data-ng-if='question.photo'>
+                                        <img data-ng-src="{{question.photo}}" alt="" style="width: 100%;">
+                                      </div>
+                                      <div style="width: 89%; display: inline-block;">
+                                          <h2 data-ng-bind='question.question'></h2>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div> -->
+                          <div >
+                              <div style="width: 10%; display: none; margin-left: 40%; text-align: center;" data-ng-if="question.audio">
+                                  <i class="fa {{audioClass}}" style='color: #2d2d86;cursor: pointer;font-size: 30px;position: relative;left: 30%;' ng-click="playAudio(question.id)"> </i>
+                                  <audio controls id="{{question.id}}" style="display:none">
+                                    <source data-ng-src="{{question.audio}}" type="audio/mpeg">
+                                  </audio>
+                              </div>
+                              <div style="width: 10%; display: inline-block; margin-left: 40%;" data-ng-if='question.photo'>
+                                <img data-ng-src="{{question.photo}}" alt="" style="width: 140%;">
+                              </div>
+                              <div style="width: 89%; display: inline-block;" ng-click="playAudio(question.id)" data-ng-if="!stop">
+                                  <span data-ng-bind='question.question' style="font-size: 30px;"></span>
+                              </div>
+                              <div style="width: 89%; display: inline-block; color: red" ng-click="playAudio(question.id)" data-ng-if="stop">
+                                  <span data-ng-bind='question.question' style="font-size: 30px;"></span>
+                              </div>
+                          </div>
+                          <div>
+                            <table>
+                                <tr>
+                                    <td>
+                                        <div>
+                                            <input id="question-choice1" type="radio" value="1" ng-model="form.choice" name="choice" data-ng-if ="realtimetest === '1'" data-ng-click='checkAnswer()' data-ng-disabled='optionDisabled'/>
+                                            <input id="question-choice1" type="radio" value="1" ng-model="form.choice" name="choice" data-ng-if ="realtimetest === '0'" data-ng-change='checkAnswer()' data-ng-disabled='optionDisabled'/>
+                                            <label class="normal" for='question-choice1' style="margin-right: 10px;"></label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div style="width: 10%; display: none; margin-left: 40%; text-align: center;" data-ng-if="question.option1audio">
+                                            <i class="fa {{audioClass}}" style='color: #2d2d86;cursor: pointer;font-size: 30px;position: relative;left: 30%;' ng-click="playOption1(question.id+'option1')"> </i>
+                                            <audio controls id="{{question.id}}option1" style="display:none">
+                                              <source data-ng-src="{{question.option1audio}}" type="audio/mpeg">
+                                            </audio>
+                                        </div>
+                                        <span for='' data-ng-bind='question.choice1' style="margin-right: 10px; font-size: 30px;" ng-click="playOption1(question.id+'option1')" data-ng-if="!stopOption1"></span>
+                                        <span for='' data-ng-bind='question.choice1' style="margin-right: 10px; color: red; font-size: 30px;" ng-click="playOption1(question.id+'option1')" data-ng-if="stopOption1"></span>
+                                    </td>
+
+                                    <td>
+                                        <div data-ng-if='question.choice1photo' style="width: 50%;">
+                                          <img data-ng-src="{{question.choice1photo}}" alt="" style="width: 100%;">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div style="padding-left: 5px; display: flex; justify-content: center; align-items: center; ">
+                                            <span><i class='fa fa-check-circle fa-3x animated zoomIn' style="color:green" data-ng-if='optionResult.successFlag1'></i></span>
+                                            <span><i class='fa fa-times-circle fa-3x animated zoomIn' style="color: red" data-ng-if='optionResult.errorFlag1'></i></span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div>
+                                            <input id="question-choice2" type="radio" value="2" ng-model="form.choice" name="choice" data-ng-if ="realtimetest === '1'" data-ng-click='checkAnswer()' data-ng-disabled='optionDisabled'/>
+                                            <input id="question-choice2" type="radio" value="2" ng-model="form.choice" name="choice" data-ng-if ="realtimetest === '0'" data-ng-change='checkAnswer()' data-ng-disabled='optionDisabled'/>
+                                            <label class="normal" for='question-choice2' style="margin-right: 10px;"></label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div style="width: 10%; display: none; margin-left: 40%; text-align: center;" data-ng-if="question.option2audio">
+                                            <i class="fa {{audioClass}}" style='color: #2d2d86;cursor: pointer;font-size: 30px;position: relative;left: 30%;' ng-click="playOption2(question.id+'option2')"> </i>
+                                            <audio controls id="{{question.id}}option2" style="display:none">
+                                              <source data-ng-src="{{question.option2audio}}" type="audio/mpeg">
+                                            </audio>
+                                        </div>
+                                        <span for='' data-ng-bind='question.choice2' style="margin-right: 10px; font-size: 30px;" ng-click="playOption2(question.id+'option2')" data-ng-if="!stopOption2"></span>
+                                        <span for='' data-ng-bind='question.choice2' style="margin-right: 10px; color: red; font-size: 30px;" ng-click="playOption2(question.id+'option2')" data-ng-if="stopOption2"></span>
+                                    </td>
+                                    <td>
+                                        <div data-ng-if='question.choice2photo' style="width: 50%;">
+                                          <img data-ng-src="{{question.choice2photo}}" alt="" style="width: 100%;">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div style="padding-left: 5px; display: flex; justify-content: center; align-items: center;">
+                                            <label><i class='fa fa-check-circle fa-3x animated zoomIn' style="color:green" data-ng-if='optionResult.successFlag2'></i></label>
+                                            <label><i class='fa fa-times-circle fa-3x animated zoomIn' style="color: red" data-ng-if='optionResult.errorFlag2'></i></label>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div>
+                                            <input id="question-choice3" type="radio" value="3" ng-model="form.choice" name="choice" data-ng-if ="realtimetest === '1'" data-ng-click='checkAnswer()' data-ng-disabled='optionDisabled'/>
+                                            <input id="question-choice3" type="radio" value="3" ng-model="form.choice" name="choice" data-ng-if ="realtimetest === '0'" data-ng-change='checkAnswer()' data-ng-disabled='optionDisabled'/>
+                                            <label class="normal" for='question-choice3' style="margin-right: 10px;"></label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div style="width: 10%; display: none; margin-left: 40%; text-align: center;" data-ng-if="question.option3audio">
+                                            <i class="fa {{audioClass}}" style='color: #2d2d86;cursor: pointer;font-size: 30px;position: relative;left: 30%;' ng-click="playOption3(question.id+'option3')"> </i>
+                                            <audio controls id="{{question.id}}option3" style="display:none">
+                                              <source data-ng-src="{{question.option3audio}}" type="audio/mpeg">
+                                            </audio>
+                                        </div>
+                                        <span for='' data-ng-bind='question.choice3' style="margin-right: 10px; font-size: 30px;" ng-click="playOption3(question.id+'option3')" data-ng-if="!stopOption3"></span>
+                                        <span for='' data-ng-bind='question.choice3' style="margin-right: 10px; color: red font-size: 30px;" ng-click="playOption3(question.id+'option3')" data-ng-if="stopOption3"></span>
+                                    </td>
+                                    <td >
+                                        <div data-ng-if='question.choice3photo' style="width: 50%;">
+                                          <img data-ng-src="{{question.choice3photo}}" alt="" style="width: 100%;">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div style="padding-left: 5px; display: flex; justify-content: center; align-items: center;">
+                                            <label><i class='fa fa-check-circle fa-3x animated zoomIn' style="color:green" data-ng-if='optionResult.successFlag3'></i></label>
+                                            <label><i class='fa fa-times-circle fa-3x animated zoomIn' style="color: red" data-ng-if='optionResult.errorFlag3'></i></label>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                          </div>
+                      <!-- </form> -->
+                  </div>
+              </div>
+              <!-- end -->
+            </div>
+            <!-- RTL screen -->
+            <div class="col-md-12" style="padding-right: 20px;" id="rtl_screen" ng-if="rtl_screen">
+              <!-- start   -->
+              <div id='test-question' data-ng-if='!loader && !testExpiry'>
+                  <div id='test-question' data-ng-if='!loader && !testExpiry' style="max-height: 520px;">
+                      <!-- <form data-ng-submit='nextQuestion()'> -->
+
+                        <!-- <div class='panel panel-info'>
+                              <div class='panel-heading' style="background-color: #F5F5F5;">
+                                  <strong style="font-size:15px;">{{'questions.label.question' | translate}}</strong>
+                                  <span data-ng-if='question.audio'>
+                                    <i class="fa {{audioClass}}" style='color: #2d2d86;cursor: pointer;font-size: 30px;position: relative;left: 87%;' ng-click="playAudio(question.id)"> </i>
+                                    <audio controls id="{{question.id}}" style="display:none">
+                                      <source data-ng-src="{{question.audio}}" type="audio/mpeg">
+                                    </audio>
+                                  </span>
+                              </div>
+                              <div class='panel-body'>
+                                  <div >
+                                      <div style="width: 25%; display: inline-block; margin-left: 30%;" data-ng-if='question.photo'>
+                                        <img data-ng-src="{{question.photo}}" alt="" style="width: 100%;">
+                                      </div>
+                                      <div style="width: 89%; display: inline-block;">
+                                          <h2 data-ng-bind='question.question'></h2>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div> -->
+                          <div >
+                              <div style="width: 10%; display: none; margin-left: 40%; text-align: center;" data-ng-if="question.audio">
+                                  <i class="fa {{audioClass}}" style='color: #2d2d86;cursor: pointer;font-size: 30px;position: relative;left: 30%;' ng-click="playAudio(question.id)"> </i>
+                                  <audio controls id="{{question.id}}" style="display:none">
+                                    <source data-ng-src="{{question.audio}}" type="audio/mpeg">
+                                  </audio>
+                              </div>
+                              <div style="width: 10%; display: inline-block; margin-left: 40%;" data-ng-if='question.photo'>
+                                <img data-ng-src="{{question.photo}}" alt="" style="width: 140%;">
+                              </div>
+                              <div style="width: 89%; display: inline-block;" ng-click="playAudio(question.id)" data-ng-if="!stop">
+                                  <span data-ng-bind='question.question' style="font-size: 30px;"></span>
+                              </div>
+                              <div style="width: 89%; display: inline-block; color: red" ng-click="playAudio(question.id)" data-ng-if="stop">
+                                  <span data-ng-bind='question.question' style="font-size: 30px;"></span>
+                              </div>
+                          </div>
+                          <div>
+                            <table>
+                                <tr>
+                                    <td>
+                                        <div>
+                                            <input id="question-choice1" type="radio" value="1" ng-model="form.choice" name="choice" data-ng-if ="realtimetest === '1'" data-ng-click='checkAnswer()' data-ng-disabled='optionDisabled'/>
+                                            <input id="question-choice1" type="radio" value="1" ng-model="form.choice" name="choice" data-ng-if ="realtimetest === '0'" data-ng-change='checkAnswer()' data-ng-disabled='optionDisabled'/>
+                                            <label class="normal" for='question-choice1' style="margin-right: 10px;"></label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div style="width: 10%; display: none; margin-left: 40%; text-align: center;" data-ng-if="question.option1audio">
+                                            <i class="fa {{audioClass}}" style='color: #2d2d86;cursor: pointer;font-size: 30px;position: relative;left: 30%;' ng-click="playOption1(question.id+'option1')"> </i>
+                                            <audio controls id="{{question.id}}option1" style="display:none">
+                                              <source data-ng-src="{{question.option1audio}}" type="audio/mpeg">
+                                            </audio>
+                                        </div>
+                                        <span for='' data-ng-bind='question.choice1' style="margin-right: 10px; font-size: 30px;" ng-click="playOption1(question.id+'option1')" data-ng-if="!stopOption1"></span>
+                                        <span for='' data-ng-bind='question.choice1' style="margin-right: 10px; color: red; font-size: 30px;" ng-click="playOption1(question.id+'option1')" data-ng-if="stopOption1"></span>
+                                    </td>
+
+                                    <td>
+                                        <div data-ng-if='question.choice1photo' style="width: 50%;">
+                                          <img data-ng-src="{{question.choice1photo}}" alt="" style="width: 100%;">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div style="padding-left: 5px; display: flex; justify-content: center; align-items: center; ">
+                                            <span><i class='fa fa-check-circle fa-3x animated zoomIn' style="color:green" data-ng-if='optionResult.successFlag1'></i></span>
+                                            <span><i class='fa fa-times-circle fa-3x animated zoomIn' style="color: red" data-ng-if='optionResult.errorFlag1'></i></span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div>
+                                            <input id="question-choice2" type="radio" value="2" ng-model="form.choice" name="choice" data-ng-if ="realtimetest === '1'" data-ng-click='checkAnswer()' data-ng-disabled='optionDisabled'/>
+                                            <input id="question-choice2" type="radio" value="2" ng-model="form.choice" name="choice" data-ng-if ="realtimetest === '0'" data-ng-change='checkAnswer()' data-ng-disabled='optionDisabled'/>
+                                            <label class="normal" for='question-choice2' style="margin-right: 10px;"></label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div style="width: 10%; display: none; margin-left: 40%; text-align: center;" data-ng-if="question.option2audio">
+                                            <i class="fa {{audioClass}}" style='color: #2d2d86;cursor: pointer;font-size: 30px;position: relative;left: 30%;' ng-click="playOption2(question.id+'option2')"> </i>
+                                            <audio controls id="{{question.id}}option2" style="display:none">
+                                              <source data-ng-src="{{question.option2audio}}" type="audio/mpeg">
+                                            </audio>
+                                        </div>
+                                        <span for='' data-ng-bind='question.choice2' style="margin-right: 10px; font-size: 30px;" ng-click="playOption2(question.id+'option2')" data-ng-if="!stopOption2"></span>
+                                        <span for='' data-ng-bind='question.choice2' style="margin-right: 10px; color: red; font-size: 30px;" ng-click="playOption2(question.id+'option2')" data-ng-if="stopOption2"></span>
+                                    </td>
+                                    <td>
+                                        <div data-ng-if='question.choice2photo' style="width: 50%;">
+                                          <img data-ng-src="{{question.choice2photo}}" alt="" style="width: 100%;">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div style="padding-left: 5px; display: flex; justify-content: center; align-items: center;">
+                                            <label><i class='fa fa-check-circle fa-3x animated zoomIn' style="color:green" data-ng-if='optionResult.successFlag2'></i></label>
+                                            <label><i class='fa fa-times-circle fa-3x animated zoomIn' style="color: red" data-ng-if='optionResult.errorFlag2'></i></label>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div>
+                                            <input id="question-choice3" type="radio" value="3" ng-model="form.choice" name="choice" data-ng-if ="realtimetest === '1'" data-ng-click='checkAnswer()' data-ng-disabled='optionDisabled'/>
+                                            <input id="question-choice3" type="radio" value="3" ng-model="form.choice" name="choice" data-ng-if ="realtimetest === '0'" data-ng-change='checkAnswer()' data-ng-disabled='optionDisabled'/>
+                                            <label class="normal" for='question-choice3' style="margin-right: 10px;"></label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div style="width: 10%; display: none; margin-left: 40%; text-align: center;" data-ng-if="question.option3audio">
+                                            <i class="fa {{audioClass}}" style='color: #2d2d86;cursor: pointer;font-size: 30px;position: relative;left: 30%;' ng-click="playOption3(question.id+'option3')"> </i>
+                                            <audio controls id="{{question.id}}option3" style="display:none">
+                                              <source data-ng-src="{{question.option3audio}}" type="audio/mpeg">
+                                            </audio>
+                                        </div>
+                                        <span for='' data-ng-bind='question.choice3' style="margin-right: 10px; font-size: 30px;" ng-click="playOption3(question.id+'option3')" data-ng-if="!stopOption3"></span>
+                                        <span for='' data-ng-bind='question.choice3' style="margin-right: 10px; color: red font-size: 30px;" ng-click="playOption3(question.id+'option3')" data-ng-if="stopOption3"></span>
+                                    </td>
+                                    <td >
+                                        <div data-ng-if='question.choice3photo' style="width: 50%;">
+                                          <img data-ng-src="{{question.choice3photo}}" alt="" style="width: 100%;">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div style="padding-left: 5px; display: flex; justify-content: center; align-items: center;">
+                                            <label><i class='fa fa-check-circle fa-3x animated zoomIn' style="color:green" data-ng-if='optionResult.successFlag3'></i></label>
+                                            <label><i class='fa fa-times-circle fa-3x animated zoomIn' style="color: red" data-ng-if='optionResult.errorFlag3'></i></label>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                          </div>
+                      <!-- </form> -->
+                  </div>
+              </div>
+              <!-- end -->
+            </div>
+            <!-- end of RTL screen -->
+            <div style='height: 50px; width: 100%; position: absolute; left: 0; background: #686868; bottom: 0; padding: 8px;' data-ng-if="!rtl_screen">
+                <button type='submit' class='pull-right testbtn' data-ng-if='questionId+1 !== test.length && !loader'> &nbsp;&nbsp; {{'test.link.next' | translate}}&nbsp;&nbsp;<i class="fa fa-arrow-right" aria-hidden="true"></i></button> &nbsp;
+                <button  type='submit' class='pull-right testbtn' data-ng-if='questionId+1 === test.length && !loader'> &nbsp;&nbsp;{{'test.link.next' | translate}}&nbsp;&nbsp;<i class="fa fa-arrow-right" aria-hidden="true"></i></button>
+                <!-- <button type='button' class='pull-right testbtn' data-ng-if='questionId+1 !== 1 && realtimetest === "0"' data-ng-click='prevQuestion()'><i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;&nbsp;{{'test.link.previous' | translate}} &nbsp;&nbsp;</button> &nbsp; -->
+                <button type='button' class='pull-right testbtn' data-ng-if='questionId+1 !== 1 && !loader' data-ng-click='prevQuestion()'><i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;&nbsp;{{'test.link.previous' | translate}} &nbsp;&nbsp;</button> &nbsp;
+                <button type='button' class='pull-left testbtn'  data-ng-if='realtimetest === "0"' data-ng-click='closePopup()'><i class="" aria-hidden="true"></i>&nbsp;&nbsp;Quit Practice&nbsp;&nbsp;</button>
+            </div>
+            <div style='height: 50px; width: 100%; position: absolute; left: 0; background: #686868; bottom: 0; padding: 8px;' data-ng-if="rtl_screen">
+                <button type='submit' class='pull-left testbtn' data-ng-if='questionId+1 !== test.length && !loader'> &nbsp;&nbsp;<i class="fa fa-arrow-left" aria-hidden="true"></i> {{'test.link.next' | translate}}&nbsp;&nbsp;</button> &nbsp;
+                <button  type='submit' class='pull-left testbtn' data-ng-if='questionId+1 === test.length && !loader'> &nbsp;&nbsp;<i class="fa fa-arrow-left" aria-hidden="true"></i>{{'test.link.next' | translate}}&nbsp;&nbsp;</button>
+                <!-- <button type='button' class='pull-right testbtn' data-ng-if='questionId+1 !== 1 && realtimetest === "0"' data-ng-click='prevQuestion()'><i class="fa fa-arrow-right" aria-hidden="true"></i>&nbsp;&nbsp;{{'test.link.previous' | translate}} &nbsp;&nbsp;</button> &nbsp; -->
+                <button type='button' class='pull-left testbtn' data-ng-if='questionId+1 !== 1 && !loader' data-ng-click='prevQuestion()'>&nbsp;&nbsp;{{'test.link.previous' | translate}}<i class="fa fa-arrow-right" aria-hidden="true"></i> &nbsp;&nbsp;</button> &nbsp;
+                <button type='button' class='pull-right testbtn'  data-ng-if='realtimetest === "0"' data-ng-click='closePopup()'><i class="" aria-hidden="true"></i>&nbsp;&nbsp;{{'form.quit_test' | translate}}&nbsp;&nbsp;</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class = "PopupPanel animated slideInDown" data-ng-if="okpop_finish">
+<!-- <div  style="margin-left:400px;border-left:none;margin-top:100px;margin-bottom:100px;" id="popup"> -->
+<div  style="text-align: center; margin-top: 60px;" id="popup">
+  <h4>
+      <!-- {{'form.practise_test_msg' | translate}} -->
+      {{'form.test_timeout_msg' | translate}}
+
+  </h4>
+  <br>
+  <button type='button' class='btn btn-success btn-lg' ng-click="MsgOk()" style="">{{'resume.ok' | translate }}</button>
+
+</div>
+</div>
+<div class = "PopupPanel animated slideInDown" data-ng-if="okpop_timeout">
+<!-- <div  style="margin-left:400px;border-left:none;margin-top:100px;margin-bottom:100px;" id="popup"> -->
+<div  style="text-align: center; margin-top: 60px;" id="popup">
+  <h4>
+      {{'form.test_timeout_msg' | translate}}
+  </h4>
+  <br>
+  <button type='button' class='btn btn-success btn-lg' ng-click="MsgOk()" style="">{{'resume.ok' | translate }}</button>
+
+</div>
+</div>

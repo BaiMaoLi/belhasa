@@ -1,0 +1,138 @@
+<!-- page content -->
+
+<div class="">
+  <div class="clearfix"></div>
+
+  <div class="row">
+
+    <div class="col-md-12 col-sm-12 col-xs-12">
+      <div class="x_panel" style="height:600px;overflow-y:scroll;">
+        <div class="x_title">
+          <h2 translate="table.updating_exitings_topic_area">Updating Exitings Topic Area</h2>
+          <div class="clearfix"></div>
+        </div>
+        <ol class="breadcrumb">
+          <li><a href='javascript:void(0);' data-ui-sref='app'  translate="home.menu.home">Home</a></li>
+          <li><a href='javascript:void(0);' data-ui-sref='app.topic_area' translate="table.topic_area">Topic Area</a></li>
+          <li class="active" translate="table.update">Update</li>
+        </ol>
+
+        <div class='alert alert-danger alert-dismissible animated flash' data-ng-if='errorMsg'>
+          <button type="button" class="close" aria-label="Close" data-ng-click='closeAlert()'><span aria-hidden="true">&times;</span></button>
+          <strong class='fa fa-warning'></strong> &nbsp; {{errorMsgString}}</span>
+        </div>
+
+       	<form data-ng-submit='updateTopic()' style="margin-top: 20px;" data-ng-init='loadDataById()'>
+          <table class='table table-stripeed'>
+            <tbody>
+            <tr class='info'>
+              <th>{{'table.translationlanguage' | translate}}</th>
+              <th>{{'table.topic_area_name' | translate}}</th>
+            </tr>
+              <tr>
+                <th translate="form.arabic">Topic Area Name</th>
+                <td> <input type='text' class='form-control' data-ng-model='newItem.name_ar' placeholder="{{'table.name_of_topic' | translate}}"></input> </td>
+                <!-- <td>
+                  <button type="submit" class='btn btn-success'>{{'testconfigure.save' | translate}}</button> &nbsp; &nbsp;
+                  <a data-ui-sref='app.topic_area' class='btn btn-close' > {{'table.cancel' | translate}} </a>
+
+                </td> -->
+              </tr>
+              <tr>
+                <th translate="form.english">Topic Area Name</th>
+                <td> <input type='text' required class='form-control' data-ng-model='newItem.name' placeholder="{{'table.name_of_topic' | translate}}"></input> </td>
+                <!-- <td>
+                  <button type="submit" class='btn btn-success'>{{'testconfigure.save' | translate}}</button> &nbsp; &nbsp;
+                  <a data-ui-sref='app.topic_area' class='btn btn-close' > {{'table.cancel' | translate}} </a>
+
+                </td> -->
+              </tr>
+              <tr>
+                <th translate="form.tamil">Topic Area Name</th>
+                <td> <input type='text' class='form-control' data-ng-model='newItem.name_ta' placeholder="{{'table.name_of_topic' | translate}}"></input> </td>
+                <!-- <td>
+                  <button type="submit" class='btn btn-success'>{{'testconfigure.save' | translate}}</button> &nbsp; &nbsp;
+                  <a data-ui-sref='app.topic_area' class='btn btn-close' > {{'table.cancel' | translate}} </a>
+
+                </td> -->
+              </tr>
+              <tr>
+                <th translate="form.urdu">Topic Area Name</th>
+                <td> <input type='text' class='form-control' data-ng-model='newItem.name_ur' placeholder="{{'table.name_of_topic' | translate}}"></input> </td>
+                <!-- <td>
+                  <button type="submit" class='btn btn-success'>{{'testconfigure.save' | translate}}</button> &nbsp; &nbsp;
+                  <a data-ui-sref='app.topic_area' class='btn btn-close' > {{'table.cancel' | translate}} </a>
+
+                </td> -->
+              </tr>
+              <tr>
+                <th translate="form.hindi">Topic Area Name</th>
+                <td> <input type='text' class='form-control' data-ng-model='newItem.name_hi' placeholder="{{'table.name_of_topic' | translate}}"></input> </td>
+                <!-- <td>
+                  <button type="submit" class='btn btn-success'>{{'testconfigure.save' | translate}}</button> &nbsp; &nbsp;
+                  <a data-ui-sref='app.topic_area' class='btn btn-close' > {{'table.cancel' | translate}} </a>
+
+                </td> -->
+              </tr>
+              <tr>
+                <th translate="form.bengali">Topic Area Name</th>
+                <td> <input type='text' class='form-control' data-ng-model='newItem.name_be' placeholder="{{'table.name_of_topic' | translate}}"></input> </td>
+                <!-- <td>
+                  <button type="submit" class='btn btn-success'>{{'testconfigure.save' | translate}}</button> &nbsp; &nbsp;
+                  <a data-ui-sref='app.topic_area' class='btn btn-close' > {{'table.cancel' | translate}} </a>
+
+                </td> -->
+              </tr>
+              <tr>
+                <th translate="form.malayalam">Topic Area Name</th>
+                <td> <input type='text' class='form-control' data-ng-model='newItem.name_ma' placeholder="{{'table.name_of_topic' | translate}}"></input> </td>
+                <!-- <td>
+                  <button type="submit" class='btn btn-success'>{{'testconfigure.save' | translate}}</button> &nbsp; &nbsp;
+                  <a data-ui-sref='app.topic_area' class='btn btn-close' > {{'table.cancel' | translate}} </a>
+
+                </td> -->
+              </tr>
+              <tr>
+                <th translate="form.farsi">Topic Area Name</th>
+                <td> <input type='text' class='form-control' data-ng-model='newItem.name_fa' placeholder="{{'table.name_of_topic' | translate}}"></input> </td>
+                <!-- <td>
+                  <button type="submit" class='btn btn-success'>{{'testconfigure.save' | translate}}</button> &nbsp; &nbsp;
+                  <a data-ui-sref='app.topic_area' class='btn btn-close' > {{'table.cancel' | translate}} </a>
+
+                </td> -->
+              </tr>
+              <tr>
+                <th translate="form.chinese">Topic Area Name</th>
+                <td> <input type='text' class='form-control' data-ng-model='newItem.name_ch' placeholder="{{'table.name_of_topic' | translate}}"></input> </td>
+                <!-- <td>
+                  <button type="submit" class='btn btn-success'>{{'testconfigure.save' | translate}}</button> &nbsp; &nbsp;
+                  <a data-ui-sref='app.topic_area' class='btn btn-close' > {{'table.cancel' | translate}} </a>
+
+                </td> -->
+              </tr>
+              <tr>
+                <th translate="form.russian">Topic Area Name</th>
+                <td> <input type='text' class='form-control' data-ng-model='newItem.name_ru' placeholder="{{'table.name_of_topic' | translate}}"></input> </td>
+
+              </tr>
+              <tr>
+                  <th></th>
+                  <td>
+                    <button type="submit" class='btn btn-success'>{{'testconfigure.save' | translate}}</button> &nbsp; &nbsp;
+                    <a data-ui-sref='app.topic_area' class='btn btn-primary' > {{'table.cancel' | translate}} </a>
+                    <!-- <span>
+                      <a data-ui-sref='app.topic_area' class='btn btn-danger'>{{'table.add_new_item' | translate}}</a>
+                    </span> -->
+                  </td>
+              </tr>
+            </tbody>
+          </table>
+        </form>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+<!-- /page content -->
