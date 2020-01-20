@@ -88,7 +88,6 @@ class SiteController extends Controller {
         } else {
             $user = json_encode('');
         }
-
         return $this->render('index', [
                     'user' => $user
         ]);
