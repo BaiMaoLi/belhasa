@@ -29,7 +29,7 @@ angular.module(module)
 
 			$scope.getAll = function() {
 				$scope.loader = true;
-				$http.get('/api/category/getall')
+				$http.get('api/category/getall')
 					.success(function(response) {
 						$scope.loader = false;
 						if (response.success) {
@@ -46,7 +46,7 @@ angular.module(module)
 			$scope.saveCategory = function() {
 				$http({
 					method: 'POST',
-					url: '/api/category/create',
+					url: 'api/category/create',
 					data: $scope.newItem
 				})
 				.success(function(response) {
@@ -67,7 +67,7 @@ angular.module(module)
 				item.status = status;
 				$http({
 					method: 'PUT',
-					url: '/api/category/updatestatus?id=' +item.id,
+					url: 'api/category/updatestatus?id=' +item.id,
 					data: item
 				})
 				.success(function(response) {
@@ -83,7 +83,7 @@ angular.module(module)
 				if (flag) {
 					$http({
 						method: 'DELETE',
-						url: '/api/category/delete?id=' + item.id
+						url: 'api/category/delete?id=' + item.id
 					})
 					.success(function(response) {
 						if (response.success) {
@@ -102,7 +102,7 @@ angular.module(module)
 
 			$scope.loadDataById = function() {
 				var id = $stateParams.id;
-				$http.get('/api/category/getbyid?id=' + id)
+				$http.get('api/category/getbyid?id=' + id)
 					.success(function(response) {
 						if (response.success) {
 							$scope.newItem = response.data;
@@ -114,7 +114,7 @@ angular.module(module)
 			$scope.updateCategory = function() {
 				$http({
 					method: 'PUT',
-					url: '/api/category/update?id=' + $scope.newItem.id,
+					url: 'api/category/update?id=' + $scope.newItem.id,
 					data: $scope.newItem
 				})
 				.success(function(response) {

@@ -23,7 +23,7 @@ angular.module(module)
 				next();
 			}
 
-			$http.get('/api/category/getall')
+			$http.get('api/category/getall')
 				.success(function(response) {
 					if (response.success) {
 						var arr = [];
@@ -37,14 +37,13 @@ angular.module(module)
 				});
 
 			$scope.loadLanguage = function() {
-				$http.get('/api/language/getall')
+				$http.get('api/language/getall')
 					.success(function(response) {
 						if (response.success) {
 							$scope.languages = response.data;
 						}
 					})
 					.error(function(response) {
-
 					});
 			};
 
@@ -54,7 +53,7 @@ angular.module(module)
 					code: $scope.input.language
 				};
 				$http({
-					url: '/api/user/language',
+					url: 'api/user/language',
 					method: 'POST',
 					data: data
 				})
@@ -74,11 +73,12 @@ angular.module(module)
 				}
 				if (user.isAdmin) {
 					$state.go('app');
-				} else {
+				}
+				else {
 					if ($window.localStorage.getItem('test-category')) {
 						$state.go('app');
 					} else {
-						// $scope.showCategory = true;
+						$scope.showCategory = true;
 						$window.localStorage.setItem('test-category', JSON.stringify({
 							userId: user.id,
 							category: user.category,
@@ -99,14 +99,13 @@ angular.module(module)
 			};
 
 			$scope.studentLogin = function() {
-				console.log($scope.input);
 				$window.localStorage.setItem('user_lang', "en-en");
 				$window.localStorage.setItem('screen_lang', $scope.input.language);
 				$window.localStorage.setItem('user_audio_lang', $scope.input.audiolanguage);
 				$translate.use("en-en");
 				$scope.language = false;
 				next();
-				// $scope.translate();
+				$scope.translate();
 			}
 		}
 	]);

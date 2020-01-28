@@ -17,8 +17,6 @@ angular.module(module)
 			// user information
 			$scope.user = Authentication.user;
 			$scope.timer = Authentication.timer;
-			console.log('timer');
-			console.log($scope.timer);
 			$scope.user_id = $scope.user.id;
 			if ($scope.user.language) {
 				$translate.use($scope.user.language);
@@ -33,7 +31,7 @@ angular.module(module)
 			$scope.isActive = function (viewLocation) {
 				var active =false;
 				if($location.path() !=viewLocation) {
-					var location = $location.path().replace('/app','');
+					var location = $location.path().replace('app','');
 					active = (location.indexOf(viewLocation) > -1);
 				} else if ($location.path() === viewLocation){
 					active =true;
@@ -46,7 +44,7 @@ angular.module(module)
 				$rootScope.$emit('DisableTimer', {});
 				// if (Authentication.timer != '00:00:00'){
 				// 	//$rootScope.$emit('DisableTimer', {});
-				// 	$http.get('/api/user/clearinsruction?id=' + $scope.user.id+'&show_instruction=1')
+				// 	$http.get('api/user/clearinsruction?id=' + $scope.user.id+'&show_instruction=1')
 				// 	.success(function(response, status, headers, config) {
 				// 		$scope.loader = false;
 				// 		if (response.success) {
@@ -61,7 +59,7 @@ angular.module(module)
 				// 	.success(function(response){
 				// 	});
 				// }
-				$http.post('/api/user/logout?id='+$scope.user_id)
+				$http.post('api/user/logout?id='+$scope.user_id)
 					.success(function(response) {
 						if (response.success) {
 							Authentication.user = null;
@@ -83,7 +81,7 @@ angular.module(module)
 					code: lang.code
 				};
 				$http({
-					url: '/api/user/language',
+					url: 'api/user/language',
 					method: 'POST',
 					data: data
 				})
@@ -117,7 +115,7 @@ angular.module(module)
 			}
 
 			$scope.loadAssets = function() {
-				$http.get('/api/language/getall')
+				$http.get('api/language/getall')
 				.success(function(response) {
 					if (response.success) {
 						$scope.languages = response.data;
@@ -125,11 +123,9 @@ angular.module(module)
 					}
 				});
 			};
-
 			// set languageCode
 			function setLanguageCode(){
 				$scope.userLang = $window.localStorage.getItem('user_lang');
-				console.log($scope.userLang);
 				if ($scope.userLang == 'ar-ar' || $scope.userLang == 'ur-ur' || $scope.userLang == 'fa-fa')
 					return 1;
 				else

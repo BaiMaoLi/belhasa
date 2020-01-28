@@ -129,7 +129,7 @@ angular.module('DocsController', [])
 
   var INDEX_PATH = /^(\/|\/index[^\.]*.html)$/;
   if (!$location.path() || INDEX_PATH.test($location.path())) {
-    $location.path('/api').replace();
+    $location.path('api').replace();
   }
 
 }]);

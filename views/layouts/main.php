@@ -8,7 +8,6 @@ use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
-
 AppAsset::register($this);
 ?>
 
@@ -17,7 +16,7 @@ AppAsset::register($this);
 <!DOCTYPE html>
 <html lang="<?= Yii::$app->language ?>">
       <!-- <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.css"> -->
-      <link rel="stylesheet" href="/app_v1/assets/css/angular-material.css">
+      <link rel="stylesheet" href="app_v1/assets/css/angular-material.css">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -57,9 +56,9 @@ AppAsset::register($this);
     </style>
 
     <?php $this->head() ?>
-    <link id="ltr" rel="stylesheet" href="/app_v1/assets/css/custom.css">
-    <link id="rtl" rel="stylesheet" href="/app_v1/assets/css/custom_rtl.css">
-    <link id="rtl2" rel="stylesheet" href="/app_v1/assets/css/bootstrap-rtl.css">
+    <link id="ltr" rel="stylesheet" href="app_v1/assets/css/custom.css">
+    <link id="rtl" rel="stylesheet" href="app_v1/assets/css/custom_rtl.css">
+    <link id="rtl2" rel="stylesheet" href="app_v1/assets/css/bootstrap-rtl.css">
     <script>
         var script = document.createElement('script');
         var lang = localStorage.getItem('user_lang');
@@ -140,6 +139,11 @@ AppAsset::register($this);
     <script type="text/javascript" src='app_v1/controllers/reports.controller.js'></script>
     <script type="text/javascript" src='app_v1/controllers/review.controller.js'></script>
     <script type="text/javascript" src='app_v1/controllers/category.controller.js'></script>
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/danialfarid-angular-file-upload/12.2.13/ng-file-upload.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.13.5/xlsx.full.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.13.5/jszip.js"></script>
+
     <script type="text/javascript">
         NProgress.done();
     </script>

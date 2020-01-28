@@ -26,7 +26,7 @@ angular.module(module)
 
 			$scope.getAll = function() {
 				$scope.loader = true;
-				$http.get('/api/user/logs')
+				$http.get('api/user/logs')
 					.success(function(response) {
 						$scope.loader = false;
 						if (response.success) {
@@ -85,7 +85,7 @@ angular.module(module)
 
 			$scope.getReport = function() {
 				$scope.loader = true;
-				$http.get('/api/question/report')
+				$http.get('api/question/report')
 					.success(function(response) {
 						$scope.loader = false;
 						if (response.success) {

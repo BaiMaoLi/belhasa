@@ -2,7 +2,7 @@
 	<div id="wrapper">
       <div id="login" class="animate form bounceInDown animated">
       	<div class='text-center'>
-      		<img src="/app_v1/assets/images/symbol.png" style="height: 65px; margin-left: -40px;" class='animated pulse'>
+      		<img src="app_v1/assets/images/symbol.png" style="height: 65px; margin-left: -40px;" class='animated pulse'>
       	</div>
       	<section class="login_content">
           <form data-ng-submit='adminLogin()'>
@@ -21,7 +21,7 @@
             </div>
             <div>
               <div data-ng-if='showLoader'>
-                <img data-ng-src='/app/assets/images/app-loader.gif' style='height: 35px;'/>
+                <img data-ng-src='app/assets/images/app-loader.gif' style='height: 35px;'/>
               </div>
               <button type='submit' class="btn btn-primary submit" data-ng-if='!showLoader' translate='login.links.login'>Log in</button>
             </div>
@@ -30,7 +30,7 @@
               <div class="clearfix"></div>
               <br />
               <div>
-                <h1 style='color: #000 !important;'><img src='/app/assets/images/symbol.png' style='width:75px;'> {{'app.title' | translate}}</h1>
+                <h1 style='color: #000 !important;'><img src='app/assets/images/symbol.png' style='width:75px;'> {{'app.title' | translate}}</h1>
               </div>
             </div>
           </form>

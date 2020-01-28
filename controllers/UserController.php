@@ -50,8 +50,10 @@ class UserController extends Controller
 
         $model = new User;
         $model->studentId = $request->post('studentId');
-        $model->firstName = $request->post('firstName');
-        $model->lastName = $request->post('lastName');
+//        $model->firstName = $request->post('firstName');
+//        $model->lastName = $request->post('lastName');
+        $model->name = $request->post('firstName')." ".$request->post('lastName');
+
         $model->email = $request->post('email');
         $model->password = sha1($request->post('password'));
         $model->confirmPassword = sha1($request->post('confirmPassword'));
@@ -130,30 +132,27 @@ class UserController extends Controller
         );
         //$admin = User::findOne(['password' => Yii::$app->request->post('password'), 'isAdmin' => 1]);
         $admin = User::findOne(['password' => sha1(Yii::$app->request->post('password')), 'status' => 1, 'studentId' => Yii::$app->request->post('supervisorId')]);
-
+        $result=array();
         if($admin){
-            $user = User::findOne($input);
-            if (count($user)) {
-                $model = new Usersession;
-                $model->sid = Yii::$app->request->post('studentId');
-                $model->name = ''.$admin->attributes['name'];
-                $model->adminid = ''.$admin->attributes['id'];
-                $flag  = $model->save();
-                Yii::$app->user->login($user);
-                $result = array(
-                    'success' => true,
-                    'data' => $user->attributes,
-                    'admin_id' => $admin->attributes['id'],
-                    'flag' => $flag
-                );
-            } else {
-                $result = array(
-                    'success' => false,
-                    'message' => 'Incorrect Username / Password'
-                );
-            }
+            $model = new Usersession;
+            $model->sid = Yii::$app->request->post('studentId');
+            $model->name = ''.$admin->attributes['name'];
+            $model->adminid = ''.$admin->attributes['id'];
+            $flag  = $model->save();
+            Yii::$app->user->login($admin);
+            $result = array(
+                'success' => true,
+                'data' => $admin->attributes,
+                'admin_id' => $admin->attributes['id'],
+                'flag' => $flag
+            );
         }
-
+        else {
+            $result = array(
+                'success' => false,
+                'message' => 'Incorrect Username / Password'
+            );
+        }
         echo json_encode($result);
         return;
     }
@@ -165,7 +164,7 @@ class UserController extends Controller
             'status' => true
         );
         $user = User::findOne($input);
-        if (count($user)) {
+        if (!is_null($user)) {
             Yii::$app->user->login($user);
             $result = array(
                 'success' => true,

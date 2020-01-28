@@ -260,6 +260,7 @@
 			"success": "Question details saved"
 		},
 		"link": {
+			"bulk_import": "Bulk Import",
 			"add_question": "Add Question",
 			"add_translation": "Add Translation",
 			"save_question": "Save Question"

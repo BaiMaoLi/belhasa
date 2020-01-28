@@ -60,7 +60,7 @@
                                   <th translate="questions.labels.audio">Audio</th>
                                   <td>
                                     <span data-ng-if='query.audio'>
-                                      <img data-ng-src='/app/assets/images/audio.png' ng-click="playAudio(query.id)"
+                                      <img data-ng-src='app/assets/images/audio.png' ng-click="playAudio(query.id)"
                                         width="20" height="20">
                                       <audio controls id="{{query.id}}" data-ng-hide='true'>
                                         <source src="{{query.audio}}" type="audio/mpeg">
@@ -173,7 +173,7 @@
                                   </th>
                                   <td>
                                       <span data-ng-if='query.option1audio'>
-                                        <img data-ng-src='/app/assets/images/audio.png' ng-click="playAudio(query.id+'option1')"
+                                        <img data-ng-src='app/assets/images/audio.png' ng-click="playAudio(query.id+'option1')"
                                           width="20" height="20">
                                         <audio controls id="{{query.id}}option1" data-ng-hide='true'>
                                           <source src="{{query.option1audio}}" type="audio/mpeg">
@@ -211,7 +211,7 @@
                                   </th>
                                   <td>
                                       <span data-ng-if='query.option2audio'>
-                                        <img data-ng-src='/app/assets/images/audio.png' ng-click="playAudio(query.id+'option2')"
+                                        <img data-ng-src='app/assets/images/audio.png' ng-click="playAudio(query.id+'option2')"
                                           width="20" height="20">
                                         <audio controls id="{{query.id}}option2" data-ng-hide='true'>
                                           <source src="{{query.option2audio}}" type="audio/mpeg">
@@ -249,7 +249,7 @@
                                   </th>
                                   <td>
                                       <span data-ng-if='query.option3audio'>
-                                        <img data-ng-src='/app/assets/images/audio.png' ng-click="playAudio(query.id+'option3')"
+                                        <img data-ng-src='app/assets/images/audio.png' ng-click="playAudio(query.id+'option3')"
                                           width="20" height="20">
                                         <audio controls id="{{query.id}}option3" data-ng-hide='true'>
                                           <source src="{{query.option3audio}}" type="audio/mpeg">

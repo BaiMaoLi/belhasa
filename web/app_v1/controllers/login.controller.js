@@ -30,7 +30,7 @@ angular
 				$scope.showLoader = true;
 				$http({
 					method: 'POST',
-					url: '/api/user/studentlogin',
+					url: 'api/user/studentlogin',
 					data: $scope.user
 				})
 				.success(function(response) {
@@ -107,7 +107,7 @@ angular
 				$scope.loader = true;
 				$http({
 					method: 'POST',
-					url: '/api/user/register',
+					url: 'api/user/register',
 					data: $scope.user
 				})
 				.success(function(response) {
@@ -131,7 +131,7 @@ angular
 				})
 				.error(function(response) {
 					$scope.loader = false;
-					$scope.error = 'Unable to process your request!'
+					$scope.error = 'Unable to process your request!';
 				})
 
 				$scope.error = 'Unable to create account';
@@ -141,7 +141,7 @@ angular
 				$scope.showLoader = true;
 				$http({
 					method: 'POST',
-					url: '/api/user/login',
+					url: 'api/user/login',
 					data: $scope.user
 				})
 				.success(function(response) {
@@ -168,7 +168,7 @@ angular
 					code: "en-en"
 				};
 				$http({
-					url: '/api/user/language',
+					url: 'api/user/language',
 					method: 'POST',
 					data: data
 				})

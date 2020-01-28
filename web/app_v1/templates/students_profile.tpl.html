@@ -17,7 +17,7 @@
         </ol>
 
         <div data-ng-if='loader' style='height: 100%; padding-top: 200px; text-align: center;'>
-          <img data-ng-src='/app/assets/images/app-loader.gif'/>
+          <img data-ng-src='app/assets/images/app-loader.gif'/>
         </div>
 
         <div class='alert alert-success animated lightSpeedIn' data-ng-if='passwordSuccessAlert'>
@@ -72,7 +72,7 @@
                       <input type='text' data-ng-model='user.name' class='form-control' required></input>
                     </td>
                     <td rowspan="13" class='text-center' style='padding-top: 10px;'>
-                      <img src='/app/assets/images/temp-icon.png' style="width:200px;" data-ng-if='!student.photo && !editView'/>
+                      <img src='app/assets/images/temp-icon.png' style="width:200px;" data-ng-if='!student.photo && !editView'/>
                       <img data-ng-src='{{student.photo}}' style="width:200px;" data-ng-if='student.photo && !editView'/>
                       <img data-ng-src='{{user.photo}}' style="width:200px;" data-ng-if='editView'/>
 

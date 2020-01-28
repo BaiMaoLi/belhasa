@@ -26,11 +26,9 @@ angular.module(module)
                   transformRequest: angular.identity,
                   headers: {'Content-Type': undefined, 'Process-Data': false}
                })
-            
                .success(function(data){
                		this.audioUrl=data;
                })
-            
                .error(function(){
                		this.audioUrl=data;
                });
@@ -228,7 +226,7 @@ angular.module(module)
 
 			$scope.uploadPhoto = function() {
 				var modal = $uibModal.open({
-					templateUrl: '/app/templates/upload_photo.tpl.html',
+					templateUrl: 'app/templates/upload_photo.tpl.html',
 					controller: 'UploadController',
 					size: 'lg',
 					backdrop: 'static',

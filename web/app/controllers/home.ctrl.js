@@ -36,7 +36,7 @@ angular.module(module)
 
 			function openTest() {
 				var modal = $uibModal.open({
-					templateUrl: '/app/templates/tests.tpl.html',
+					templateUrl: 'app/templates/tests.tpl.html',
 					controller: 'TestController',
 					size: 'lg',
 					backdrop: 'static',

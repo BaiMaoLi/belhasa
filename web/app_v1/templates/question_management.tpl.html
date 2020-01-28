@@ -1,90 +1,94 @@
 <!--page content -->
 
-  <div class="" data-ng-init='getCount()'>
-          <div class="clearfix"></div>
-
-          <div class="row">
-
-            <div class="col-md-12 col-sm-12 col-xs-12">
-              <div class="x_panel" style="height:600px;overflow-y:scroll;">
+<div class="" data-ng-init='getCount()'>
+    <div class="clearfix"></div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel" style="height:600px;overflow-y:scroll;">
                 <div class="x_title">
-                  <h2 translate="questions.title_management">Questions List</h2>
-                  <ul class="nav navbar-right panel_toolbox">
-                    </li>
-                  </ul>
-                  <div class="clearfix"></div>
+                    <h2 translate="questions.title_management">Questions List</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        </li>
+                    </ul>
+                    <div class="clearfix"></div>
                 </div>
-
                 <ol class="breadcrumb">
-                  <li><a href='javascript:void(0);' data-ui-sref='app'  translate="home.menu.home">Home</a></li>
-                  <li class="active"  translate="home.menu.test">Test</li>
+                    <li><a href='javascript:void(0);' data-ui-sref='app' translate="home.menu.home">Home</a></li>
+                    <li class="active" translate="home.menu.test">Test</li>
                 </ol>
 
                 <div class='alert alert-success alert-dismissible animated flash' data-ng-if='saveAlert'>
-                  <button type="button" class="close" aria-label="Close" data-ng-click='closeAlert()'><span aria-hidden="true">&times;</span></button>
-                  <strong class='glyphicon glyphicon-ok'></strong> &nbsp; {{'questions.alert.success' | translate}}
+                    <button type="button" class="close" aria-label="Close" data-ng-click='closeAlert()'><span
+                            aria-hidden="true">&times;</span></button>
+                    <strong class='glyphicon glyphicon-ok'></strong> &nbsp; {{'questions.alert.success' | translate}}
                 </div>
 
                 <div data-ng-if='loader' style='height: 100%; padding-top: 200px; text-align: center;'>
-                  <img data-ng-src='/app/assets/images/app-loader.gif'/>
+                    <img data-ng-src='app/assets/images/app-loader.gif'/>
                 </div>
-                <div data-ng-if='!loader && !items.length' style='height: 100%; padding-top: 150px; text-align: center;'>
-                  <h3><span class='fa fa-warning text-warning'></span> {{'home.alert.question' | translate}}</h3> <br />
-                  <a href='javascript:void(0);' class='btn btn-primary' data-ui-sref='app.questions_add' translate='questions.link.add_question'> Add a New Question</a>
+                <div data-ng-if='!loader && !items.length'
+                     style='height: 100%; padding-top: 150px; text-align: center;'>
+                    <h3><span class='fa fa-warning text-warning'></span> {{'home.alert.question' | translate}}</h3>
+                    <br/>
+                    <a href='javascript:void(0);' class='btn btn-primary' data-ui-sref='app.questions_add'
+                       translate='questions.link.add_question'> Add a New Question</a>
                 </div>
 
-               	<table class='table table-bordered' data-ng-if='items.length && !loader'>
-               		<thead >
-                  <tr class='info'>
-                    <th style='width:50px;' rowspan="2"><p translate="table.sno" align="center"></th>
-                    <th style='width:100px;' rowspan="2"><p translate="table.category_name" align="center"></p></th>
-                    <th style='width:100px;' rowspan="2"><p translate="table.specifictest" align="center"></p></th>
-                    <th style='width:50px;' rowspan="2"><p translate="form.mock" align="center"></p></th>
-                    <th style='width:50px;' rowspan="2" >
-                      <p translate="form.practise" align="center"></p>
-                    </th>
-                    <th style='width:100px;' rowspan="2"><p translate="table.commontest" align="center"></p></th>
-                  </tr>
-      						<tr class='info' align="center">
-                    <!-- <th style='width:100px;' translate="table.realtest">Real Test</th> -->
-                    <!-- <th style='width:100px;' ><p translate="table.specifictest" align="center"></th> -->
-                    <!-- <th style='width:100px;' ><p translate="table.commontest" align="center"></th> -->
-                    <!-- <th style='width:100px;' ><p translate="table.action" align="center"></th> -->
-                    <!-- <th style='width:125px;' ><p translate="table.commontest" align="center"></th> -->
-                    <!-- <th style='width:100px;' ><p translate="table.action" align="center"></th> -->
-                    <!-- <th style='width:125px;' ><p translate="table.specifictest" align="center"></th> -->
-                    <!-- <th style='width:100px;' ><p translate="table.action" align="center"></th> -->
-      						</tr>
-      					</thead>
-      					<tbody>
-      						<tr data-ng-repeat='item in items track by $index' align='center'>
-                    <td data-ng-bind='$index+1'></td>
-                    <td data-ng-bind='item.name'></td>
-                    <!-- <td data-ng-bind='item.realtime'></td> -->
-                    <td data-ng-bind='item.realtimeSpecific'></td>
-                    <!-- <td data-ng-bind='item.realtimeCommon'></td> -->
-                    <td><a href='#/app/questions?category={{item.name}}&type=realtime' class='btn btn-info btn-xs text-primary'>
-                      <i class="fa fa-edit"></i>&nbsp;&nbsp;&nbsp;{{'table.manage' | translate }}&nbsp;&nbsp;&nbsp;
-                    </a></td>
-                    <!-- <td data-ng-bind='item.common'></td> -->
-                    <!-- <td><a href='#/app/questions?category={{item.name}}&type=common' class='btn btn-info btn-xs text-primary'>
-                      <i class="fa fa-edit"></i>&nbsp;&nbsp;&nbsp;{{'table.manage' | translate }}&nbsp;&nbsp;&nbsp;
-                    </a></td> -->
-                    <!-- <td data-ng-bind='item.specific'></td> -->
-                    <td><a href='#/app/questions?category={{item.name}}&type=specific' class='btn btn-info btn-xs text-primary'>
-                      <i class="fa fa-edit"></i>&nbsp;&nbsp;&nbsp;{{'table.manage' | translate }}&nbsp;&nbsp;&nbsp;
-                    </a></td>
-                    <td><a href='#/app/questions?category={{item.name}}&type=common' class='btn btn-info btn-xs text-primary'>
-                      <i class="fa fa-edit"></i>&nbsp;&nbsp;&nbsp;{{'table.manage' | translate }}&nbsp;&nbsp;&nbsp;
-                    </a></td>
-      						</tr>
-      					</tbody>
-               	</table>
-              </div>
-
+                <table class='table table-bordered' data-ng-if='items.length && !loader'>
+                    <thead>
+                    <tr class='info'>
+                        <th style='width:50px;' rowspan="2"><p translate="table.sno" align="center"></th>
+                        <th style='width:100px;' rowspan="2"><p translate="table.category_name" align="center"></p></th>
+                        <th style='width:100px;' rowspan="2"><p translate="table.specifictest" align="center"></p></th>
+                        <th style='width:50px;' rowspan="2"><p translate="form.mock" align="center"></p></th>
+                        <th style='width:50px;' rowspan="2">
+                            <p translate="form.practise" align="center"></p>
+                        </th>
+                        <th style='width:100px;' rowspan="2"><p translate="table.commontest" align="center"></p></th>
+                    </tr>
+                    <tr class='info' align="center">
+                        <!-- <th style='width:100px;' translate="table.realtest">Real Test</th> -->
+                        <!-- <th style='width:100px;' ><p translate="table.specifictest" align="center"></th> -->
+                        <!-- <th style='width:100px;' ><p translate="table.commontest" align="center"></th> -->
+                        <!-- <th style='width:100px;' ><p translate="table.action" align="center"></th> -->
+                        <!-- <th style='width:125px;' ><p translate="table.commontest" align="center"></th> -->
+                        <!-- <th style='width:100px;' ><p translate="table.action" align="center"></th> -->
+                        <!-- <th style='width:125px;' ><p translate="table.specifictest" align="center"></th> -->
+                        <!-- <th style='width:100px;' ><p translate="table.action" align="center"></th> -->
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr data-ng-repeat='item in items track by $index' align='center'>
+                        <td data-ng-bind='$index+1'></td>
+                        <td data-ng-bind='item.name'></td>
+                        <!-- <td data-ng-bind='item.realtime'></td> -->
+                        <td data-ng-bind='item.realtimeSpecific'></td>
+                        <!-- <td data-ng-bind='item.realtimeCommon'></td> -->
+                        <td><a href='#/app/questions?category={{item.name}}&type=realtime'
+                               class='btn btn-info btn-xs text-primary'>
+                            <i class="fa fa-edit"></i>&nbsp;&nbsp;&nbsp;{{'table.manage' | translate }}&nbsp;&nbsp;&nbsp;
+                        </a></td>
+                        <!-- <td data-ng-bind='item.common'></td> -->
+                        <!-- <td><a href='#/app/questions?category={{item.name}}&type=common' class='btn btn-info btn-xs text-primary'>
+                          <i class="fa fa-edit"></i>&nbsp;&nbsp;&nbsp;{{'table.manage' | translate }}&nbsp;&nbsp;&nbsp;
+                        </a></td> -->
+                        <!-- <td data-ng-bind='item.specific'></td> -->
+                        <td><a href='#/app/questions?category={{item.name}}&type=specific'
+                               class='btn btn-info btn-xs text-primary'>
+                            <i class="fa fa-edit"></i>&nbsp;&nbsp;&nbsp;{{'table.manage' | translate }}&nbsp;&nbsp;&nbsp;
+                        </a></td>
+                        <td><a href='#/app/questions?category={{item.name}}&type=common'
+                               class='btn btn-info btn-xs text-primary'>
+                            <i class="fa fa-edit"></i>&nbsp;&nbsp;&nbsp;{{'table.manage' | translate }}&nbsp;&nbsp;&nbsp;
+                        </a></td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
 
-          </div>
         </div>
+
+    </div>
+</div>
 
 <!-- /page content

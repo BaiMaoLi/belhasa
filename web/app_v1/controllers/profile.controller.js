@@ -70,7 +70,7 @@ angular.module(module)
 
 				$http({
 						method: 'POST',
-						url: '/api/user/update?id=' + $scope.user.id,
+						url: 'api/user/update?id=' + $scope.user.id,
 						data: $scope.user
 					})
 					.success(function(response) {
@@ -104,7 +104,7 @@ angular.module(module)
 
 	        $scope.uploadPhoto = function() {
 				var modal = $uibModal.open({
-					templateUrl: '/app_v1/templates/upload_photo.tpl.html',
+					templateUrl: 'app_v1/templates/upload_photo.tpl.html',
 					controller: 'UploadController',
 					size: 'lg',
 					backdrop: 'static',
@@ -131,7 +131,7 @@ angular.module(module)
 					$scope.data.id = $scope.student.id;
 					$http({
 						method: 'POST',
-						url: '/api/user/resetpassword',
+						url: 'api/user/resetpassword',
 						data: $scope.data
 					})
 					.success(function(response, status, headers, config) {

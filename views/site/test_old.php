@@ -1,12 +1,12 @@
 <!-- <script src="http://mrrio.github.io/jsPDF/dist/jspdf.debug.js"></script>
 <script src="http://mrrio.github.io/jsPDF/dist/jspdf.min.js"></script> -->
 <?php if($result['user_lang'] == "ar-ar" || $result['user_lang'] == "ur-ur" || $result['user_lang'] == "fa-fa"){ ?>
-    <link rel="stylesheet" href="/app_v1/assets/css/bootstrap-rtl.css">
+    <link rel="stylesheet" href="app_v1/assets/css/bootstrap-rtl.css">
 <?php $user_lang = true;} ?>
-<link rel="stylesheet" href="/app_v1/assets/css/bootstrap-rtl.css">
+<link rel="stylesheet" href="app_v1/assets/css/bootstrap-rtl.css">
 <?php $user_lang = true; ?>
-<script src="/app_v1/assets/css/jsPDF-1.2.60/dist/jspdf.debug.js"></script>
-<script src="/app_v1/assets/css/jsPDF-1.2.60/dist/jspdf.min.js"></script>
+<script src="app_v1/assets/css/jsPDF-1.2.60/dist/jspdf.debug.js"></script>
+<script src="app_v1/assets/css/jsPDF-1.2.60/dist/jspdf.min.js"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
@@ -62,9 +62,9 @@ tbody.heabody {
             style += '.center{ width: 50%;margin: 0 auto; }</style>';
         var mywindow = window.open('', 'Print', 'height=400,width=600');
         mywindow.document.write('<html><head><title>Training and Self Evaluation Test Results</title>');
-        mywindow.document.write('<link rel="stylesheet" href="/app_v1/assets/css/bootstrap.min.css">');
+        mywindow.document.write('<link rel="stylesheet" href="app_v1/assets/css/bootstrap.min.css">');
         <?php if($result['user_lang'] == "ar-ar" || $result['user_lang'] == "ur-ur" || $result['user_lang'] == "fa-fa"){ ?>
-            mywindow.document.write('<link rel="stylesheet" href="/app_v1/assets/css/bootstrap-rtl.css">');
+            mywindow.document.write('<link rel="stylesheet" href="app_v1/assets/css/bootstrap-rtl.css">');
         <?php $user_lang = true;} ?>
         mywindow.document.write(style);
         mywindow.document.write('<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></scri'+ 'pt>');
@@ -117,7 +117,7 @@ $(document).ready(function(){
 
 <div style="width: 970px; margin: 10px auto;display:none;" id="printPage">
     <div style="margin-top: 10px; padding-bottom: 10px; text-align: center;<?php echo isset($user_lang) ? 'margin-right: 25%' : 'margin-left: 25%';?>">
-        <img src='/app_v1/assets/images/logo.png' style="height: 75px;" />
+        <img src='app_v1assets/images/logo.png' style="height: 75px;" />
     </div>
     <div style="padding-top: 10px; <?php echo isset($user_lang) ? 'margin-right: 5%' : 'margin-left: 5%';?>" id="table">
 
@@ -202,7 +202,7 @@ $(document).ready(function(){
 
 <div style="width: 970px; margin: 10px auto;" id="arabicPrintPage">
     <div style="margin-top: 10px; padding-bottom: 10px; <?php echo isset($user_lang) ? 'margin-right: 25%' : 'margin-left: 25%';?>">
-        <img src='/app_v1/assets/images/logo.png' style="height: 75px;" />
+        <img src='app_v1assets/images/logo.png' style="height: 75px;" />
     </div>
     <div style="padding-top: 10px; <?php echo isset($user_lang) ? 'margin-right: 5%' : 'margin-left: 5%';?>" id="table">
 

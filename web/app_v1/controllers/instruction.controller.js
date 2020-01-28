@@ -98,8 +98,8 @@ angular.module(module)
 
 			function getInstruction(){
 				var settings = JSON.parse(window.localStorage.getItem('test-category'));
-				//$http.get('/api/count/testconfig')
-				$http.get('/api/count/testconfig?category='+settings.category)
+				//$http.get('api/count/testconfig')
+				$http.get('api/count/testconfig?category='+settings.category)
 					.success(function(response) {
 						if (response.success) {
 							//$scope.items = response.data;
@@ -123,7 +123,7 @@ angular.module(module)
 				testConfig.language = $window.localStorage.getItem('screen_lang');
 				$http({
 						method: 'POST',
-						url: '/api/question/test',
+						url: 'api/question/test',
 						data: testConfig
 					})
 					.success(function(response) {
@@ -154,7 +154,7 @@ angular.module(module)
 				if ($scope.userLanguage) {
 					$scope.loader = true;
 					var question = $scope.question.id;
-					$http.get('/api/question/getbyid?id=' + question + '&language=' + $window.localStorage.getItem('screen_lang'))
+					$http.get('api/question/getbyid?id=' + question + '&language=' + $window.localStorage.getItem('screen_lang'))
 						.success(function(response) {
 							$scope.loader = false;
 							if (response.success) {
@@ -274,7 +274,7 @@ angular.module(module)
                 };
                 $http({
                     method: 'POST',
-                    url: '/api/question/testcomplete',
+                    url: 'api/question/testcomplete',
                     data: data
                 })
                 .success(function(response, status, headers, config) {

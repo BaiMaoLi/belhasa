@@ -1,0 +1,73 @@
+<div class="test-page">
+    <div class="clearfix"></div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12" data-ng-init='loadAssets()'>
+            <div class="x_panel" style="">
+                <div class="x_title">
+                    <h2 translate="questions.labels.question_creation">Question Bulk Import</h2>
+                    <div class="clearfix"></div>
+                </div>
+
+                <ol class="breadcrumb">
+                    <li><a href='javascript:void(0);' data-ui-sref='app' translate="home.menu.home">Home</a></li>
+                    <li data-ng-if='temp.testType === "realtime"'><a
+                            href='#/app/questions?category={{question.category}}&type={{temp.testType}}'
+                            translate="home.menu.questions">Questions</a></li>
+                    <li data-ng-if='temp.testType !== "realtime"'><a
+                            href='#/app/questions?category={{question.category}}&type={{tempType.practiseType}}'
+                            translate="home.menu.questions">Questions</a></li>
+                    <li class="active" translate="questions.labels.create">Bulk Import</li>
+                </ol>
+
+                <form data-ng-submit='bulkUpload()' enctype="multipart/form-data">
+                    <div>
+                        <div class='panel panel-default'>
+                            <div class='panel-heading'>
+                                <h4 class='panel-title'>
+                                    <span style="color: #31708f;" translate="questions.labels.question">Question </span>
+                                </h4>
+                            </div>
+                            <div class='panel-body'>
+                                <div class='col-sm-12 animated fadeIn'>
+                                    <div class='col-sm-12'>
+                                        <label>Select File</label>
+                                        <input type='file'
+                                               accept=".xlsx,.xls" id="{{$index}}option2"
+                                               file-model="bulk_upload_file"
+                                           >
+                                        <div data-ng-if="progressVisible"
+                                             style="margin-top: 10px;">
+                                            <div class="percent-progress">{{progress}}%</div>
+                                            <div class="progress-bar">
+                                                <div class="uploaded" ng-style="{'width': progress+'%'}"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr style='margin-top: 20px;'/>
+                            </div>
+                        </div>
+                    </div>
+                    <p class='text-center'>
+                        <button class='btn btn-info' type='submit' style='margin-top: 25px;width: 200px;'
+                                translate='questions.link.save_question' ng-if="!addQuestionSave">Save Question
+                        </button>
+                        <button class='btn btn-info disabled' type='submit' style='margin-top: 25px;width: 200px;'
+                                translate='questions.link.save_question' ng-if="addQuestionSave">Save Question
+                        </button>
+                        <a class="btn btn-primary" data-ng-if='temp.testType === "realtime"'
+                           style='margin-top: 25px;width: 200px;'
+                           href='#/app/questions?category={{question.category}}&type={{temp.testType}}'>{{'table.cancel'
+                            | translate }}</a>
+                        <a class="btn btn-primary" data-ng-if='temp.testType !== "realtime"'
+                           style='margin-top: 25px;width: 200px;'
+                           href='#/app/questions?category={{question.category}}&type={{tempType.practiseType}}'>{{'table.cancel'
+                            | translate }} </a>
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- /page content

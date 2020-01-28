@@ -29,7 +29,7 @@ angular.module(module)
 
 			$scope.getAll = function() {
 				$scope.loader = true;
-				$http.get('/api/topics/getall')
+				$http.get('api/topics/getall')
 					.success(function(response) {
 						$scope.loader = false;
 						if (response.success) {
@@ -46,7 +46,7 @@ angular.module(module)
 			$scope.saveTopic = function() {
 				$http({
 					method: 'POST',
-					url: '/api/topics/create',
+					url: 'api/topics/create',
 					data: $scope.newItem
 				})
 				.success(function(response) {
@@ -68,7 +68,7 @@ angular.module(module)
 				if (flag) {
 					$http({
 						method: 'DELETE',
-						url: '/api/topics/delete?id=' + item.id
+						url: 'api/topics/delete?id=' + item.id
 					})
 					.success(function(response) {
 						if (response.success) {
@@ -87,7 +87,7 @@ angular.module(module)
 
 			$scope.loadDataById = function() {
 				var id = $stateParams.id;
-				$http.get('/api/topics/getbyid?id=' + id)
+				$http.get('api/topics/getbyid?id=' + id)
 					.success(function(response) {
 						if (response.success) {
 							$scope.newItem = response.data;
@@ -99,7 +99,7 @@ angular.module(module)
 			$scope.updateTopic = function() {
 				$http({
 					method: 'PUT',
-					url: '/api/topics/update?id=' + $scope.newItem.id,
+					url: 'api/topics/update?id=' + $scope.newItem.id,
 					data: $scope.newItem
 				})
 				.success(function(response) {

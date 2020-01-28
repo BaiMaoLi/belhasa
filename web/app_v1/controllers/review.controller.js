@@ -311,7 +311,7 @@ angular.module(module)
 				console.log(data);
                 $http({
                     method: 'POST',
-                    url: '/api/question/testcomplete',
+                    url: 'api/question/testcomplete',
                     data: data
                 })
                 .success(function(response, status, headers, config) {
@@ -321,8 +321,8 @@ angular.module(module)
 						var popupWin = window.location.origin + '/site/testprint?id='+response.data+"&lang="+$window.localStorage.getItem('screen_lang');
 						var id = response.data;
 						location.href = popupWin;
-						//$http.post('/api/user/logout')
-						$http.post('/api/user/logout?id='+$scope.user_id)
+						//$http.post('api/user/logout')
+						$http.post('api/user/logout?id='+$scope.user_id)
 						.success(function(response) {
 							if (response.success) {
 								Authentication.user = null;
@@ -381,7 +381,7 @@ angular.module(module)
 					if($scope.markedQuestionIndex != -1){
 						question = $scope.testResults[$scope.markedQuestion[$scope.markedQuestionIndex]].question;
 					}
-					$http.get('/api/question/getbyid?id=' + question + '&language=' + screenlang + '&audiolang=' + audiolang)
+					$http.get('api/question/getbyid?id=' + question + '&language=' + screenlang + '&audiolang=' + audiolang)
 						.success(function(response) {
 							$scope.loader = false;
 							if (response.success) {
@@ -416,7 +416,7 @@ angular.module(module)
 					var audiolang = $window.localStorage.getItem('user_audio_lang');
 					var screenlang = $window.localStorage.getItem('screen_lang');
 					var question = $scope.question.id;
-					$http.get('/api/question/getbyid?id=' + question + '&language=' + screenlang + '&audiolang=' + audiolang)
+					$http.get('api/question/getbyid?id=' + question + '&language=' + screenlang + '&audiolang=' + audiolang)
 						.success(function(response) {
 							$scope.loader = false;
 							if (response.success) {
@@ -536,7 +536,7 @@ angular.module(module)
 						// $http.post('api/question/updatetime?id='+$scope.user_id+'&time='+$scope.timer)
 						// 	.success(function(response){
 						// });
-						$http.post('/api/user/logout?id='+$scope.user_id)
+						$http.post('api/user/logout?id='+$scope.user_id)
 							.success(function(response) {
 								if (response.success) {
 									Authentication.user = null;

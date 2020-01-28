@@ -35,7 +35,7 @@
                             <div style="margin-bottom: 20px; margin-top: 10px;">
                                 Audio: &nbsp;
                                 <span data-ng-if='query.audio'>
-                                  <img data-ng-src='/app/assets/images/audio.png' ng-click="playAudio(query.id)" 
+                                  <img data-ng-src='app/assets/images/audio.png' ng-click="playAudio(query.id)"
                                     width="20" height="20">
                                   <audio controls id="{{query.id}}" data-ng-hide='true'>
                                     <source src="{{query.audio}}" type="audio/mpeg">

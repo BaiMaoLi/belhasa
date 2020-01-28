@@ -28,7 +28,7 @@ angular.module(module)
 			$scope.success = $stateParams.save;
 
 			$scope.loadCategory = function(){
-				$http.get('/api/category/getall')
+				$http.get('api/category/getall')
 					.success(function(response) {
 						if (response.success) {
 							var arr = [];
@@ -44,7 +44,7 @@ angular.module(module)
 
 			$scope.loadStudents = function() {
 				$scope.loader = true;
-				$http.get('/api/user/getall')
+				$http.get('api/user/getall')
 					.success(function(response, status, headers, config) {
 						$scope.loader = false;
 						if (response.success) {
@@ -95,7 +95,7 @@ angular.module(module)
 				console.log(student);
 				$http({
 					method: 'PUT',
-					url: '/api/user/activate',
+					url: 'api/user/activate',
 					data: {id: student.id}
 				})
 				.success(function(response, status, headers, config) {
@@ -108,7 +108,7 @@ angular.module(module)
 				$scope.loader = true;
 				$http({
 					method: 'GET',
-					url: '/api/user/getbyid?id=' + $stateParams.id
+					url: 'api/user/getbyid?id=' + $stateParams.id
 				})
 				.success(function(response, status, headers, config) {
 					$scope.loader = false;
@@ -135,7 +135,7 @@ angular.module(module)
 					$scope.data.id = $stateParams.id;
 					$http({
 						method: 'POST',
-						url: '/api/user/resetpassword',
+						url: 'api/user/resetpassword',
 						data: $scope.data
 					})
 					.success(function(response, status, headers, config) {
@@ -207,7 +207,7 @@ angular.module(module)
 
 				$http({
 						method: 'POST',
-						url: '/api/user/update?id=' + $scope.user.id,
+						url: 'api/user/update?id=' + $scope.user.id,
 						data: $scope.user
 					})
 					.success(function(response) {
@@ -247,7 +247,7 @@ angular.module(module)
 
 			$scope.uploadPhoto = function() {
 				var modal = $uibModal.open({
-					templateUrl: '/app_v1/templates/upload_photo.tpl.html',
+					templateUrl: 'app_v1/templates/upload_photo.tpl.html',
 					controller: 'UploadController',
 					size: 'lg',
 					backdrop: 'static',
@@ -270,7 +270,7 @@ angular.module(module)
 			$scope.createUser = function() {
 				$http({
 					method: 'POST',
-					url: '/api/user/student',
+					url: 'api/user/student',
 					data: $scope.newStudent
 				})
 				.success(function(response) {

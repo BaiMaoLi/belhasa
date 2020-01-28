@@ -26,11 +26,9 @@ angular.module(module)
                   transformRequest: angular.identity,
                   headers: {'Content-Type': undefined, 'Process-Data': false}
                })
-
                .success(function(data){
                		this.audioUrl=data;
                })
-
                .error(function(){
                		this.audioUrl=data;
                });
@@ -57,13 +55,10 @@ angular.module(module)
 			};
 			$scope.tempType = {};
 			$scope.titlemsg = $stateParams.type;
-
 			$scope.addQuestionSave = false;
 			$scope.editQuestionSave = false;
-
 			$scope.tempTypeEdit = {};
-
-			$http.get('/api/category/getall')
+			$http.get('api/category/getall')
 				.success(function(response) {
 					if (response.success) {
 						var arr = [];
@@ -74,9 +69,8 @@ angular.module(module)
 					}
 				})
 				.error(function(response) {
-				});
-
-
+				}
+			);
 			$scope.selectoption = function(){
 				if($scope.question.queries[0].language == ""){
 					$scope.question.queries[0].language = "en-en";
@@ -190,7 +184,7 @@ angular.module(module)
 			$scope.language = $rootScope.userLanguage;
 			$rootScope.$on('language-changed', function(event, data) {
 				$scope.language = data;
-				$http.get('/api/language/getall')
+				$http.get('api/language/getall')
 					.success(function(response, status, headers, config) {
 						if (response.success === true) {
 							var $translate = $filter('translate');
@@ -229,16 +223,16 @@ angular.module(module)
 				} else {
 					$scope.selectedQuestion.queries.push(row);
 				}
-
 			};
 
 			$scope.getAll = function() {
 				$scope.loader = true;
 				if ($scope.userLanguage) {
-					$http.get('/api/question/getall?language=' + $scope.language.code)
-					//$http.get('/api/question/getcount')
+					$http.get('api/question/getall?language=' + $scope.language.code)
+					//$http.get('api/question/getcount')
 						.success(function(response, status, headers, config) {
 							$scope.loader = false;
+							console.log(response);
 							if (response.success === true) {
 								//$scope.items = response.data;
 								var result = [];
@@ -264,7 +258,7 @@ angular.module(module)
 			$scope.getCount = function() {
 				$scope.loader = true;
 				if ($scope.userLanguage) {
-					$http.get('/api/question/getcount')
+					$http.get('api/question/getcount')
 						.success(function(response, status, headers, config) {
 							$scope.loader = false;
 							if (response.success === true) {
@@ -282,7 +276,7 @@ angular.module(module)
 
 			$scope.getById = function() {
 				if ($stateParams.id) {
-					$http.get('/api/language/getbyid?id=' + $stateParams.id)
+					$http.get('api/language/getbyid?id=' + $stateParams.id)
 						.success(function(response, status, headers, config) {
 							if (response.success === true) {
 								$scope.item = response.data;
@@ -317,7 +311,7 @@ angular.module(module)
 					}
 					$http({
 						method: 'POST',
-						url: '/api/question/create',
+						url: 'api/question/create',
 						data: data
 					})
 					.success(function(response, status, headers, config) {
@@ -344,8 +338,8 @@ angular.module(module)
 					var $translate = $filter('translate');
 					alert($translate("table.ques_lang_msg"));
 				}
-
 			}
+
 
 			$scope.changeType = function() {
 				console.log($scope.temp);
@@ -399,7 +393,7 @@ angular.module(module)
 			$scope.saveConfig = function() {
 				$http({
 						method: 'POST',
-						url: '/api/count/testconfigsave',
+						url: 'api/count/testconfigsave',
 						data: $scope.testConfig
 					})
 					.success(function(response) {
@@ -417,11 +411,6 @@ angular.module(module)
 
 			$scope.newQuestion = function() {
 				$scope.addQuestionSave = true;
-				if ($scope.selectedPractiseTypes.length) {
-					for(var i=0; i< ($scope.selectedPractiseTypes.length); i++) {
-
-					}
-				}
 
 				var audioLength = 0;
 				var processedAudio = 0
@@ -442,7 +431,6 @@ angular.module(module)
 
 				if (audioLength) {
 					angular.forEach($scope.question.queries, function(value, key) {
-
 						if(value.audio){
 							$scope.uploadFile(value.audio , (value.query + value.language))
 								.then(function (res) {
@@ -474,7 +462,6 @@ angular.module(module)
 					});
 					var interval = $interval(function(){
 						if (processedAudio === audioLength) {
-							console.log("all file uploaded");
 							createNewQuestion();
 							$interval.cancel(interval);
 						}
@@ -484,11 +471,105 @@ angular.module(module)
 				}
 			};
 
+
+			///////////////////////////////////////////////////////////////////////////
+			//////////////////  Excel Bulk Upload Part  /////////////////////////////////
+
+				$scope.bulkUpload = function() {
+					$scope.addQuestionSave = true;
+					$scope.Upload();
+				};
+
+				$scope.Upload = function () {
+					if (typeof (FileReader) != "undefined") {
+						if($scope.bulk_upload_file){
+							var reader = new FileReader();
+							if (reader.readAsBinaryString) {
+								reader.onload = function (e) {
+									$scope.ProcessExcel(e.target.result);
+								};
+								reader.readAsBinaryString($scope.bulk_upload_file);
+							} else {
+								//For IE Browser.
+								reader.onload = function (e) {
+									var data = "";
+									var bytes = new Uint8Array(e.target.result);
+									for (var i = 0; i < bytes.byteLength; i++) {
+										data += String.fromCharCode(bytes[i]);
+									}
+									$scope.ProcessExcel(data);
+								};
+								reader.readAsArrayBuffer($scope.SelectedFile);
+							}
+						}else{
+							console.log("No Bulk Upload File");
+						}
+					} else {
+						$window.alert("This browser does not support HTML5.");
+					}
+				};
+
+				$scope.ProcessExcel = function (data) {
+					var question_type={
+						testType:$scope.temp.testType,
+						isCommon:false,
+						isSpecific:false
+					};
+
+					if ($scope.tempType.practiseType === 'common') {
+						question_type.isCommon = true;
+					} else if ($scope.tempType.practiseType === 'specific') {
+						question_type.isSpecific = true;
+					}
+					//Read the Excel File data.
+					var workbook = XLSX.read(data, {
+						type: 'binary'
+					});
+
+					//Fetch the name of First Sheet.
+					var firstSheet = workbook.SheetNames[0];
+
+					//Read all rows from First Sheet into an JSON array.
+					var excelRows = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[firstSheet]);
+					$http({
+						method: 'POST',
+						url: 'api/question/bulk',
+						data: {
+							data:excelRows,
+							question_type:question_type
+						}
+					}).then(
+						res=>{
+							var urltype = '';
+							if($stateParams.type == "isRealtime"){
+								urltype = "realtime";
+							}else if ($stateParams.type == "isCommon") {
+								urltype = "common";
+							}else if ($stateParams.type == "isSpecific") {
+								urltype = "specific";
+							}
+							$scope.addQuestionSave = false;
+							$state.go('app.questions', {category: $stateParams.category,type: urltype,save: true});
+
+						},
+						error=>{
+							$scope.error = true;
+							console.log(error);
+						}
+					)
+				};
+			/////////////////////// End Excel Uploading  ///////////////////////////////
+			////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
 			$scope.saveItem = function() {
 				if ($scope.item.id) {
 					$http({
 						method: 'PUT',
-						url: '/api/language/update',
+						url: 'api/language/update',
 						data: $scope.item
 					})
 					.success(function(response, status, headers, config) {
@@ -509,7 +590,7 @@ angular.module(module)
 			$scope.removeItem = function(item) {
 				var flag = confirm('Do you want to remove this element');
 				if (flag) {
-					$http.delete('/api/question/delete?id=' + item.id)
+					$http.delete('api/question/delete?id=' + item.id)
 						.success(function(response, status, headers, config) {
 							if (response.success === true) {
 								$scope.items.splice(($scope.items).indexOf(item), 1);
@@ -524,7 +605,7 @@ angular.module(module)
 			};
 
 			$scope.loadAssets = function() {
-				$http.get('/api/language/getall')
+				$http.get('api/language/getall')
 					.success(function(response, status, headers, config) {
 						if (response.success === true) {
 							var $translate = $filter('translate');
@@ -548,7 +629,7 @@ angular.module(module)
 						$scope.error = true;
 					});
 
-				$http.get('/api/topics/getall')
+				$http.get('api/topics/getall')
 					.success(function(response, status, headers, config) {
 						if (response.success === true) {
 							$scope.topics = response.data;
@@ -624,7 +705,7 @@ angular.module(module)
 
 			$scope.uploadPhoto = function() {
 				var modal = $uibModal.open({
-					templateUrl: '/app_v1/templates/upload_photo.tpl.html',
+					templateUrl: 'app_v1/templates/upload_photo.tpl.html',
 					controller: 'UploadController',
 					size: 'lg',
 					backdrop: 'static',
@@ -651,7 +732,7 @@ angular.module(module)
 
 			$scope.uploadPhoto1 = function() {
 				var modal = $uibModal.open({
-					templateUrl: '/app_v1/templates/upload_photo.tpl.html',
+					templateUrl: 'app_v1/templates/upload_photo.tpl.html',
 					controller: 'UploadController',
 					size: 'lg',
 					backdrop: 'static',
@@ -678,7 +759,7 @@ angular.module(module)
 
 			$scope.uploadPhoto2 = function() {
 				var modal = $uibModal.open({
-					templateUrl: '/app_v1/templates/upload_photo.tpl.html',
+					templateUrl: 'app_v1/templates/upload_photo.tpl.html',
 					controller: 'UploadController',
 					size: 'lg',
 					backdrop: 'static',
@@ -705,7 +786,7 @@ angular.module(module)
 
 			$scope.uploadPhoto3 = function() {
 				var modal = $uibModal.open({
-					templateUrl: '/app_v1/templates/upload_photo.tpl.html',
+					templateUrl: 'app_v1/templates/upload_photo.tpl.html',
 					controller: 'UploadController',
 					size: 'lg',
 					backdrop: 'static',
@@ -736,7 +817,7 @@ angular.module(module)
 
 			// Edit the Question
 			$scope.loadQuestion = function() {
-				$http.get('/api/question/getinfo?id=' + $stateParams.id)
+				$http.get('api/question/getinfo?id=' + $stateParams.id)
 					.success(function(response) {
 						if (response.success) {
 							$scope.link_category = $window.localStorage.getItem('link_category');
@@ -780,7 +861,7 @@ angular.module(module)
 				if(langdup == 0){
 					$http({
 						method: 'POST',
-						url: '/api/question/update',
+						url: 'api/question/update',
 						data: $scope.selectedQuestion
 					})
 					.success(function(response) {

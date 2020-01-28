@@ -40,7 +40,7 @@ angular.module(module)
 			};
 
 
-			$http.get('/api/category/getall')
+			$http.get('api/category/getall')
 				.success(function(response) {
 					if (response.success) {
 						var arr = [];
@@ -105,7 +105,7 @@ angular.module(module)
 				};
 
 
-				$http.get('/api/question/testinfo?id=' + $stateParams.id)
+				$http.get('api/question/testinfo?id=' + $stateParams.id)
 					.success(function(response, status, headers, config) {
 						$scope.loader = false;
 						if (response.success) {
@@ -174,7 +174,7 @@ angular.module(module)
 						$query  = $query + "?page=" + $scope.curPage + "&pageSize=" + $scope.pageSize + "&StudentId=" + $scope.search.studentId + "&filterBy=" + $scope.search.filterBy;
 					}
 
-					$http.get('/api/question/testall' + $query)
+					$http.get('api/question/testall' + $query)
 						.success(function(response) {
 							$scope.loader = false;
 							if (response.success) {
@@ -219,7 +219,7 @@ angular.module(module)
 					$query  = $query + "?page=0&pageSize=" + $scope.responsePageSize;
 				}
 
-				$http.get('/api/question/testall' + $query)
+				$http.get('api/question/testall' + $query)
 					.success(function(response) {
 						$scope.exportButton = false;
 						if (response.success) {
@@ -263,7 +263,7 @@ angular.module(module)
 					$query  = $query + "?page=0&pageSize=" + $scope.responsePageSize;
 				}
 
-				$http.get('/api/question/testall' + $query)
+				$http.get('api/question/testall' + $query)
 					.success(function(response) {
 						$scope.exportButton = false;
 						if (response.success) {
@@ -341,7 +341,7 @@ angular.module(module)
 					}else{
 						$query += "?from="+fromDate+"&to="+toDate + "&page=" + $scope.curPage + "&pageSize=" + $scope.pageSize;
 					}
-					$http.get('/api/question/testall' + $query)
+					$http.get('api/question/testall' + $query)
 						.success(function(response) {
 							$scope.loader = false;
 							if (response.success) {
@@ -383,7 +383,7 @@ angular.module(module)
 					$query  = $query + "?page=" + $scope.curPage + "&pageSize=" + $scope.pageSize;
 				}
 
-				$http.get('/api/question/testall' + $query)
+				$http.get('api/question/testall' + $query)
 					.success(function(response) {
 						$scope.loader = false;
 						if (response.success) {

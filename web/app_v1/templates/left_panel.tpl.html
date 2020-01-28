@@ -1,121 +1,129 @@
 <style>
-body {
-    color: #73879C;
-    background: #2A3F54;
-    /*#ECF0F1; #FCFCFC*/
+    body {
+        color: #73879C;
+        background: #2A3F54;
+        /*#ECF0F1; #FCFCFC*/
 
-    font-family: "Helvetica Neue", Roboto, Arial, "Droid Sans", sans-serif;
-    font-size: 13px;
-    font-weight: 500;
-    line-height: 1.471;
-}
+        font-family: "Helvetica Neue", Roboto, Arial, "Droid Sans", sans-serif;
+        font-size: 13px;
+        font-weight: 500;
+        line-height: 1.471;
+    }
 </style>
 <div class="left_col scroll-view">
-
-  <div class="navbar nav_title" style="border: 0;">
-    <a data-ui-sref='app' class="site_title"><img src='/app/assets/images/symbol.png' style='width:75px;'> <span translate='app.title'>Belhasa Driving</span></a>
-  </div>
-  <div class="clearfix"></div>
-
-  <!-- menu prile quick info -->
-  <div class="profile">
-    <div class="profile_pic">
-      <img data-ng-src="{{user.photo}}" alt="Profile photo" class="img-circle profile_img animated pulse" data-ng-if='user.photo'>
-      <img src="app/assets/images/temp-icon.png" alt="Profile photo" class="img-circle profile_img animated pulse" data-ng-if='!user.photo'>
+    <div class="navbar nav_title" style="border: 0;">
+        <a data-ui-sref='app' class="site_title"><img src='app/assets/images/symbol.png' style='width:75px;'> <span
+                translate='app.title'>Belhasa Driving</span></a>
     </div>
-    <div class="profile_info animated fadeInDown">
-      <span translate="home.labels.welcome"></span>,
-      <h2 data-ng-bind='user.name'>MA</h2>
+    <div class="clearfix"></div>
+
+    <!-- menu prile quick info -->
+    <div class="profile">
+        <div class="profile_pic">
+            <img data-ng-src="{{user.photo}}" alt="Profile photo" class="img-circle profile_img animated pulse"
+                 data-ng-if='user.photo'>
+            <img src="app/assets/images/temp-icon.png" alt="Profile photo" class="img-circle profile_img animated pulse"
+                 data-ng-if='!user.photo'>
+        </div>
+        <div class="profile_info animated fadeInDown">
+            <span translate="home.labels.welcome"></span>,
+            <h2 data-ng-bind='user.name'>MA</h2>
+        </div>
     </div>
-  </div>
-  <!-- /menu prile quick info -->
+    <!-- /menu prile quick info -->
 
-  <br />
+    <br/>
 
-  <!-- sidebar menu -->
-  <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+    <!-- sidebar menu -->
+    <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
 
-    <div class="menu_section">
-      <h3>&nbsp;</h3>
-      <ul class="nav side-menu" data-ng-if='user.isAdmin'>
-        <li ng-class="{ active: isActive('/app') }" class='animated fadeInLeft'>
-          <a href='javascript:void(0);' data-ui-sref='app'><i class="fa fa-home"></i> {{'home.menu.home' | translate}} </a>
-        </li>
-        <li ng-class="{ active: isActive('/students') }" class='animated fadeInLeft' data-ng-if="user.isAdmin=='1'">
-          <a href='javascript:void(0);' data-ui-sref='app.students'>
-            <i class="fa fa-edit"></i> {{'home.menu.users' | translate}} </span>
-          </a>
-        </li>
-        <li ng-class="{ active: isActive('/students') }" class='animated fadeInLeft' data-ng-if="user.isAdmin=='2'">
-          <a href='javascript:void(0);' data-ui-sref='app.students'>
-            <i class="fa fa-edit"></i> {{'home.menu.users' | translate}} </span>
-          </a>
-        </li>
-        <li ng-class="{ active: isActive('/category') }" class='animated fadeInLeft' data-ng-if="user.isAdmin=='1'">
-          <a data-ui-sref='app.category'>
-            <i class="fa fa-cog"></i> Category</span>
-          </a>
-        </li>
-        <li ng-class="{ active: isActive('/topic_area') }" class='animated fadeInLeft' data-ng-if="user.isAdmin=='1'">
-          <a data-ui-sref='app.topic_area'>
-            <i class="fa fa-car"></i> {{'home.menu.topic_area' | translate}}</span>
-          </a>
-        </li>
-        <li ng-class="{ active: isActive('/question') }" class='animated fadeInLeft' data-ng-if="user.isAdmin=='1'">
-          <a data-ui-sref='app.questionmanagement'>
-            <i class="fa fa-question-circle"></i>{{'home.menu.test' | translate}}</span>
-          </a>
-        </li>
-<!--         <li class='animated fadeInLeft'>
-          <a data-ui-sref='app.questions'>
-            <i class="fa fa-question-circle"></i> {{'home.menu.questions' | translate}} </span>
-          </a>
-        </li> -->
-        <li ng-class="{ active: isActive('/results') }" class='animated fadeInLeft'>
-          <a data-ui-sref='app.test_results'>
-            <i class="fa fa-pencil-square-o"></i> {{'home.menu.results' | translate}} </span>
-          </a>
-        </li>
-<!--         <li class='animated fadeInLeft'>
-          <a data-ui-sref='app.testconfig'>
-            <i class="fa fa-tag"></i> {{'home.menu.test_config' | translate}} </span>
-          </a>
-        </li> -->
-        <li ng-class="{ active: isActive('/logs') }"class='animated fadeInLeft' data-ng-if="user.isAdmin=='1'">
-          <a data-ui-sref='app.logs'>
-            <i class="fa fa-tag"></i> {{'home.menu.logs' | translate}} </span>
-          </a>
-        </li>
-        <li ng-class="{ active: isActive('/reports') }"class='animated fadeInLeft' data-ng-if="user.isAdmin=='1'">
-          <a data-ui-sref='app.reports'>
-            <i class="fa fa-file-text"></i>{{'form.reports' | translate}}</span>
-          </a>
-        </li>
-      </ul>
+        <div class="menu_section">
+            <h3>&nbsp;</h3>
+            <ul class="nav side-menu" data-ng-if='user.isAdmin'>
+                <li ng-class="{ active: isActive('app') }" class='animated fadeInLeft'>
+                    <a href='javascript:void(0);' data-ui-sref='app'><i class="fa fa-home"></i> {{'home.menu.home' |
+                        translate}} </a>
+                </li>
+                <li ng-class="{ active: isActive('/students') }" class='animated fadeInLeft'
+                    data-ng-if="user.isAdmin=='1'">
+                    <a href='javascript:void(0);' data-ui-sref='app.students'>
+                        <i class="fa fa-edit"></i> {{'home.menu.users' | translate}} </span>
+                    </a>
+                </li>
+                <li ng-class="{ active: isActive('/students') }" class='animated fadeInLeft'
+                    data-ng-if="user.isAdmin=='2'">
+                    <a href='javascript:void(0);' data-ui-sref='app.students'>
+                        <i class="fa fa-edit"></i> {{'home.menu.users' | translate}} </span>
+                    </a>
+                </li>
+                <li ng-class="{ active: isActive('/category') }" class='animated fadeInLeft'
+                    data-ng-if="user.isAdmin=='1'">
+                    <a data-ui-sref='app.category'>
+                        <i class="fa fa-cog"></i> Category</span>
+                    </a>
+                </li>
+                <li ng-class="{ active: isActive('/topic_area') }" class='animated fadeInLeft'
+                    data-ng-if="user.isAdmin=='1'">
+                    <a data-ui-sref='app.topic_area'>
+                        <i class="fa fa-car"></i> {{'home.menu.topic_area' | translate}}</span>
+                    </a>
+                </li>
+                <li ng-class="{ active: isActive('/question') }" class='animated fadeInLeft'
+                    data-ng-if="user.isAdmin=='1'">
+                    <a data-ui-sref='app.questionmanagement'>
+                        <i class="fa fa-question-circle"></i>{{'home.menu.test' | translate}}</span>
+                    </a>
+                </li>
+                <!--         <li class='animated fadeInLeft'>
+                          <a data-ui-sref='app.questions'>
+                            <i class="fa fa-question-circle"></i> {{'home.menu.questions' | translate}} </span>
+                          </a>
+                        </li> -->
+                <li ng-class="{ active: isActive('/results') }" class='animated fadeInLeft'>
+                    <a data-ui-sref='app.test_results'>
+                        <i class="fa fa-pencil-square-o"></i> {{'home.menu.results' | translate}} </span>
+                    </a>
+                </li>
+                <!--         <li class='animated fadeInLeft'>
+                          <a data-ui-sref='app.testconfig'>
+                            <i class="fa fa-tag"></i> {{'home.menu.test_config' | translate}} </span>
+                          </a>
+                        </li> -->
+                <li ng-class="{ active: isActive('/logs') }" class='animated fadeInLeft' data-ng-if="user.isAdmin=='1'">
+                    <a data-ui-sref='app.logs'>
+                        <i class="fa fa-tag"></i> {{'home.menu.logs' | translate}} </span>
+                    </a>
+                </li>
+                <li ng-class="{ active: isActive('/reports') }" class='animated fadeInLeft'
+                    data-ng-if="user.isAdmin=='1'">
+                    <a data-ui-sref='app.reports'>
+                        <i class="fa fa-file-text"></i>{{'form.reports' | translate}}</span>
+                    </a>
+                </li>
+            </ul>
 
-      <ul class="nav side-menu" data-ng-if='!user.isAdmin'>
-        <li ng-class="{ active: isActive('/app') }" class='animated fadeInLeft'>
-          <a href='javascript:void(0);' data-ui-sref='app'><i class="fa fa-home"></i> {{'home.menu.home' | translate}} </a>
-        </li>
-        <!-- <li class='animated fadeInLeft'>
-          <a href='javascript:void(0);' data-ui-sref='app.students'>
-            <i class="fa fa-edit"></i> Test </span>
-          </a>
-        </li> -->
-        <li ng-class="{ active: isActive('/results') }" class='animated fadeInLeft'>
-          <a data-ui-sref='app.test_results'>
-            <i class="fa fa-edit"></i> {{'home.menu.my_results' | translate}} </span>
-          </a>
-        </li>
-        <li ng-class="{ active: isActive('/practise') }" class='animated fadeInLeft'>
-          <a data-ui-sref='app.practise'>
-            <i class="fa fa-product-hunt"></i> {{'questions.labels.practise' | translate}} </span>
-          </a>
-        </li>
-      </ul>
+            <ul class="nav side-menu" data-ng-if='!user.isAdmin'>
+                <li ng-class="{ active: isActive('app') }" class='animated fadeInLeft'>
+                    <a href='javascript:void(0);' data-ui-sref='app'><i class="fa fa-home"></i> {{'home.menu.home' |
+                        translate}} </a>
+                </li>
+                <!-- <li class='animated fadeInLeft'>
+                  <a href='javascript:void(0);' data-ui-sref='app.students'>
+                    <i class="fa fa-edit"></i> Test </span>
+                  </a>
+                </li> -->
+                <li ng-class="{ active: isActive('/results') }" class='animated fadeInLeft'>
+                    <a data-ui-sref='app.test_results'>
+                        <i class="fa fa-edit"></i> {{'home.menu.my_results' | translate}} </span>
+                    </a>
+                </li>
+                <li ng-class="{ active: isActive('/practise') }" class='animated fadeInLeft'>
+                    <a data-ui-sref='app.practise'>
+                        <i class="fa fa-product-hunt"></i> {{'questions.labels.practise' | translate}} </span>
+                    </a>
+                </li>
+            </ul>
+        </div>
     </div>
-
-  </div>
-  <!-- /sidebar menu -->
-
+    <!-- /sidebar menu -->
 </div>

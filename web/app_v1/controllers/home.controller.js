@@ -16,7 +16,6 @@ angular.module(module)
 		function($scope, $state, $timeout, Authentication, $http, $translate, $rootScope, $uibModal, $window, $mdDialog) {
 			// Styles Adjustments
 			$('body').attr('style', 'background-color:none;');
-
 			$scope.blocked = 'cursor: no-drop;';
 			$scope.testTime = '';
 			var popupMsg = '';
@@ -33,7 +32,13 @@ angular.module(module)
 			$scope.okpop = false;
 			$scope.popreload = false;
 
-			$http.get('/api/category/getall')
+			$window.localStorage.setItem('test-category', JSON.stringify({
+				userId: $scope.user.id,
+				category: $scope.user.category,
+				name : $scope.user.name
+			}));
+
+			$http.get('api/category/getall')
 				.success(function(response) {
 					if (response.success) {
 						var arr = [];
@@ -53,7 +58,7 @@ angular.module(module)
 			if($window.localStorage.getItem('reload_lang') == 1){
 				$window.localStorage.setItem('reload_lang', 0);
 				$window.localStorage.setItem('home_reload', 2);
-				$window.location.reload();
+				// $window.location.reload();
 			}else{
 				if($scope.user.isAdmin == 0){
 					$window.localStorage.setItem('home_reload', 1);
@@ -64,7 +69,7 @@ angular.module(module)
 			if($window.localStorage.getItem('reload_logout') == 1){
 				$window.localStorage.setItem('reload_logout', 0);
 				$window.localStorage.setItem('home_reload', 0);
-				$window.location.reload();
+				// $window.location.reload();
 			}
 
 			if ($scope.user.resume_test) {
@@ -81,7 +86,7 @@ angular.module(module)
 			$scope.loadCounts = function() {
 				if ($scope.user.isAdmin) {
 					// user counts
-					$http.get('/api/count/user')
+					$http.get('api/count/user')
 						.success(function(response, status, headers, config) {
 							if (response.success) {
 								$scope.userCount = response.data;
@@ -89,7 +94,7 @@ angular.module(module)
 						});
 
 					// user requests
-					$http.get('/api/count/user?field=status&value=0')
+					$http.get('api/count/user?field=status&value=0')
 						.success(function(response, status, headers, config) {
 							if (response.success) {
 								$scope.userRequests = response.data;
@@ -97,7 +102,7 @@ angular.module(module)
 						});
 
 					// questions
-					$http.get('/api/count/questions')
+					$http.get('api/count/questions')
 						.success(function(response, status, headers, config) {
 							if (response.success) {
 								$scope.questionsCount = response.data;
@@ -105,7 +110,7 @@ angular.module(module)
 						});
 
 					// tests
-					$http.get('/api/count/tests')
+					$http.get('api/count/tests')
 						.success(function(response, status, headers, config) {
 							if (response.success) {
 								$scope.testCount = response.data;
@@ -113,17 +118,17 @@ angular.module(module)
 						});
 				} //else if($scope.timer != '00:00:00' && Authentication.timer != '00:00:00') {
 				else if($scope.user.time != '00:00:00') {
+					console.log("enable Timer");
 					enableTimer();
-
 				} else if($scope.user.time == '00:00:00' && $scope.user.resume_test) {
-					enableTimer();
 					console.log('enable timer');
+					enableTimer();
 				}
 			};
 
 			$scope.isTestComplete = function() {
 				var settings = JSON.parse(window.localStorage.getItem('test-category'));
-				$http.get('/api/question/testiscomplete?category=' + settings.category)
+				$http.get('api/question/testiscomplete?category=' + settings.category)
 					.success(function(response) {
 						if (response.success) {
 							//$scope.blocked = 'cursor: no-drop';
@@ -140,8 +145,8 @@ angular.module(module)
 
 			$scope.loadTestconfig =  function() {
 				var settings = JSON.parse(window.localStorage.getItem('test-category'));
-				//$http.get('/api/count/testconfig')
-				$http.get('/api/count/testconfig?category='+settings.category)
+				//$http.get('api/count/testconfig')
+				$http.get('api/count/testconfig?category='+settings.category)
 					.success(function(response) {
 						if (response.success) {
 							$scope.items = response.data;
@@ -166,7 +171,7 @@ angular.module(module)
 					&& ($scope.configItem.noofcommonquestion >= $scope.configItem.noofreqcommonanswer)) {
 					$http({
 						method: 'POST',
-						url: '/api/count/testconfigsave',
+						url: 'api/count/testconfigsave',
 						data: $scope.configItem
 					})
 					.success(function(response) {
@@ -228,40 +233,41 @@ angular.module(module)
 
 			//show resume test popup
 			if ($scope.user.resume_test) {
-					var instruction = $uibModal.open({
-						templateUrl: '/app_v1/templates/resume_test_popup.tpl.html',
-						controller: 'ResumeTestController',
-						size: 'lg',
-						backdrop: 'static',
-						keyboard: false,
-						resolve: {
-							testOptions: function () {
-								return config;
-							}
+				var instruction = $uibModal.open({
+					templateUrl: 'app_v1/templates/resume_test_popup.tpl.html',
+					controller: 'ResumeTestController',
+					size: 'lg',
+					backdrop: 'static',
+					keyboard: false,
+					resolve: {
+						testOptions: function () {
+							return config;
 						}
-					});
-					instruction.result.then(function(data) {
-					//open(config);
-						$scope.resetDisplay();
-						$scope.testSuccess = true;
-					}, function(data) {
-						// console.log(data);
-						$scope.resetDisplay();
-						if (data == "ok") {
-							open(config);
-							//$scope.testError = data;
-						} else {
-							//$scope.testError = 'Test has been terminated due to user\'s interupt!';
-							$scope.testError = data;
-						}
-					});
-				}
+					}
+				});
+				instruction.result.then(function(data) {
+				//open(config);
+					$scope.resetDisplay();
+					$scope.testSuccess = true;
+				}, function(data) {
+					// console.log(data);
+					$scope.resetDisplay();
+					if (data == "ok") {
+						open(config);
+						//$scope.testError = data;
+					} else {
+						//$scope.testError = 'Test has been terminated due to user\'s interupt!';
+						$scope.testError = data;
+					}
+				});
+			}
+
 			function openTest(config) {
 				if (config['noofquestion']>0 && $scope.instruction_time) {
 					$scope.instruction_time = 0;
 					clearShowInstruction(1);
 					var instruction = $uibModal.open({
-						templateUrl: '/app_v1/templates/instruction.tpl.html',
+						templateUrl: 'app_v1/templates/instruction.tpl.html',
 						controller: 'InstructionController',
 						size: 'lg',
 						backdrop: 'static',
@@ -288,7 +294,7 @@ angular.module(module)
 					});
 				} else if(config['noofquestion']>0){
 					var modal = $uibModal.open({
-						templateUrl: '/app_v1/templates/tests.tpl.html',
+						templateUrl: 'app_v1/templates/tests.tpl.html',
 						controller: 'TestController',
 						size: 'lg',
 						backdrop: 'static',
@@ -303,7 +309,7 @@ angular.module(module)
 					modal.result.then(function(data) {
 						$scope.resetDisplay();
 						var settings = JSON.parse(window.localStorage.getItem('test-category'));
-						$http.get('/api/count/testconfig?category='+settings.category)
+						$http.get('api/count/testconfig?category='+settings.category)
 						.success(function(response) {
 							if (response.success) {
 								$scope.items = response.data;
@@ -329,7 +335,7 @@ angular.module(module)
 
 			function open(config){
 				var modal = $uibModal.open({
-					templateUrl: '/app_v1/templates/tests.tpl.html',
+					templateUrl: 'app_v1/templates/tests.tpl.html',
 					controller: 'TestController',
 					size: 'lg',
 					backdrop: 'static',
@@ -344,7 +350,7 @@ angular.module(module)
 				modal.result.then(function(data) {
 					$scope.resetDisplay();
 					var settings = JSON.parse(window.localStorage.getItem('test-category'));
-					$http.get('/api/count/testconfig?category='+settings.category)
+					$http.get('api/count/testconfig?category='+settings.category)
 					.success(function(response) {
 						if (response.success) {
 							$scope.items = response.data;
@@ -390,9 +396,8 @@ angular.module(module)
 
 
 				if ($scope.user.time == '00:00:00' && !$scope.user.resume_test) {
-					console.log('first time');
 					Authentication.timer = $scope.user.time;
-					$http.get('/api/count/testconfig?category='+settings.category)
+					$http.get('api/count/testconfig?category='+settings.category)
 					.success(function(response) {
 						if (response.success) {
 							$scope.items = response.data;
@@ -402,7 +407,8 @@ angular.module(module)
 						}
 					})
 					.error(function(response) {});
-				} else if ($scope.user.resume_test) {
+				}
+				else if ($scope.user.resume_test) {
 					console.log('If resume test');
 					if ($scope.user.time != '00:00:00') {
 						// console.log('reload while takeing test');
@@ -423,7 +429,7 @@ angular.module(module)
 					} else if ($scope.user.time == '00:00:00') {
 						console.log('test questions not completed');
 						//feature = new Date(date.getTime() + (mins*60000));
-						$http.get('/api/count/testconfig?category='+settings.category)
+						$http.get('api/count/testconfig?category='+settings.category)
 						.success(function(response) {
 							if (response.success) {
 								$scope.items = response.data;
@@ -436,7 +442,8 @@ angular.module(module)
 					} else {
 						console.log('else state');
 					}
-				} else if ($scope.user.time != '00:00:00' && !$scope.user.resume_test) {
+				}
+				else if ($scope.user.time != '00:00:00' && !$scope.user.resume_test) {
 					console.log('taking test second or multiple time');
 					//var timeArr = Authentication.timer.split(':');
 					if (isNaN($scope.timer != '00:00:00') ||  Authentication.timer != '00:00:00') {
@@ -474,7 +481,7 @@ angular.module(module)
 							//console.log(mins);
 							feature = new Date(date.getTime() + (mins*60000));
 						} else {
-							$http.get('/api/count/testconfig?category='+settings.category)
+							$http.get('api/count/testconfig?category='+settings.category)
 							.success(function(response) {
 								if (response.success) {
 									$scope.items = response.data;
@@ -485,7 +492,7 @@ angular.module(module)
 							})
 							.error(function(response) {});
 						}
-						// $http.get('/api/count/testconfig?category='+settings.category)
+						// $http.get('api/count/testconfig?category='+settings.category)
 						// .success(function(response) {
 						// 	if (response.success) {
 						// 		$scope.items = response.data;
@@ -537,11 +544,11 @@ angular.module(module)
 						$scope.showAlert(popupMsg);
 						//set timer to 00:00:00
 						$http.post('api/question/updatetime?id='+$scope.user_id+'&time='+$scope.timer)
-						.success(function(response){
+							.success(function(response){
 						});
 
 						//logout when time is up
-						$http.post('/api/user/logout?id='+$scope.user_id)
+						$http.post('api/user/logout?id='+$scope.user_id)
 							.success(function(response) {
 								if (response.success) {
 									Authentication.user = null;
@@ -573,12 +580,8 @@ angular.module(module)
             $window.onbeforeunload = function(){
             	if ($scope.timer !== '00:00:00') {
             		// return 'Do you want to reload?';
-            		console.log('inside home page');
             		Authentication.timer = $scope.timer;
-            		console.log('home_reload');
-            		console.log($window.localStorage.getItem('home_reload'));
             		if ($window.localStorage.getItem('home_reload') != 2){
-            			console.log('inside condition');
             			$window.localStorage.setItem('home_reload', 1);
             		}
             		$http.post('api/question/updatetime?id='+$scope.user_id+'&time='+Authentication.timer)
@@ -593,7 +596,7 @@ angular.module(module)
 			};
 
             function clearShowInstruction (instruction){
-            	$http.get('/api/user/clearinsruction?id=' + $scope.user.id+'&show_instruction='+instruction)
+            	$http.get('api/user/clearinsruction?id=' + $scope.user.id+'&show_instruction='+instruction)
 					.success(function(response, status, headers, config) {
 						$scope.loader = false;
 						if (response.success) {

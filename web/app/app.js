@@ -33,13 +33,13 @@ $app.config([
 			})
 			.state('splash', {
 				url: '/splash',
-				templateUrl: '/app/templates/splash.tpl.html',
+				templateUrl: 'app/templates/splash.tpl.html',
 				controller: 'SplashController',
 				onEnter: function(Authentication, $state) {
 				}
 			})
 			.state('app', {
-				url: '/app?test',
+				url: 'app?test',
 				views: {
 					'': {
 						templateUrl: 'app/templates/home.tpl.html',
@@ -227,7 +227,7 @@ $app.config([
 	'$translateProvider',
 	function($translateProvider) {
 		$translateProvider.useStaticFilesLoader({
-		    prefix: '/app/assets/i18n/',
+		    prefix: 'app/assets/i18n/',
 		    suffix: '.json'
 		});
 

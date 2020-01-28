@@ -11,6 +11,7 @@ use app\models\User;
 use app\models\Questionstate;
 use app\models\Testconfig;
 use app\models\Category;
+use app\models\Language;
 use Yii;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
@@ -40,7 +41,6 @@ class QuestionController extends Controller
 
 
     public function insertQuestionTranslation($questionId, $question) {
-
         foreach ($question as $value) {
             $model = new QuestionsTranslations;
             $model->questionid = $questionId;
@@ -123,31 +123,96 @@ class QuestionController extends Controller
         return;
     }
 
+    public function actionBulk() {
+        $rows = Language::findAll(['status' => TRUE]);
+        $languages = array();
+        foreach($rows as $row) {
+            array_push($languages, $row->attributes);
+        }
+
+        $input = Yii::$app->request->post();
+        $data=$input['data'];
+        $question_type=$input['question_type'];
+        $questionId=0;
+        foreach ($data as $item){
+            if(isset($item['No'])){
+                $question = new Questions;
+                $question->answer = $item['answer'];
+                $question->category = isset($item['category']) ? $item['category'] : 'LMV';
+                $question->topicArea = $item['topicArea'];
+                $question->photo = isset($item['photo']) ? $item['photo'] : '';
+                $question->choice1photo = isset($item['choice1photo']) ? $item['choice1photo'] : '';
+                $question->choice2photo = isset($item['choice2photo']) ? $item['choice2photo'] : '';
+                $question->choice3photo = isset($item['choice3photo']) ? $item['choice3photo'] : '';
+                if (isset($question_type['testType'])) {
+                    if ($question_type['testType'] == 'realtime') {
+                        $question->isRealtime = TRUE;
+                        $question->isPractise = TRUE;
+                        $question->parent = 'realtime';
+                    } else {
+                        $question->isRealtime = TRUE;
+                        $question->isPractise = TRUE;
+                    }
+                } else {
+                    $question->isRealtime = TRUE;
+                    $question->isPractise = TRUE;
+                }
+                $question->isCommon = isset($question_type['isCommon']) ? $question_type['isCommon'] : FALSE;
+                $question->isSpecific = isset($question_type['isSpecific']) ? $question_type['isSpecific'] : FALSE;
+                if ($question->isCommon && $question->isPractise) {
+                    $question->parent = 'common';
+                } elseif ($question->isSpecific && $question->isPractise)  {
+                    $question->parent = 'specific';
+                }
+                $result = $question->save();
+                if ($result) {
+                    $questionId = $question->primaryKey;
+                }
+            }
+            foreach ($languages as $language){
+                if($item['language']==$language['name']){
+                    $item['language']=$language['code'];
+                    $this->insertQuestionTranslation($questionId,[$item]);
+                    break;
+                }
+            }
+        }
+        echo json_encode(array(
+            'success' => true,
+            'message' => 'Question created'
+        ));
+        return;
+    }
+
     public function getQuestionStmt($questionId, $language) {
         $rows = QuestionsTranslations::find()->where('questionid=' . $questionId)->all();
         foreach ($rows as $row) {
-            $result = $row->attributes;
+            $result = $row['attributes'];
             $result['translationId'] = $result['id'];
             unset($result['id']);
             if ($result['language'] === $language) {
                 return $result;
             }
         }
-        $result = $rows[0]->attributes;
-        $result['translationId'] = $result['id'];
-        unset($result['id']);
-        return $result;
+        if(!is_null($rows) && isset($rows[0])){
+            $result = $rows[0]['attributes'];
+            $result['translationId'] = $result['id'];
+            unset($result['id']);
+            return $result;
+        }else{
+            return Array();
+        }
     }
 
     public function actionGetall() {
         $language = Yii::$app->request->get('language');
         $rows = Questions::find()->where('status = 1')->all();
         $response = array();
-        foreach ($rows as $row) {
-            $result = $row->attributes;
 
+        foreach ($rows as $row) {
+            $result = $row['attributes'];
             $model = Topicarea::findOne(['id' => $result['topicArea']]);
-            $topicArea = $model->attributes;
+            $topicArea = $model['attributes'];
             $result['topicArea'] = $topicArea['name'];
 
             $result = array_merge($result, $this->getQuestionStmt($result['id'], $language));
@@ -639,7 +704,6 @@ class QuestionController extends Controller
     }
 
     public function actionAudioupload() {
-
         if(isset($_FILES)) {
             $key = '';
             $keys = array_merge(range(0, 9), range('a', 'z'));
@@ -653,7 +717,7 @@ class QuestionController extends Controller
             if(move_uploaded_file($_FILES['file']['tmp_name'], $target_path)) {
                 echo json_encode(array(
                     'success' => true,
-                    'url' => "/app_v1/assets/audio/".$new_file_name
+                    'url' => "app_v1/assets/audio/".$new_file_name
                 ));
             } else {
                 echo json_encode(array(

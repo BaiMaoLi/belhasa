@@ -4,8 +4,8 @@
  */
 angular.module(module)
 	.controller('TestController', [
-		'$scope', 'Authentication', '$rootScope', '$http', '$state', '$stateParams', '$uibModalInstance', '$uibModal', 'testOptions', '$window', '$translate', '$mdDialog',
-		function($scope, Authentication, $rootScope, $http, $state, $stateParams, $uibModalInstance, $uibModal, testOptions, $window, $translate, $mdDialog) {
+		'$scope', 'Authentication', '$rootScope', '$http', '$state', '$stateParams', '$uibModalInstance', '$uibModal', 'testOptions', '$window', '$translate', '$mdDialog','$sce',
+		function($scope, Authentication, $rootScope, $http, $state, $stateParams, $uibModalInstance, $uibModal, testOptions, $window, $translate, $mdDialog,$sce) {
 			// Styles Adjustments
 			$('body').attr('style', 'background-color:none;');
 			var popupMsg = '';
@@ -77,6 +77,13 @@ angular.module(module)
 				}
 			}
 
+			$scope.trustUrl=function(url) {
+				return function() {
+					return $sce.trustAsResourceUrl(url);
+				}
+			};
+
+
 			function enableTimer() {
 				var date = new Date();
 
@@ -90,7 +97,7 @@ angular.module(module)
 						console.log('duration is empty');
 						var feature = new Date(date.getTime() + ((testOptions.duration)*60000));
 					} else {
-						$http.get('/api/count/testconfig?category='+settings.category)
+						$http.get('api/count/testconfig?category='+settings.category)
 						.success(function(response) {
 							console.log('if');
 							if (response.success) {
@@ -207,7 +214,7 @@ angular.module(module)
 							// if ($scope.leftQuestions.length){
 							// 	$http({
 					        //         method: 'POST',
-					        //         url: '/api/question/questionstate',
+					        //         url: 'api/question/questionstate',
 					        //         data: $scope.leftQuestions
 					        //         })
 					        //     .success(function(response) {
@@ -231,7 +238,7 @@ angular.module(module)
 							// .success(function(response){
 							// });
 							//logout when time is up
-							$http.post('/api/user/logout?id='+$scope.user_id)
+							$http.post('api/user/logout?id='+$scope.user_id)
 							.success(function(response) {
 								if (response.success) {
 									$translate.use("en-en");
@@ -268,7 +275,7 @@ angular.module(module)
 				}
 				$http({
 						method: 'POST',
-						url: '/api/question/test',
+						url: 'api/question/test',
 						data: testConfig
 					})
 					.success(function(response) {
@@ -290,8 +297,17 @@ angular.module(module)
 								$scope.loader = false;
 								enableTimer();
 								$scope.test = response.data;
+								$scope.test.map(function(item){
+									item.option1audio="https://www.computerhope.com/jargon/m/example.mp3";
+									item.option2audio="https://www.computerhope.com/jargon/m/example.mp3";
+									item.option3audio="https://www.computerhope.com/jargon/m/example.mp3";
+								});
 								$scope.question = $scope.test[0];
 								$scope.questionId = 0;
+
+								setTimeout(function () {
+									$scope.playOption($scope.question.id,1,true);
+								},1000);
 							} else {
 								$scope.closePopup('There is no tests available for this category.');
 							}
@@ -310,7 +326,7 @@ angular.module(module)
 					var audiolang = $window.localStorage.getItem('user_audio_lang');
 					var screenlang = $window.localStorage.getItem('screen_lang');
 					var question = $scope.question.id;
-					$http.get('/api/question/getbyid?id=' + question + '&language=' + screenlang + '&audiolang=' + audiolang)
+					$http.get('api/question/getbyid?id=' + question + '&language=' + screenlang + '&audiolang=' + audiolang)
 						.success(function(response) {
 							$scope.loader = false;
 							if (response.success) {
@@ -350,31 +366,59 @@ angular.module(module)
 				}
 			};
 
-			$scope.playOption1 = function(id) {
-			    var audio = document.getElementById(id);
-				if(!$scope.stopOption1){
-			    	audio.play();
-			    	$scope.audioClass = 'fa-stop-circle';
-					$scope.audioPlay = true;
-			    	$scope.stopOption1 = true;
-					audio.onended = function() {
+			$scope.playOption = function(id,option_number, auto_next_play=false) {
+			    var audio = document.getElementById(id+"option"+option_number);
+			    var src=$scope.question['option'+option_number+'audio'];
+			    if(src!=='' && src!=null && src!=='null'){
+					audio.src = src;
+					audio.load();
+					for(let i=1;i<=3;i++){
+						if(i!=option_number){
+							$scope['stopOption'+i] = false;
+							var audio_temp = document.getElementById(id+"option"+i);
+							audio_temp.pause();
+						}
+					}
+					console.log(id, option_number, auto_next_play,$scope['stopOption'+option_number]);
+					if(!$scope['stopOption'+option_number]){
+						audio.play();
+						$scope.audioClass = 'fa-stop-circle';
+						$scope.audioPlay = true;
+						$scope['stopOption'+option_number] = true;
+						audio.onended = function() {
+							audio.pause();
+							$scope.audioClass = 'fa-play-circle';
+							$scope.audioPlay = false;
+							audio.currentTime = 0;
+							if(!auto_next_play)
+								$scope['stopOption'+option_number] = false;
+							else{
+								if(option_number<3)
+								{
+									var next_option=option_number+1;
+									$scope.playOption(id,next_option, auto_next_play);
+								}
+							}
+						};
+					} else {
 						audio.pause();
 						$scope.audioClass = 'fa-play-circle';
 						$scope.audioPlay = false;
 						audio.currentTime = 0;
-						$scope.stopOption1 = false;
-					};
-				} else {
-					audio.pause();
-					$scope.audioClass = 'fa-play-circle';
-					$scope.audioPlay = false;
-					audio.currentTime = 0;
-					$scope.stopOption1 = false;
+						$scope['stopOption'+option_number] = false;
+					}
 				}
+			    else{
+                    if(option_number<3)
+                    {
+                        var next_option=option_number+1;
+                        $scope.playOption(id,next_option, auto_next_play);
+                    }
+                }
 			};
 
 			$scope.playOption2 = function(id) {
-			    var audio = document.getElementById(id);
+			    var audio = document.getElementById(id+"option2");
 				if(!$scope.stopOption2){
 			    	audio.play();
 			    	$scope.audioClass = 'fa-stop-circle';
@@ -397,7 +441,7 @@ angular.module(module)
 			};
 
 			$scope.playOption3 = function(id) {
-			    var audio = document.getElementById(id);
+			    var audio = document.getElementById(id+"option3");
 				if(!$scope.stopOption3){
 			    	audio.play();
 			    	$scope.audioClass = 'fa-stop-circle';
@@ -431,7 +475,7 @@ angular.module(module)
 				if ($scope.timer == '00:00:00' ) {
 					// disableTimer();
 					$uibModalInstance.close('testdone');
-					$http.post('/api/user/logout?id='+$scope.user_id)
+					$http.post('api/user/logout?id='+$scope.user_id)
 						.success(function(response) {
 							if (response.success) {
 								$translate.use("en-en");
@@ -461,7 +505,7 @@ angular.module(module)
 						// $http.post('api/question/updatetime?id='+$scope.user_id+'&time='+$scope.timer)
 						// 	.success(function(response){
 						// });
-						$http.post('/api/user/logout?id='+$scope.user_id)
+						$http.post('api/user/logout?id='+$scope.user_id)
 							.success(function(response) {
 								if (response.success) {
 									$translate.use("en-en");
@@ -551,7 +595,6 @@ angular.module(module)
 				$scope.stopOption1 = false;
 				$scope.stopOption2 = false;
 				$scope.stopOption3 = false;
-				console.log(testConfig.type);
 				if(testConfig.type != 'realtime' && $scope.form.choice == ''){
 					$scope.selectoption = true;
 				}else{
@@ -571,6 +614,11 @@ angular.module(module)
 						$scope.quescount++;
 	                    $scope.getQuestion();
 						$scope.mapOption();
+						setTimeout(function () {
+							console.log("next",$scope.question.id);
+							$scope.playOption($scope.question.id,1,true);
+						},1000);
+
 	                } else {
 	                	if (testConfig.test !== 'realtime') {
 	                		popupMsg = 'You have reached end of practice. Click Ok to continue...';
@@ -582,7 +630,6 @@ angular.module(module)
 							$scope.loader = true;
 							// $scope.okpop_finish = true;
 							$scope.viewResults();
-
 	                	}
 	                }
 				}
@@ -654,7 +701,7 @@ angular.module(module)
 						// if ($scope.leftQuestions.length){
 						// 	$http({
 				        //         method: 'POST',
-				        //         url: '/api/question/questionstate',
+				        //         url: 'api/question/questionstate',
 				        //         data: $scope.leftQuestions
 				        //         })
 				        //     .success(function(response) {
@@ -686,7 +733,7 @@ angular.module(module)
 				console.log(data);
                 $http({
                     method: 'POST',
-                    url: '/api/question/testcomplete',
+                    url: 'api/question/testcomplete',
                     data: data
                 })
                 .success(function(response, status, headers, config) {
@@ -696,8 +743,8 @@ angular.module(module)
 						var popupWin = window.location.origin + '/site/testprint?id='+response.data+"&lang="+$window.localStorage.getItem('screen_lang');;
 						var id = response.data;
 						location.href = popupWin;
-						//$http.post('/api/user/logout')
-						$http.post('/api/user/logout?id='+$scope.user_id)
+						//$http.post('api/user/logout')
+						$http.post('api/user/logout?id='+$scope.user_id)
 						.success(function(response) {
 							if (response.success) {
 								$translate.use("en-en");
@@ -731,7 +778,7 @@ angular.module(module)
 				$uibModalInstance.close('testdone');
 				var config;
 				var modal = $uibModal.open({
-					templateUrl: '/app_v1/templates/test_review.tpl.html',
+					templateUrl: 'app_v1/templates/test_review.tpl.html',
 					controller: 'ReviewController',
 					size: 'lg',
 					backdrop: 'static',
@@ -745,7 +792,7 @@ angular.module(module)
 				// $uibModalInstance.close('testdone');
                 // $http({
                 //     method: 'POST',
-                //     url: '/api/question/testcomplete',
+                //     url: 'api/question/testcomplete',
                 //     data: data
                 // })
                 // .success(function(response, status, headers, config) {
@@ -755,8 +802,8 @@ angular.module(module)
 				// 		var popupWin = window.location.origin + '/site/testprint?id='+response.data+"&lang="+$window.localStorage.getItem('user_lang');
 				// 		var id = response.data;
 				// 		location.href = popupWin;
-				// 		//$http.post('/api/user/logout')
-				// 		$http.post('/api/user/logout?id='+$scope.user_id)
+				// 		//$http.post('api/user/logout')
+				// 		$http.post('api/user/logout?id='+$scope.user_id)
 				// 		.success(function(response) {
 				// 			if (response.success) {
 				// 				Authentication.user = null;
@@ -806,7 +853,7 @@ angular.module(module)
             };
 
             function clearShowInstruction (instruction){
-            	$http.get('/api/user/clearinsruction?id=' + $scope.user.id+'&show_instruction='+instruction)
+            	$http.get('api/user/clearinsruction?id=' + $scope.user.id+'&show_instruction='+instruction)
 					.success(function(response, status, headers, config) {
 						// $scope.loader = false;
 						if (response.success) {

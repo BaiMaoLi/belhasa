@@ -1,44 +1,47 @@
 <!-- top navigation -->
 
 <div class="nav_menu" data-ng-init='loadAssets()'>
-  <nav class="" role="navigation">
-    <div class="nav toggle">
-      <a id="menu_toggle"><i class="fa fa-bars"></i></a>
-    </div>
+    <nav class="" role="navigation">
+        <div class="nav toggle">
+            <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+        </div>
 
-    <ul class="nav navbar-nav navbar-right">
-      <li>
-        <a href="javascript:void(0);" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-if="user.isAdmin === 5"> {{userLanguage.name}}
-          <span class=" fa fa-angle-down"></span>
-        </a>
-        <ul class="dropdown-menu dropdown-usermenu animated fadeInDown pull-right">
-          <li data-ng-repeat='item in languages'>
-            <a href="javascript:void(0);" data-ng-click='setUserLanguage(item)' data-ng-bind='item.name'> </a>
-          </li>
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                <a href="javascript:void(0);" class="user-profile dropdown-toggle" data-toggle="dropdown"
+                   aria-expanded="false" ng-if="user.isAdmin === 5"> {{userLanguage.name}}
+                    <span class=" fa fa-angle-down"></span>
+                </a>
+                <ul class="dropdown-menu dropdown-usermenu animated fadeInDown pull-right">
+                    <li data-ng-repeat='item in languages'>
+                        <a href="javascript:void(0);" data-ng-click='setUserLanguage(item)'
+                           data-ng-bind='item.name'> </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="">
+                <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown"
+                   aria-expanded="false">
+                    <img data-ng-src="{{user.photo}}" alt="" data-ng-if='user.photo'>
+                    <img src="app/assets/images/temp-icon.png" alt="" data-ng-if='!user.photo'>
+
+                    {{user.name}}
+                    <span class=" fa fa-angle-down"></span>
+                </a>
+                <ul class="dropdown-menu dropdown-usermenu animated fadeInDown pull-right">
+                    <li>
+                        <a href="javascript:void(0);" translate="home.menu.profile" data-ui-sref='app.profile'> </a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0);" data-ng-click='logout()'>
+                            <i class="fa fa-sign-out pull-right"></i> {{'home.menu.logout' | translate}}
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
         </ul>
-      </li>
-      <li class="">
-        <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-          <img data-ng-src="{{user.photo}}" alt="" data-ng-if='user.photo'>
-          <img src="app/assets/images/temp-icon.png" alt="" data-ng-if='!user.photo'>
-
-          {{user.name}}
-          <span class=" fa fa-angle-down"></span>
-        </a>
-        <ul class="dropdown-menu dropdown-usermenu animated fadeInDown pull-right">
-          <li>
-            <a href="javascript:void(0);" translate="home.menu.profile" data-ui-sref='app.profile'> </a>
-          </li>
-          <li>
-            <a href="javascript:void(0);" data-ng-click='logout()'>
-              <i class="fa fa-sign-out pull-right"></i> {{'home.menu.logout' | translate}}
-            </a>
-          </li>
-        </ul>
-      </li>
-
-    </ul>
-  </nav>
+    </nav>
 </div>
 
-      <!-- /top navigation -->
+<!-- /top navigation -->

@@ -22,7 +22,7 @@ angular.module(module)
 
 
 			$scope.cancel = function () {
-				$http.get('/api/question/clearstate?id=' + $scope.user.id)
+				$http.get('api/question/clearstate?id=' + $scope.user.id)
 					.success(function(response, status, headers, config) {
 						$scope.loader = false;
 						if (response.success) {
@@ -38,7 +38,7 @@ angular.module(module)
   			$scope.continue = function(){
   				$window.localStorage.setItem('resume',true);
   				var modal = $uibModal.open({
-					templateUrl: '/app_v1/templates/tests.tpl.html',
+					templateUrl: 'app_v1/templates/tests.tpl.html',
 					controller: 'TestController',
 					size: 'lg',
 					backdrop: 'static',

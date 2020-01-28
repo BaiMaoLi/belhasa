@@ -57,7 +57,7 @@ angular.module(module)
 
 	        $scope.uploadPhoto = function() {
 				var modal = $uibModal.open({
-					templateUrl: '/app/templates/upload_photo.tpl.html',
+					templateUrl: 'app/templates/upload_photo.tpl.html',
 					controller: 'UploadController',
 					size: 'lg',
 					backdrop: 'static',
