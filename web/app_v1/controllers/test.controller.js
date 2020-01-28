@@ -263,10 +263,8 @@ angular.module(module)
 			};
 			$scope.loadTest = function() {
 				$scope.loader = true;
-				console.log('testconfig');
 				testConfig.language = $window.localStorage.getItem('screen_lang');
 				testConfig.audiolang = $window.localStorage.getItem('user_audio_lang');
-				console.log(testConfig);
 				var l = $window.localStorage.getItem('screen_lang');
 				$translate.use(l);
 				$rootScope.$emit('language-changed', l);
@@ -282,7 +280,6 @@ angular.module(module)
 						if (response.success) {
 							$scope.quescount = 1;
 							$scope.totalcount = response.data.length;
-							console.log(response.data);
 							$scope.titlecategory = testConfig.category;
 							if(testConfig.type == "realtime"){
 								$scope.titletype = "Mock Test";
@@ -298,15 +295,18 @@ angular.module(module)
 								enableTimer();
 								$scope.test = response.data;
 								$scope.test.map(function(item){
+									item.audio="https://www.computerhope.com/jargon/m/example.mp3";
 									item.option1audio="https://www.computerhope.com/jargon/m/example.mp3";
 									item.option2audio="https://www.computerhope.com/jargon/m/example.mp3";
 									item.option3audio="https://www.computerhope.com/jargon/m/example.mp3";
 								});
 								$scope.question = $scope.test[0];
 								$scope.questionId = 0;
+								console.log($scope.test);
 
 								setTimeout(function () {
-									$scope.playOption($scope.question.id,1,true);
+									// $scope.playOption($scope.question.id,1,true);
+									$scope.playAudio($scope.question.id,true);
 								},1000);
 							} else {
 								$scope.closePopup('There is no tests available for this category.');
@@ -332,6 +332,10 @@ angular.module(module)
 							if (response.success) {
 								//$scope.quescount++;
 								$scope.question = response.data;
+								$scope.question.audio="https://www.computerhope.com/jargon/m/example.mp3";
+								$scope.question.option1audio="https://www.computerhope.com/jargon/m/example.mp3";
+								$scope.question.option2audio="https://www.computerhope.com/jargon/m/example.mp3";
+								$scope.question.option3audio="https://www.computerhope.com/jargon/m/example.mp3";
 								$scope.animatedClass = 'flipInY';
 							}
 						});
@@ -346,29 +350,49 @@ angular.module(module)
 				});
 			};
 
-			$scope.playAudio = function(id) {
+			$scope.playAudio = function(id, auto_play=false) {
 			    var audio = document.getElementById(id);
-				if(!$scope.stop){
-			    	audio.play();
-			    	$scope.audioClass = 'fa-stop-circle';
-					$scope.stop = true;
-					audio.onended = function() {
+				var src=$scope.question['audio'];
+				for(let i=1;i<=3;i++){
+					$scope['stopOption'+i] = false;
+					var audio_temp = document.getElementById(id+"option"+i);
+					audio_temp.pause();
+				}
+				if(src!=='' && src!=null && src!=='null') {
+					audio.src = src;
+					audio.load();
+					if(!$scope.stop){
+						audio.play();
+						$scope.audioClass = 'fa-stop-circle';
+						$scope.stop = true;
+						audio.onended = function() {
+							audio.pause();
+							$scope.audioClass = 'fa-play-circle';
+							audio.currentTime = 0;
+							$scope.stop = false;
+							if(auto_play){
+								$scope.playOption(id,1,true);
+							}
+						};
+					} else {
 						audio.pause();
 						$scope.audioClass = 'fa-play-circle';
 						audio.currentTime = 0;
 						$scope.stop = false;
-					};
-				} else {
-					audio.pause();
-					$scope.audioClass = 'fa-play-circle';
-					audio.currentTime = 0;
-					$scope.stop = false;
+					}
+				}else{
+					$scope.playOption(id,1,true);
 				}
 			};
 
 			$scope.playOption = function(id,option_number, auto_next_play=false) {
 			    var audio = document.getElementById(id+"option"+option_number);
 			    var src=$scope.question['option'+option_number+'audio'];
+
+			    var audio = document.getElementById(id);
+				audio.pause();
+				$scope.stop = false;
+
 			    if(src!=='' && src!=null && src!=='null'){
 					audio.src = src;
 					audio.load();
@@ -379,7 +403,6 @@ angular.module(module)
 							audio_temp.pause();
 						}
 					}
-					console.log(id, option_number, auto_next_play,$scope['stopOption'+option_number]);
 					if(!$scope['stopOption'+option_number]){
 						audio.play();
 						$scope.audioClass = 'fa-stop-circle';
@@ -590,7 +613,6 @@ angular.module(module)
             }
 
             $scope.nextQuestion = function() {
-            	//$scope.quescount++;
 				$scope.stop = false;
 				$scope.stopOption1 = false;
 				$scope.stopOption2 = false;
@@ -615,8 +637,8 @@ angular.module(module)
 	                    $scope.getQuestion();
 						$scope.mapOption();
 						setTimeout(function () {
-							console.log("next",$scope.question.id);
-							$scope.playOption($scope.question.id,1,true);
+							// $scope.playOption($scope.question.id,1,true);
+							$scope.playAudio($scope.question.id,true);
 						},1000);
 
 	                } else {
