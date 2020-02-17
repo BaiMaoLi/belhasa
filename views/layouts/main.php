@@ -16,7 +16,7 @@ AppAsset::register($this);
 <!DOCTYPE html>
 <html lang="<?= Yii::$app->language ?>">
       <!-- <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.css"> -->
-      <link rel="stylesheet" href="<?=$baseUrl ?>app_v1/assets/css/angular-material.css">
+      <link rel="stylesheet" href="<?=$baseUrl ?>/app_v1/assets/css/angular-material.css">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
