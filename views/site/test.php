@@ -1,12 +1,13 @@
 <!-- <script src="http://mrrio.github.io/jsPDF/dist/jspdf.debug.js"></script>
 <script src="http://mrrio.github.io/jsPDF/dist/jspdf.min.js"></script> -->
+<?php $baseUrl=Yii::$app->controller->module->params['baseUrl'];?>
 <?php if ($result['user_lang'] == "ar-ar" || $result['user_lang'] == "ur-ur" || $result['user_lang'] == "fa-fa") { ?>
     <link rel="stylesheet" href="<?= $baseUrl?>/app_v1/assets/css/bootstrap-rtl.css">
     <?php $user_lang = true;
 } else {
     ?>
 
-    <?php $baseUrl=Yii::$app->controller->module->params['baseUrl'];?>
+
 
     <link rel="stylesheet" href="<?= $baseUrl?>/app_v1/assets/css/bootstrap.min.css">
 <?php } ?>

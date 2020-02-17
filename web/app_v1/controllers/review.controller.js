@@ -318,7 +318,7 @@ angular.module(module)
                     if (response.success) {
                         // $uibModalInstance.close('testdone');
                         // $scope.showAlert(popupMsg);
-						var popupWin =base_url+'site/testprint?id='+response.data+"&lang="+$window.localStorage.getItem('screen_lang');
+						var popupWin =base_url+'/site/testprint?id='+response.data+"&lang="+$window.localStorage.getItem('screen_lang');
 						var id = response.data;
 						location.href = popupWin;
 						//$http.post('api/user/logout')
