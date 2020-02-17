@@ -8,11 +8,11 @@ use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
-
 AppAsset::register($this);
 ?>
 
 <?php $this->beginPage() ?>
+<?php $baseUrl=Yii::$app->controller->module->params['baseUrl'];?>
 
 <!DOCTYPE html>
 <html lang="<?= Yii::$app->language ?>">
@@ -31,7 +31,6 @@ AppAsset::register($this);
 </head>
 
 <body style="background:#FFFFFF;">
-
 <?php $this->beginBody() ?>
     <!-- Body content -->
     <?= $content ?>

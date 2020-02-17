@@ -16,7 +16,7 @@ AppAsset::register($this);
 <!DOCTYPE html>
 <html lang="<?= Yii::$app->language ?>">
       <!-- <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.css"> -->
-      <link rel="stylesheet" href="app_v1/assets/css/angular-material.css">
+      <link rel="stylesheet" href="<?=$baseUrl ?>app_v1/assets/css/angular-material.css">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -25,6 +25,7 @@ AppAsset::register($this);
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?= Html::csrfMetaTags() ?>
+
 
     <title><?= Html::encode($this->title) ?></title>
     <style>
@@ -54,11 +55,11 @@ AppAsset::register($this);
             margin: 0px 0px !important;
         }
     </style>
-
     <?php $this->head() ?>
-    <link id="ltr" rel="stylesheet" href="app_v1/assets/css/custom.css">
-    <link id="rtl" rel="stylesheet" href="app_v1/assets/css/custom_rtl.css">
-    <link id="rtl2" rel="stylesheet" href="app_v1/assets/css/bootstrap-rtl.css">
+    <?php $baseUrl=Yii::$app->controller->module->params['baseUrl'];?>
+    <link id="ltr" rel="stylesheet" href="<?=$baseUrl ?>/app_v1/assets/css/custom.css">
+    <link id="rtl" rel="stylesheet" href="<?=$baseUrl ?>/app_v1/assets/css/custom_rtl.css">
+    <link id="rtl2" rel="stylesheet" href="<?=$baseUrl ?>/app_v1/assets/css/bootstrap-rtl.css">
     <script>
         var script = document.createElement('script');
         var lang = localStorage.getItem('user_lang');
@@ -69,6 +70,7 @@ AppAsset::register($this);
             document.getElementById("rtl").disabled=true;
             document.getElementById("rtl2").disabled=true;
         }
+        var base_url="<?php echo $baseUrl; ?>"
     </script>
 </head>
 
@@ -92,53 +94,53 @@ AppAsset::register($this);
     <!--<script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.js"></script>-->
 
     <!-- vendor files -->
-    <script type="text/javascript" src='app_v1/assets/vendor/jquery.min.js'></script>
-    <script type="text/javascript" src='app_v1/assets/vendor/bootstrap.min.js'></script>
-    <script type="text/javascript" src='app_v1/assets/vendor/nprogress.js'></script>
+    <script type="text/javascript" src='<?=$baseUrl ?>/app_v1/assets/vendor/jquery.min.js'></script>
+    <script type="text/javascript" src='<?=$baseUrl ?>/app_v1/assets/vendor/bootstrap.min.js'></script>
+    <script type="text/javascript" src='<?=$baseUrl ?>/app_v1/assets/vendor/nprogress.js'></script>
 
 
-    <script type="text/javascript" src='app_v1/assets/vendor/angular/angular.min.js'></script>
-    <script type="text/javascript" src='app_v1/assets/vendor/ui-bootstrap-tpls-1.2.5.min.js'></script>
-    <script type="text/javascript" src='app_v1/assets/vendor/angular-ui-router/release/angular-ui-router.min.js'></script>
-    <script type="text/javascript" src='app_v1/assets/vendor/bower-angular-translate-2.9.0.1/angular-translate.min.js'></script>
-    <script type="text/javascript" src='app_v1/assets/vendor/bower-angular-translate-loader-static-files-master/angular-translate-loader-static-files.min.js'></script>
-    <script type="text/javascript" src='app_v1/assets/vendor/ngImgCrop/compile/unminified/ng-img-crop.js'></script>
+    <script type="text/javascript" src='<?=$baseUrl ?>/app_v1/assets/vendor/angular/angular.min.js'></script>
+    <script type="text/javascript" src='<?=$baseUrl ?>/app_v1/assets/vendor/ui-bootstrap-tpls-1.2.5.min.js'></script>
+    <script type="text/javascript" src='<?=$baseUrl ?>/app_v1/assets/vendor/angular-ui-router/release/angular-ui-router.min.js'></script>
+    <script type="text/javascript" src='<?=$baseUrl ?>/app_v1/assets/vendor/bower-angular-translate-2.9.0.1/angular-translate.min.js'></script>
+    <script type="text/javascript" src='<?=$baseUrl ?>/app_v1/assets/vendor/bower-angular-translate-loader-static-files-master/angular-translate-loader-static-files.min.js'></script>
+    <script type="text/javascript" src='<?=$baseUrl ?>/app_v1/assets/vendor/ngImgCrop/compile/unminified/ng-img-crop.js'></script>
 
-    <script type="text/javascript" src='app_v1/assets/vendor/angular-animate.min.js'></script>
-    <script type="text/javascript" src='app_v1/assets/vendor/angular-aria.min.js'></script>
-    <script type="text/javascript" src='app_v1/assets/vendor/angular-messages.min.js'></script>
-    <script type="text/javascript" src='app_v1/assets/vendor/angular-material.min.js'></script>
+    <script type="text/javascript" src='<?=$baseUrl ?>/app_v1/assets/vendor/angular-animate.min.js'></script>
+    <script type="text/javascript" src='<?=$baseUrl ?>/app_v1/assets/vendor/angular-aria.min.js'></script>
+    <script type="text/javascript" src='<?=$baseUrl ?>/app_v1/assets/vendor/angular-messages.min.js'></script>
+    <script type="text/javascript" src='<?=$baseUrl ?>/app_v1/assets/vendor/angular-material.min.js'></script>
 
     <!-- Export Excel -->
-    <script type="text/javascript" src='app_v1/assets/vendor/alasql.min.js'></script>
-    <script type="text/javascript" src='app_v1/assets/vendor/xlsx.core.min.js'></script>
+    <script type="text/javascript" src='<?=$baseUrl ?>/app_v1/assets/vendor/alasql.min.js'></script>
+    <script type="text/javascript" src='<?=$baseUrl ?>/app_v1/assets/vendor/xlsx.core.min.js'></script>
 
     <!-- Export PDF -->
-    <script type="text/javascript" src='app_v1/assets/vendor/jspdf.min.js'></script>
-    <script type="text/javascript" src='app_v1/assets/vendor/jspdf.plugin.autotable.js'></script>
+    <script type="text/javascript" src='<?=$baseUrl ?>/app_v1/assets/vendor/jspdf.min.js'></script>
+    <script type="text/javascript" src='<?=$baseUrl ?>/app_v1/assets/vendor/jspdf.plugin.autotable.js'></script>
 
 
 
     <!-- app files -->
-    <script type="text/javascript" src='app_v1/app.js'></script>
-    <script type="text/javascript" src='app_v1/controllers/loading.controller.js'></script>
-    <script type="text/javascript" src='app_v1/controllers/login.controller.js'></script>
-    <script type="text/javascript" src='app_v1/controllers/customize.controller.js'></script>
-    <script type="text/javascript" src='app_v1/controllers/home.controller.js'></script>
-    <script type="text/javascript" src='app_v1/controllers/header.controller.js'></script>
-    <script type="text/javascript" src='app_v1/controllers/topics.controller.js'></script>
-    <script type="text/javascript" src='app_v1/controllers/question.controller.js'></script>
-    <script type="text/javascript" src='app_v1/controllers/upload.controller.js'></script>
-    <script type="text/javascript" src='app_v1/controllers/profile.controller.js'></script>
-    <script type="text/javascript" src='app_v1/controllers/admin_students.controller.js'></script>
-    <script type="text/javascript" src='app_v1/controllers/test.controller.js'></script>
-    <script type="text/javascript" src='app_v1/controllers/result.controller.js'></script>
-    <script type="text/javascript" src='app_v1/controllers/logs.controller.js'></script>
-    <script type="text/javascript" src='app_v1/controllers/instruction.controller.js'></script>
-    <script type="text/javascript" src='app_v1/controllers/resumetest.controller.js'></script>
-    <script type="text/javascript" src='app_v1/controllers/reports.controller.js'></script>
-    <script type="text/javascript" src='app_v1/controllers/review.controller.js'></script>
-    <script type="text/javascript" src='app_v1/controllers/category.controller.js'></script>
+    <script type="text/javascript" src='<?=$baseUrl ?>/app_v1/app.js'></script>
+    <script type="text/javascript" src='<?=$baseUrl ?>/app_v1/controllers/loading.controller.js'></script>
+    <script type="text/javascript" src='<?=$baseUrl ?>/app_v1/controllers/login.controller.js'></script>
+    <script type="text/javascript" src='<?=$baseUrl ?>/app_v1/controllers/customize.controller.js'></script>
+    <script type="text/javascript" src='<?=$baseUrl ?>/app_v1/controllers/home.controller.js'></script>
+    <script type="text/javascript" src='<?=$baseUrl ?>/app_v1/controllers/header.controller.js'></script>
+    <script type="text/javascript" src='<?=$baseUrl ?>/app_v1/controllers/topics.controller.js'></script>
+    <script type="text/javascript" src='<?=$baseUrl ?>/app_v1/controllers/question.controller.js'></script>
+    <script type="text/javascript" src='<?=$baseUrl ?>/app_v1/controllers/upload.controller.js'></script>
+    <script type="text/javascript" src='<?=$baseUrl ?>/app_v1/controllers/profile.controller.js'></script>
+    <script type="text/javascript" src='<?=$baseUrl ?>/app_v1/controllers/admin_students.controller.js'></script>
+    <script type="text/javascript" src='<?=$baseUrl ?>/app_v1/controllers/test.controller.js'></script>
+    <script type="text/javascript" src='<?=$baseUrl ?>/app_v1/controllers/result.controller.js'></script>
+    <script type="text/javascript" src='<?=$baseUrl ?>/app_v1/controllers/logs.controller.js'></script>
+    <script type="text/javascript" src='<?=$baseUrl ?>/app_v1/controllers/instruction.controller.js'></script>
+    <script type="text/javascript" src='<?=$baseUrl ?>/app_v1/controllers/resumetest.controller.js'></script>
+    <script type="text/javascript" src='<?=$baseUrl ?>/app_v1/controllers/reports.controller.js'></script>
+    <script type="text/javascript" src='<?=$baseUrl ?>/app_v1/controllers/review.controller.js'></script>
+    <script type="text/javascript" src='<?=$baseUrl ?>/app_v1/controllers/category.controller.js'></script>
 
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/danialfarid-angular-file-upload/12.2.13/ng-file-upload.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.13.5/xlsx.full.min.js"></script>

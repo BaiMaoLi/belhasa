@@ -322,15 +322,16 @@ class SiteController extends Controller {
         );
         if ($id) {
             $row = Testresults::findOne(['id' => $id]);
-
             $response = $row->attributes;
-            //print_r($response['category']);
+
             $user = User::findOne(['id' => $response['studentid']]);
+
 
             unset($response['studentid']);
             $response['student'] = $this->formatUser($user->attributes);
             $response['questions'] = array();
             $questions = Testquestions::findAll(['testid' => $response['id']]);
+
             foreach ($questions as $row) {
                 $record = $row->attributes;
                 $question = QuestionsTranslations::findOne(['questionid' => $record['questionid']]);
@@ -356,6 +357,7 @@ class SiteController extends Controller {
 
 
 
+
             $topics = array();
             foreach ($response['questions'] as $record) {
                 if (!isset($topics[$record['topicArea']])) {
@@ -369,19 +371,29 @@ class SiteController extends Controller {
             $response['topics'] = $topics;
 
 
+//            echo "<pre>";
+
+
+
             $reqQuestions = Testconfig::findOne(['id' => 1]);
             $reqQuestions = $reqQuestions->attributes;
             $response['reqQuestions'] = $reqQuestions;
             $reqQuestions = Testconfig::findOne(['testcategory' => $response['category'], 'category' => 'realtime']);
-            $reqQuestions = $reqQuestions->attributes;
+//            print_r( $reqQuestions);
+//            exit;
+
             $response['noofcommonquestion'] = $reqQuestions['noofcommonquestion'];
             $response['noofspecificquestion'] = $reqQuestions['noofspecificquestion'];
             $response['noofreqspecificanswer'] = $reqQuestions['noofreqspecificanswer'];
             $response['noofreqcommonanswer'] = $reqQuestions['noofreqcommonanswer'];
 
+
             $response['correctSpecificAnswers'] = 0;
             $response['correctCommonAnswers'] = 0;
             $questionList = Testquestions::findAll(['status' => 1, 'testid' => $response['id']]);
+
+
+
             foreach ($questionList as $value) {
                 $record = $value->attributes;
                 $count = Questions::findOne(['isRealtime' => 1, 'id' => $record['questionid']]);
@@ -403,6 +415,7 @@ class SiteController extends Controller {
             $response['page'] = $page[$user_lang];
             $response['user_lang'] = $user_lang;
             $response['content'] = $page[$user_lang];
+
             return $this->render('test', [
                         'result' => $response
             ]);

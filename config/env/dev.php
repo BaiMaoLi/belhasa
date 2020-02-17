@@ -23,6 +23,7 @@ return array(
 		),
 	),
 	'defaultMail' => "karthi.m@cloudmaxis.com",
+	'baseUrl' => 'https://tecnicocerca.com/belhasa/web'
 );
 
 ?>
