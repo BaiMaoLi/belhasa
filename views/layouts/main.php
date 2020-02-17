@@ -10,7 +10,7 @@ use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
 AppAsset::register($this);
 ?>
-
+<?php $baseUrl=Yii::$app->controller->module->params['baseUrl'];?>
 <?php $this->beginPage() ?>
 
 <!DOCTYPE html>
@@ -56,7 +56,7 @@ AppAsset::register($this);
         }
     </style>
     <?php $this->head() ?>
-    <?php $baseUrl=Yii::$app->controller->module->params['baseUrl'];?>
+
     <link id="ltr" rel="stylesheet" href="<?=$baseUrl ?>/app_v1/assets/css/custom.css">
     <link id="rtl" rel="stylesheet" href="<?=$baseUrl ?>/app_v1/assets/css/custom_rtl.css">
     <link id="rtl2" rel="stylesheet" href="<?=$baseUrl ?>/app_v1/assets/css/bootstrap-rtl.css">
