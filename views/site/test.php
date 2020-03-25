@@ -69,11 +69,11 @@ $this->title = 'Training and Self Evaluation Test Results';
         var mywindow = window.open('', 'Print', 'height=400,width=600');
         mywindow.document.write('<html><head><title>Training and Self Evaluation Test Results</title>');
         mywindow.document.write('<link rel="stylesheet" href="<?= $baseUrl?>app_v1/assets/css/bootstrap.min.css">');
-<?php if ($result['user_lang'] == "ar-ar" || $result['user_lang'] == "ur-ur" || $result['user_lang'] == "fa-fa") { ?>
-            mywindow.document.write('<link rel="stylesheet" href="<?= $baseUrl?>app_v1/assets/css/bootstrap-rtl.css">');
-    <?php $user_lang = true;
-}
-?>
+        <?php if ($result['user_lang'] == "ar-ar" || $result['user_lang'] == "ur-ur" || $result['user_lang'] == "fa-fa") { ?>
+                    mywindow.document.write('<link rel="stylesheet" href="<?= $baseUrl?>app_v1/assets/css/bootstrap-rtl.css">');
+            <?php $user_lang = true;
+        }
+        ?>
         mywindow.document.write(style);
         mywindow.document.write('<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></scri' + 'pt>');
         mywindow.document.write('<script>$(document).ready(function(){ window.print(); window.close();});</scri' + 'pt>')
@@ -94,7 +94,6 @@ $this->title = 'Training and Self Evaluation Test Results';
             parent.history.back();
             return false;
         });
-
     });
 </script>
 <script>
@@ -128,16 +127,11 @@ $this->title = 'Training and Self Evaluation Test Results';
         <img src='<?=$baseUrl?>/app_v1/assets/images/logo.png' style="height: 75px;" />
     </div>
     <div style="padding-top: 10px; <?php echo isset($user_lang) ? 'margin-right: 5%' : 'margin-left: 5%'; ?>" id="table">
-
         <table class='table hea'>
             <tbody class="heabody">
                 <tr>
                     <th style="width: 200px;"><?php echo $result['page']['Date Tested']; ?></th>
                     <td><?php echo date("Y/m/d"); ?></td>
-                </tr>
-                <tr>
-                    <th><?php echo $result['page']['Student Id']; ?></th>
-                    <td><?php echo $result['student']['studentId']; ?></td>
                 </tr>
                 <tr>
                     <th><?php echo $result['page']['Student Name']; ?></th>
@@ -151,9 +145,11 @@ $this->title = 'Training and Self Evaluation Test Results';
         </table>
         <table class="table hea">
             <tbody class="heabody">
-                <tr><th style="font-size: initial;">
-            <div><?php echo $result['result']; ?></div>
-            </th></tr>
+                <tr>
+                    <th style="font-size: initial;">
+                        <div><?php echo $result['result']; ?></div>
+                    </th>
+                </tr>
             </tbody>
         </table>
         <table class="table hea">
@@ -168,7 +164,7 @@ $this->title = 'Training and Self Evaluation Test Results';
                 ?>
                 <tr>
                     <th>
-    <?php echo $key; ?>
+                        <?php echo $key; ?>
                     </th>
                     <td>
                         <div class="center"><div class="center"><?php echo $topic; ?></div></div>
@@ -179,24 +175,23 @@ $this->title = 'Training and Self Evaluation Test Results';
             ?>
             </tbody>
         </table>
-        <table class="table table-bordered" style="width: 85%;">
+        <table class="table table-bordered" style="width: 100%;">
             <tr>
-                <th style="width: 25%;"><div class=""><?php echo $result['page']['Questions']; ?></div></th>
-            <th style="width: 20%;"><div class=""><?php echo $result['page']['Number of Questions per Test']; ?></div></th>
-                <th style="width: 20%;"><div class=""><?php echo $result['page']['Minimum Correct Answers Required']; ?></div></th>
-            <th style="width: 20%;"><div class=""><?php echo $result['page']['Correct Answers']; ?></div></th>
+                <th style="width: 30%;"><div class=""><?php echo $result['page']['Number of Questions per Test']; ?></div></th>
+                <th style="width: 35%;"><div class=""><?php echo $result['page']['Minimum Correct Answers Required']; ?></div></th>
+                <th style="width: 35%;"><div class=""><?php echo $result['page']['Correct Answers']; ?></div></th>
             </tr>
             <tr>
-                <th><div class=""><?php echo $result['page']['Specific Questions']; ?></div></th>
-            <td><div class=""><?php echo $result['noofspecificquestion']; ?></div></td>
-            <td><div class=""><?php echo $result['noofreqspecificanswer']; ?></div></td>
-            <td><div class=""><?php echo $result['correctSpecificAnswers'] ?></div></td>
+                <td><div class=""><?php echo $result['reqQuestions']['noofquestion']; ?></div></td>
+                <td><div class=""><?php echo $result['reqQuestions']['noofreqspecificanswer'] + $result['reqQuestions']['noofreqcommonanswer']; ?></div></td>
+                <td><div class=""><?php echo $result['correctSpecificAnswers'] + $result['correctCommonAnswers']; ?></div></td>
             </tr>
+        </table>
+        <table class="table table-bordered" style="width: 100%; border-top:none !important; margin-top:-21px;">
             <tr>
-                <th><div class=""><?php echo $result['page']['Common Questions']; ?></div></th>
-            <td><div class=""><?php echo $result['noofcommonquestion']; ?></div></td>
-            <td><div class=""><?php echo $result['noofreqcommonanswer']; ?></div></td>
-            <td><div class=""><?php echo $result['correctCommonAnswers'] ?></div></td>
+                <td>
+                    <strong><?php echo($result['user_result'] ? $result['page']['Test Pass'] : $result['page']['Test Fail']); ?></strong>: <?= $result['page']['Test Result']?>
+                </td>
             </tr>
         </table>
     </div>
@@ -221,10 +216,6 @@ $this->title = 'Training and Self Evaluation Test Results';
                     <td><?php echo date("Y/m/d"); ?></td>
                 </tr>
                 <tr>
-                    <th><?php echo $result['content']['Student Id']; ?></th>
-                    <td><?php echo $result['student']['studentId']; ?></td>
-                </tr>
-                <tr>
                     <th><?php echo $result['content']['Student Name']; ?></th>
                     <td><?php echo $result['student']['name']; ?></td>
                 </tr>
@@ -236,32 +227,37 @@ $this->title = 'Training and Self Evaluation Test Results';
         </table>
         <table class="table hea">
             <tbody class="heabody">
-                <tr><th style="font-size: initial;">
-            <div><?php
-                if ($result['user_result']) {
-                    echo $result['content']['pass'];
-                } else {
-                    echo $result['content']['fail'];
-                }
-                ?></div>
-            </th></tr>
+                <tr>
+                    <th style="font-size: initial;">
+                        <div>
+                            <?php
+                                if ($result['user_result']) {
+                                    echo $result['content']['pass'];
+                                } else {
+                                    echo $result['content']['fail'];
+                                }
+                            ?>
+                        </div>
+                    </th>
+                </tr>
             </tbody>
         </table>
-        <table class="table hea">
+<!--        <table class="table hea">-->
+        <table class="table table-bordered">
             <tbody class="heabody">
                 <tr style="text-decoration: underline;">
-                    <th><?php echo $result['content']['Topic Area']; ?></th>
-                    <th><div class="center"><?php echo $result['content']['No of Incorrect Answers']; ?></div></th>
+                    <th class="text-center"><?php echo $result['content']['Topic Area']; ?></th>
+                    <th><div class="text-center"><?php echo $result['content']['No of Incorrect Answers']; ?></div></th>
             </tr>
             <?php
             $topics = $result['topics'];
             foreach ($topics as $key => $topic) {
                 ?>
                 <tr>
-                    <th>
-    <?php echo $key; ?>
-                    </th>
-                    <td>
+                    <td class="text-center">
+                        <?php echo $key; ?>
+                    </td>
+                    <td class="text-center">
                         <div class="center"><div class="center"><?php echo $topic; ?></div></div>
                     </td>
                 </tr>
@@ -270,26 +266,28 @@ $this->title = 'Training and Self Evaluation Test Results';
             ?>
             </tbody>
         </table>
-        <table class="table table-bordered" style="width: 85%;">
+        <table class="table table-bordered" style="width: 100%;">
+            <tbody>
+                <tr>
+                    <th style="width: 30%;" class="text-center"><div class="text-center"><?php echo $result['content']['Number of Questions per Test']; ?></div></th>
+                    <th style="width: 35%;" class="text-center"><div class="text-center"><?php echo $result['content']['Minimum Correct Answers Required']; ?></div></th>
+                    <th style="width: 35%;" class="text-center"><div class="text-center"><?php echo $result['content']['Correct Answers']; ?></div></th>
+                </tr>
+                <tr>
+                    <td><div class="text-center"><?php echo $result['reqQuestions']['noofquestion']; ?></div></td>
+                    <td><div class="text-center"><?php echo $result['reqQuestions']['noofreqspecificanswer'] + $result['reqQuestions']['noofreqcommonanswer']; ?></div></td>
+                    <td><div class="text-center"><?php echo $result['correctSpecificAnswers'] + $result['correctCommonAnswers'] ?></div></td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-bordered" style="width: 100%; border-top:none !important; margin-top:-21px;">
             <tr>
-                <th style="width: 25%;"><div class=""><?php echo $result['content']['Questions']; ?></div></th>
-            <th style="width: 20%;"><div class=""><?php echo $result['content']['Number of Questions per Test']; ?></div></th>
-            <th style="width: 20%;"><div class=""><?php echo $result['content']['Minimum Correct Answers Required']; ?></div></th>
-            <th style="width: 20%;"><div class=""><?php echo $result['content']['Correct Answers']; ?></div></th>
-            </tr>
-            <tr>
-                <th><div class=""><?php echo $result['content']['Specific Questions']; ?></div></th>
-            <td><div class=""><?php echo $result['noofspecificquestion']; ?></div></td>
-            <td><div class=""><?php echo $result['noofreqspecificanswer']; ?></div></td>
-            <td><div class=""><?php echo $result['correctSpecificAnswers'] ?></div></td>
-            </tr>
-            <tr>
-                <th><div class=""><?php echo $result['content']['Common Questions']; ?></div></th>
-            <td><div class=""><?php echo $result['noofcommonquestion']; ?></div></td>
-            <td><div class=""><?php echo $result['noofreqcommonanswer']; ?></div></td>
-            <td><div class=""><?php echo $result['correctCommonAnswers'] ?></div></td>
+                <td>
+                    <?= $result['page']['Test Result']?>:<strong><?php echo($result['user_result'] ? $result['page']['Test Pass'] : $result['page']['Test Fail']); ?></strong>
+                </td>
             </tr>
         </table>
+
     </div>
     <div class="no-print">
         <button id = 'printCertificateLang' onClick="printCertificateLang()">Print</button>

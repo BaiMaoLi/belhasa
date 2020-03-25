@@ -22,7 +22,8 @@
 			</div>
 		</div>
 
-		<div data-ng-if='language || !isAdmin' data-ng-init='loadLanguage()' style='width: 400px; margin: 10px auto;'>
+<!--		<div data-ng-if='!language || !isAdmin' data-ng-init='loadLanguage()' style='width: 400px; margin: 10px auto;'>-->
+		<div data-ng-if='language && !isAdmin' data-ng-init='loadLanguage()' style='width: 400px; margin: 10px auto;'>
 			<div id='language-section' class='animated flipInX'>
 				<form role="form" data-ng-submit='studentLogin()'>
 					<label>Screen Language</label> <br/>

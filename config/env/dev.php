@@ -10,7 +10,7 @@ return array(
 	),
 	'db' => array(
 		'class' => 'yii\db\Connection',
-		'dsn' => 'mysql:host=127.0.0.1;dbname=production',
+		'dsn' => 'mysql:host=127.0.0.1;dbname=production_origin',
 		'username' => 'root',
 		'password' => '',
 		'charset' => 'utf8',
@@ -23,7 +23,8 @@ return array(
 		),
 	),
 	'defaultMail' => "karthi.m@cloudmaxis.com",
-	'baseUrl' => 'https://tecnicocerca.com/belhasa/web'
+//	'baseUrl' => 'https://tecnicocerca.com/belhasa/web'
+	'baseUrl' => 'http://localhost/belhasa/web'
 );
 
 ?>

@@ -190,7 +190,6 @@ angular.module(module)
 						$scope.draw.push(i);
 					}
 				}
-				console.log("counting");
 				var temp = 0;
 				for(var i = 0; i < $scope.reviewquestion.length; i++){
 					if($scope.reviewquestion[i].input == "0"){
@@ -308,7 +307,6 @@ angular.module(module)
 					test: $scope.test,
 					admin_id: $window.localStorage.getItem('admin_id')
                 };
-				console.log(data);
                 $http({
                     method: 'POST',
                     url: 'api/question/testcomplete',

@@ -9,8 +9,6 @@ angular.module(module)
 			// Styles Adjustments
 			$('body').attr('style', 'background-color:none;');
 			$scope.animatedClass = 'slideInDown';
-			console.log('testOptions');
-			console.log(testOptions.category);
 			$scope.user = Authentication.user;
 			$scope.qustionId = null;
 			$scope.form = {};
@@ -23,16 +21,13 @@ angular.module(module)
 			$scope.dismsg = testOptions.category;
 			var settings = JSON.parse($window.localStorage.getItem('test-category'));
 			if (testOptions.duration < 60 ){
-				console.log('inside if');
 				$scope.mins = testOptions.duration;
 			} else if (testOptions.duration >= 60 ){
-				console.log('inside else');
 				$scope.hrs = testOptions.duration / 60;
 				$scope.hrs = Math.floor($scope.hrs)
-				console.log($scope.hrs);
 				$scope.mins = testOptions.duration % 60;
 			} else {
-				console.log('inside else');
+
 			}
 
 			$scope.userLanguage = $rootScope.userLanguage;
@@ -156,6 +151,8 @@ angular.module(module)
 					var question = $scope.question.id;
 					$http.get('api/question/getbyid?id=' + question + '&language=' + $window.localStorage.getItem('screen_lang'))
 						.success(function(response) {
+							console.log(response.data);
+
 							$scope.loader = false;
 							if (response.success) {
 								$scope.quescount++;

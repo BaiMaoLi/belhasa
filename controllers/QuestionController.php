@@ -372,11 +372,11 @@ class QuestionController extends Controller
             'success' => true,
             'data' => $response
         ));
-
         return;
     }
-    public function getQuestionStmtAudio($response, $audiolang){
 
+
+    public function getQuestionStmtAudio($response, $audiolang){
         foreach ($response as $key => $row) {
             $rows = QuestionsTranslations::find()->where('questionid=' . $row['questionid'])->all();
             $status = false;
@@ -403,6 +403,7 @@ class QuestionController extends Controller
 
         return $response;
     }
+
     public function getQuestionStmtAudioById($response, $audiolang){
 
         $rows = QuestionsTranslations::find()->where('questionid=' . $response['id'])->all();
@@ -440,8 +441,19 @@ class QuestionController extends Controller
         $response = $question->attributes;
 
         $model = Topicarea::findOne(['id' => $response['topicArea']]);
-        $topicArea = $model->attributes;
-        $response['topicArea'] = $topicArea['name'];
+
+
+//        echo "<pre>";
+//        print_r($response);
+//        exit;
+
+        $response['topicArea']="";
+        if(!is_null($model)){
+            $topicArea = $model->attributes;
+            $response['topicArea'] = $topicArea['name'];
+
+        }
+
 
         $response = array_merge($response, $this->getQuestionStmt($id, $language));
         $audiolang = Yii::$app->request->get('audiolang');
@@ -681,6 +693,12 @@ class QuestionController extends Controller
                 }
             }
             $reqQuestions = Testconfig::findOne(['testcategory' => $response['category'], 'category' => 'realtime']);
+            echo json_encode(array(
+                'success' => true,
+                'data' => $result,
+                'totalCount' => $totalCount
+            ));
+
             $reqQuestions = $reqQuestions->attributes;
             if ($correctSpecificAnswers >= $reqQuestions['noofreqspecificanswer']
                 && $correctCommonAnswers >= $reqQuestions['noofreqcommonanswer']) {

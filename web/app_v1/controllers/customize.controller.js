@@ -16,12 +16,14 @@ angular.module(module)
 			$scope.isAdmin = Authentication.user.isAdmin;
 			$scope.input = {};
 			$scope.categories = [];//['LMV', 'MC', 'HVT and LB', 'FRLK', 'Instructor'];
+			$scope.showCategory = true;
 			if (!user.language) {
 				$scope.language = true;
 			} else {
 				$translate.use(user.language);
 				next();
 			}
+
 
 			$http.get('api/category/getall')
 				.success(function(response) {
@@ -37,6 +39,7 @@ angular.module(module)
 				});
 
 			$scope.loadLanguage = function() {
+
 				$http.get('api/language/getall')
 					.success(function(response) {
 						if (response.success) {
@@ -77,14 +80,6 @@ angular.module(module)
 				else {
 					if ($window.localStorage.getItem('test-category')) {
 						$state.go('app');
-					} else {
-						$scope.showCategory = true;
-						$window.localStorage.setItem('test-category', JSON.stringify({
-							userId: user.id,
-							category: user.category,
-							name : user.name
-						}));
-						$state.go('app');
 					}
 				}
 			}
@@ -95,7 +90,6 @@ angular.module(module)
 					category: $scope.input.category,
 					name : user.name
 				}));
-				$state.go('app');
 			};
 
 			$scope.studentLogin = function() {
@@ -104,8 +98,14 @@ angular.module(module)
 				$window.localStorage.setItem('user_audio_lang', $scope.input.audiolanguage);
 				$translate.use("en-en");
 				$scope.language = false;
+				$window.localStorage.setItem('test-category', JSON.stringify({
+					userId: user.id,
+					category: user.category,
+					name : user.name
+				}));
+				$state.go('app');
 				next();
-				$scope.translate();
+				// $scope.translate();
 			}
 		}
 	]);

@@ -146,7 +146,11 @@ class SiteController extends Controller {
                 "Close" => "Close",
                 "fail" => "Unfortunately, you failed your theory test",
                 "pass" => "Congratulations, you passed your theory test",
-                "download" => "Download"
+                "download" => "Download",
+                "Test Result"=>"Test Result",
+                "Test Pass"=>"Pass",
+                "Test Fail"=>"Fail"
+
             ),
             "ar-ar"
             => array("Date Tested" => "تاریخ اإلختبار",
@@ -165,7 +169,10 @@ class SiteController extends Controller {
                 "Close" => "قريب",
                 "fail" => "نأسف لقد رسبت فى الإختبار ",
                 "pass" => "مبروك لقد نجحت فى الإختبار ",
-                "download" => "تحميل"
+                "download" => "تحميل",
+                "Test Result"=>"نتيجة الاختبار",
+                "Test Pass"=>"Pass",
+                "Test Fail"=>"Fail"
             ),
             "ur-ur"
             => array("Date Tested" => "امتحان کی تاریخ",
@@ -184,7 +191,10 @@ class SiteController extends Controller {
                 "Close" => "بند کریں",
                 "fail" => "بد قسمتی،  سے آپ اس امتحان میں ناکام ہوگئے ہیں",
                 "pass" => "مبارک ہو، آپ اس امتحان میں کامیاب  ہوگئے ہیں",
-                "download" => "ڈاؤن لوڈ"
+                "download" => "ڈاؤن لوڈ",
+                "Test Result"=>"نتيجة الاختبار",
+                "Test Pass"=>"Pass",
+                "Test Fail"=>"Fail"
             ),
             "ta-ta"
             => array("Date Tested" => "தேர்வு தேதி",
@@ -203,7 +213,10 @@ class SiteController extends Controller {
                 "Close" => "மூடு",
                 "fail" => "துரதிருஷ்டவசமாக, நீங்கள் உங்கள் தேர்வில் தோல்வி அடைந்தீர்கள்",
                 "pass" => "வாழ்த்துக்கள், நீங்கள் உங்கள் தேர்வில் தேர்சியடைன்தீர்கள்",
-                "download" => "பதிவிறக்கம்"
+                "download" => "பதிவிறக்கம்",
+                "Test Result"=>"نتيجة الاختبار",
+                "Test Pass"=>"Pass",
+                "Test Fail"=>"Fail"
             ),
             "hi-hi"
             => array("Date Tested" => "परीक्षा की तारीख",
@@ -222,7 +235,10 @@ class SiteController extends Controller {
                 "Close" => "बंद करे",
                 "fail" => "अफसोस, आप इस परीक्षा में फेल हुएं हैं",
                 "pass" => "बधाई हो, आप इस परीक्षा में पास हुएं हैं",
-                "download" => "डाउनलोड"
+                "download" => "डाउनलोड",
+                "Test Result"=>"परीक्षा परिणाम",
+                "Test Pass"=>"Pass",
+                "Test Fail"=>"Fail"
             ),
             "be-be"
             => array("Date Tested" => "তারিখ পরিক্ষিত",
@@ -241,7 +257,10 @@ class SiteController extends Controller {
                 "Close" => "ঘনিষ্ঠ",
                 "fail" => "দুর্ভাগ্যবশত, আপনি আপনার পরীক্ষার ব্যর্থ হয়েছে",
                 "pass" => "অভিনন্দন, আপনি আপনার পরীক্ষায় পাশ করেছি",
-                "download" => "ডাউনলোড"
+                "download" => "ডাউনলোড",
+                "Test Result"=>"نتيجة الاختبار",
+                "Test Pass"=>"Pass",
+                "Test Fail"=>"Fail"
             ),
             "ma-ma"
             => array("Date Tested" => "തീയതി യാഥാർത്ഥ്യം",
@@ -260,7 +279,10 @@ class SiteController extends Controller {
                 "Close" => "അടയ്ക്കുക",
                 "fail" => "നിർഭാഗ്യവശാൽ, നിങ്ങളുടെ പരീക്ഷ വിജയിച്ചിരുന്നില്ല",
                 "pass" => "അഭിനന്ദനങ്ങൾ, നിങ്ങളുടെ പരീക്ഷ പാസായത് ഞങ്ങൾ",
-                "download" => "ഡൗൺലോഡ്"
+                "download" => "ഡൗൺലോഡ്",
+                "Test Result"=>"പരീക്ഷാഫലം",
+                "Test Pass"=>"Pass",
+                "Test Fail"=>"Fail"
             ),
             "fa-fa"
             => array("Date Tested" => "تاریخ تست شده",
@@ -279,7 +301,10 @@ class SiteController extends Controller {
                 "Close" => "نزدیک",
                 "fail" => "متاسفانه، شما امتحان خود را شکست خورده اند",
                 "pass" => "تبریک می گویم، شما امتحان خود را پشت سر گذاشته",
-                "download" => "دانلود"
+                "download" => "دانلود",
+                "Test Result"=>"نتيجة الاختبار",
+                "Test Pass"=>"Pass",
+                "Test Fail"=>"Fail"
             ),
             "ch-ch"
             => array("Date Tested" => "測試日期",
@@ -298,7 +323,10 @@ class SiteController extends Controller {
                 "Close" => "關",
                 "fail" => "不幸的是，你沒有你的考試",
                 "pass" => "恭喜你，你已經通過考試",
-                "download" => "下載"
+                "download" => "下載",
+                "Test Result"=>"نتيجة الاختبار",
+                "Test Pass"=>"Pass",
+                "Test Fail"=>"Fail"
             ),
             "ru-ru"
             => array("Date Tested" => "Дата Испытано",
@@ -317,7 +345,10 @@ class SiteController extends Controller {
                 "Close" => "Закрыть",
                 "fail" => "К сожалению, вы не смогли экзамен",
                 "pass" => "Поздравляю, вы прошли экзамен",
-                "download" => "скачать"
+                "download" => "скачать",
+                "Test Result"=>"ٹیسٹ کا نتیجہ",
+                "Test Pass"=>"Pass",
+                "Test Fail"=>"Fail"
             )
         );
         if ($id) {
@@ -340,24 +371,46 @@ class SiteController extends Controller {
                 $userQuestion = Questions::findOne(['id' => $record['questionid']]);
                 $questionRow = $userQuestion->attributes;
                 $model = Topicarea::findOne(['id' => $questionRow['topicArea']]);
-                $topicArea = $model->attributes;
-                if ($user_lang == "en-en") {
-                    $record['topicArea'] = $topicArea['name'];
-                } else {
-                    $temp = $topicArea['name_' . substr($user_lang, 0, 2)];
-                    if ($temp) {
-                        $record['topicArea'] = $temp;
-                    } else {
+
+//******************************  Original Part  *************************************//
+//                $topicArea = $model->attributes;
+//                if ($user_lang == "en-en") {
+//                    $record['topicArea'] = $topicArea['name'];
+//                } else {
+//                    $temp = $topicArea['name_' . substr($user_lang, 0, 2)];
+//                    if ($temp) {
+//                        $record['topicArea'] = $temp;
+//                    } else {
+//                        $record['topicArea'] = $topicArea['name'];
+//                    }
+//                }
+//****************************  End Original Part *********************************//
+
+
+//****************************  Updated Part  ****************************************//
+                if(!is_null($model)){   // My changing part
+                    $topicArea = $model->attributes;
+                    if ($user_lang == "en-en") {
                         $record['topicArea'] = $topicArea['name'];
+                    } else {
+                        $temp = $topicArea['name_' . substr($user_lang, 0, 2)];
+                        if ($temp) {
+                            $record['topicArea'] = $temp;
+                        } else {
+                            $record['topicArea'] = $topicArea['name'];
+                        }
                     }
                 }
+                else{
+                    $record['topicArea'] = "Unknown";
+                }
+//*************************** End Updated part By Bai ***********************************//
+
+
+
                 $record['option'] = $this->getUserChoice($question, $record['input']);
                 array_push($response['questions'], $record);
             }
-
-
-
-
             $topics = array();
             foreach ($response['questions'] as $record) {
                 if (!isset($topics[$record['topicArea']])) {
@@ -405,16 +458,34 @@ class SiteController extends Controller {
                 }
             }
 
-            if ($response['correctSpecificAnswers'] >= $response['noofreqspecificanswer'] && $response['correctCommonAnswers'] >= $response['noofreqcommonanswer']) {
+
+//            if ($response['correctSpecificAnswers'] >= $response['reqQuestions']['noofreqspecificanswer'] && $response['correctCommonAnswers'] >= $response['reqQuestions']['noofreqcommonanswer']) {
+//                $response['result'] = $page[$user_lang]["pass"];
+//                $response['user_result'] = 1;
+//            } else {
+//                $response['result'] = $page[$user_lang]["fail"];
+//                $response['user_result'] = 0;
+//            }
+            if ($response['correctSpecificAnswers'] + $response['correctCommonAnswers'] >= $response['reqQuestions']['noofreqspecificanswer'] + $response['reqQuestions']['noofreqcommonanswer']) {
                 $response['result'] = $page[$user_lang]["pass"];
                 $response['user_result'] = 1;
             } else {
                 $response['result'] = $page[$user_lang]["fail"];
                 $response['user_result'] = 0;
             }
+
+
             $response['page'] = $page[$user_lang];
             $response['user_lang'] = $user_lang;
             $response['content'] = $page[$user_lang];
+
+//            echo "<pre>";
+//            echo "$response[correctSpecificAnswers]    $response[noofreqspecificanswer]<br>";
+//
+//            echo "result1    ".$response['correctSpecificAnswers']."     ".$response['noofreqspecificanswer']."     ".$response['correctSpecificAnswers']>=$response['noofreqspecificanswer'];
+//            echo "result2    ".$response['correctCommonAnswers']."  ".$response['noofreqcommonanswer']."   ".$response['correctCommonAnswers']>=$response['noofreqcommonanswer'];
+//            print_r($response);
+//            exit;
 
             return $this->render('test', [
                         'result' => $response

@@ -1,3 +1,4 @@
+
 'use strict';
 /**
  * @name HomeController
@@ -294,12 +295,12 @@ angular.module(module)
 								$scope.loader = false;
 								enableTimer();
 								$scope.test = response.data;
-								$scope.test.map(function(item){
-									item.audio="https://www.computerhope.com/jargon/m/example.mp3";
-									item.option1audio="https://www.computerhope.com/jargon/m/example.mp3";
-									item.option2audio="https://www.computerhope.com/jargon/m/example.mp3";
-									item.option3audio="https://www.computerhope.com/jargon/m/example.mp3";
-								});
+								// $scope.test.map(function(item){
+								// 	item.audio="https://www.computerhope.com/jargon/m/example.mp3";
+								// 	item.option1audio="https://www.computerhope.com/jargon/m/example.mp3";
+								// 	item.option2audio="https://www.computerhope.com/jargon/m/example.mp3";
+								// 	item.option3audio="https://www.computerhope.com/jargon/m/example.mp3";
+								// });
 								$scope.question = $scope.test[0];
 								$scope.questionId = 0;
 								console.log($scope.test);
@@ -328,6 +329,7 @@ angular.module(module)
 					var question = $scope.question.id;
 					$http.get('api/question/getbyid?id=' + question + '&language=' + screenlang + '&audiolang=' + audiolang)
 						.success(function(response) {
+							console.log(response.data);
 							$scope.loader = false;
 							if (response.success) {
 								//$scope.quescount++;
@@ -371,7 +373,7 @@ angular.module(module)
 							audio.currentTime = 0;
 							$scope.stop = false;
 							if(auto_play){
-								$scope.playOption(id,1,true);
+								// $scope.playOption(id,1,true);
 							}
 						};
 					} else {
@@ -381,7 +383,7 @@ angular.module(module)
 						$scope.stop = false;
 					}
 				}else{
-					$scope.playOption(id,1,true);
+					// $scope.playOption(id,1,true);
 				}
 			};
 

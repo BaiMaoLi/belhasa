@@ -369,7 +369,7 @@ angular.module(module)
 						$scope.testError = 'Test has been terminated due to user\'s interupt!';
 					}
 				});
-			};
+			}
 
 			$scope.resetDisplay = function() {
 				$scope.practiseTest = false;
