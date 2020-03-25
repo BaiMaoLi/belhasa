@@ -23,8 +23,8 @@ return array(
 		),
 	),
 	'defaultMail' => "karthi.m@cloudmaxis.com",
-//	'baseUrl' => 'https://tecnicocerca.com/belhasa/web'
-	'baseUrl' => 'http://localhost/belhasa/web'
+	'baseUrl' => 'https://tecnicocerca.com/belhasa/web'
+//	'baseUrl' => 'http://localhost/belhasa/web'
 );
 
 ?>
